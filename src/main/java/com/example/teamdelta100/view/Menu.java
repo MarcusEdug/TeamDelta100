@@ -1,2 +1,4 @@
-package com.example.teamdelta100.view;public class Menu {
+package com.example.teamdelta100.view;
+
+public class Menu {
 }
