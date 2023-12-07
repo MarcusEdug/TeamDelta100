@@ -1,2 +1,4 @@
-package com.example.teamdelta100.controller;public class PlayerController {
+package com.example.teamdelta100.controller;
+
+public class PlayerController {
 }
