@@ -42,6 +42,7 @@ public class GameController {
             transaction = entityManager.getTransaction();
             transaction.begin();
             List<Games> listToReturn = new ArrayList<>(entityManager.createQuery("FROM Games", Games.class).getResultList());
+            //TypedQuery<Games> resultlist = entityManager.createNamedQuery("FROM Games", Games.class);
             transaction.commit();
             if (printOut) {
                 for (Games games :
@@ -54,6 +55,26 @@ public class GameController {
                 }
             }
             return listToReturn;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return null;
+    }
+
+    public Games getGameById (int gameId) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+            Games gamesToReturn = entityManager.find(Games.class, gameId);
+            transaction.commit();
+            return gamesToReturn;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -80,6 +101,8 @@ public class GameController {
                 transaction.rollback();
             }
             e.getMessage();
+        } finally {
+            entityManager.close();
         }
         return false;
     }
