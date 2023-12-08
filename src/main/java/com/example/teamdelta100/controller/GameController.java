@@ -20,7 +20,7 @@ public class GameController {
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-            entityManager.persist(games);
+            entityManager.persist(games); //Persist = spara
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -46,11 +46,11 @@ public class GameController {
             if (printOut) {
                 for (Games games :
                         listToReturn) {
-                    System.out.println(games.getGamesId() + ". " + games.getGameName());
-                    for (Player player :
+                    System.out.println(games.getGameId() + ". " + games.getGameName());
+                   /* for (Player player :
                             player.getPlayerName()) {
                         System.out.println(games.getGameName());
-                    }
+                    }*/
                 }
             }
             return listToReturn;

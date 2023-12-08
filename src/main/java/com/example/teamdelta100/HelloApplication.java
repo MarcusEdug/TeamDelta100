@@ -1,22 +1,15 @@
 package com.example.teamdelta100;
 
-import javafx.application.Application;
+import com.example.teamdelta100.controller.GameController;
+import com.example.teamdelta100.view.Menu;
 
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+public class HelloApplication  {
 
-import java.io.IOException;
-
-public class HelloApplication extends Application {
-    @Override
-    public void start(Stage stage) throws IOException {
-
-        stage.setTitle("Hello!");
-
-        stage.show();
-    }
 
     public static void main(String[] args) {
-        launch();
+        GameController gameController = new GameController();
+        Menu menu = new Menu (gameController);
+        menu.showMenu();
     }
+
 }
