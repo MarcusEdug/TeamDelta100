@@ -97,14 +97,18 @@ public class TeamsController implements Share {
         }
         return false;
     }
-    public boolean deleteTeamsById(String Id){
+    public boolean deleteTeamsById(int Id){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
+            Teams teams = entityManager.find(Teams.class, Id);
             // If the entity is attached then remove customer, else merge(attach/update) entity and then remove
-            entityManager.remove(entityManager.contains(Id) ? Id :entityManager.merge(Id));
+            //entityManager.remove(entityManager.contains(Id) ? Id :entityManager.merge(Id));
+            if(teams != null){
+                entityManager.remove(teams);
+            }
             transaction.commit();
             return true;
         } catch (Exception e){
