@@ -1,6 +1,7 @@
 package com.example.teamdelta100;
 
 import com.example.teamdelta100.view.FX;
+import com.example.teamdelta100.view.PlayerMenu;
 import javafx.application.Application;
 
 import javafx.stage.Stage;
@@ -14,8 +15,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FX fx = new FX();
-        fx.start(stage);
+
+        /*FX fx = new FX();
+        fx.start(stage);*/
+
+        PlayerMenu pm = new PlayerMenu();
+        pm.start(stage);
 
     }
 }

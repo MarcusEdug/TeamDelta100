@@ -62,4 +62,25 @@ public class PlayerController {
             }
         }
     }
+    public List<Player> tableUpdate(boolean printOut){
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+        List<Player> playerListToReturn = new ArrayList<>();
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+            TypedQuery<Player> resultList = entityManager.createQuery("FROM Player ", Player.class);
+            playerListToReturn.addAll(resultList.getResultList());
+            transaction.commit();
+            return playerListToReturn;
+        } catch (Exception e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return null;
+    }
 }

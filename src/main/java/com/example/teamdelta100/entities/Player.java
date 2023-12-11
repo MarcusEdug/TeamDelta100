@@ -22,6 +22,9 @@ public class Player {
         this.playerLastname = playerLastname;
     }
 
+    public Player(String playerName) {
+    }
+
     public int getId() {
         return id;
     }

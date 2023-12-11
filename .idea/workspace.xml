@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f5e8969-0314-454c-9a5d-a8437e8b1a23" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerPopup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/PlayerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/entities/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" afterDir="false" />
@@ -59,7 +61,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.PlayerMenu">
+  <component name="RunManager" selected="Application.com.example.teamdelta100.Main">
     <configuration name="FX" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.teamdelta100.view.FX" />
       <module name="TeamDelta100" />
@@ -127,8 +129,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.PlayerMenu" />
         <item itemvalue="Application.com.example.teamdelta100.Main" />
+        <item itemvalue="Application.PlayerMenu" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Menu" />
         <item itemvalue="Application.FX" />
@@ -145,7 +147,7 @@
       <updated>1701937991447</updated>
       <workItem from="1701937992547" duration="2000" />
       <workItem from="1702283865925" duration="3931000" />
-      <workItem from="1702287862425" duration="3729000" />
+      <workItem from="1702287862425" duration="5980000" />
     </task>
     <servers />
   </component>
