@@ -1,12 +1,14 @@
 package com.example.teamdelta100.controller;
 
-
 import com.example.teamdelta100.entities.Match;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+// Klasskommmentar
+//
+
 
 public class MatchController {
 
@@ -76,6 +78,30 @@ public class MatchController {
             em.close();
         }
     }
+
+    public List<Match> tableUpdate(boolean printOut){
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+
+        List<Match> returnList = new ArrayList<>();
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+            TypedQuery<Match> resultList = entityManager.createQuery("FROM Match ", Match.class);
+            returnList.addAll(resultList.getResultList());
+            transaction.commit();
+            return returnList;
+        } catch (Exception e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return null;
+    }
+
 
 }
 
