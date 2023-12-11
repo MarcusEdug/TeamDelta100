@@ -15,6 +15,7 @@ public class Games {
     private int gameId;
     @Column (length = 50)
     private String gameName;
+    private String hej;
 
     @Column (length = 50)
     private String gameGenre;

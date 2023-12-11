@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
+    private String hej;
     public static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("hibernate");
 
     // Create

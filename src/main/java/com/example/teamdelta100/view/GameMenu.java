@@ -11,6 +11,7 @@ public class GameMenu {
     public GameMenu(GameController gameController) {
         this.gameController = gameController;
     }
+    private String hej;
 
     public void showMenu () {
         System.out.println("-----------------Meny------------------");
