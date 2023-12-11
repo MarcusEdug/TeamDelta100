@@ -5,6 +5,6 @@ module com.example.teamdelta100 {
     requires org.hibernate.orm.core;
     requires hibernate.entitymanager;
     exports com.example.teamdelta100;
-    opens com.demo.example.teamdelta100 to org.hibernate.orm.core;
+    opens com.example.teamdelta100 to org.hibernate.orm.core;
     exports com.example.teamdelta100.entities;
 }
