@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f5e8969-0314-454c-9a5d-a8437e8b1a23" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/hotswap_agent.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/PlayerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/entities/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,26 +59,13 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.com.example.teamdelta100.Main">
+  <component name="RunManager" selected="Application.PlayerMenu">
     <configuration name="FX" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.teamdelta100.view.FX" />
       <module name="TeamDelta100" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.example.teamdelta100.view.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.teamdelta100.HelloApplication" />
-      <module name="TeamDelta100" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.teamdelta100.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -116,6 +99,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PlayerMenu" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.teamdelta100.view.PlayerMenu" />
+      <module name="TeamDelta100" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.teamdelta100.view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="com.example.teamdelta100.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.teamdelta100.Main" />
       <module name="TeamDelta100" />
@@ -131,11 +127,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.PlayerMenu" />
         <item itemvalue="Application.com.example.teamdelta100.Main" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Menu" />
         <item itemvalue="Application.FX" />
-        <item itemvalue="Application.HelloApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -149,7 +145,7 @@
       <updated>1701937991447</updated>
       <workItem from="1701937992547" duration="2000" />
       <workItem from="1702283865925" duration="3931000" />
-      <workItem from="1702287862425" duration="1379000" />
+      <workItem from="1702287862425" duration="3729000" />
     </task>
     <servers />
   </component>

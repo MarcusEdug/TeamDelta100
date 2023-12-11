@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     private String playerName;
 
@@ -16,17 +16,17 @@ public class Player {
     public Player (){
 
     }
-    public Player(Long id, String playerName, String playerLastname) {
+    public Player(int id, String playerName, String playerLastname) {
         this.id = id;
         this.playerName = playerName;
         this.playerLastname = playerLastname;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
