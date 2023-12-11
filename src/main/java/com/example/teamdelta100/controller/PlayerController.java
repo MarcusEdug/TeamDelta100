@@ -35,11 +35,7 @@ public class PlayerController {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         try {
             List<Player> listToReturn = new ArrayList<>(entityManager.createQuery("FROM Player", Player.class).getResultList());
-            if (printOut) {
-                for (Player player : listToReturn) {
-                    System.out.println(player.getId() + ". " + player.getPlayerName() + " " + player.getPlayerLastname());
-                }
-            }
+
             return listToReturn;
         } catch (Exception e) {
             e.printStackTrace();

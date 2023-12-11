@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f5e8969-0314-454c-9a5d-a8437e8b1a23" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerPopup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/PlayerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/entities/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -147,7 +144,7 @@
       <updated>1701937991447</updated>
       <workItem from="1701937992547" duration="2000" />
       <workItem from="1702283865925" duration="3931000" />
-      <workItem from="1702287862425" duration="5980000" />
+      <workItem from="1702287862425" duration="7255000" />
     </task>
     <servers />
   </component>

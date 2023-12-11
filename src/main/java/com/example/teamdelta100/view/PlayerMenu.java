@@ -64,11 +64,11 @@ public class PlayerMenu extends Application {
         TableColumn playerIdColumn = new TableColumn<Player, Integer>("Player ID");
         playerIdColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("ID"));
 
-        TableColumn playerNameColumn = new TableColumn<Player, Integer>("Player Name");
-        playerNameColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("name"));
+        TableColumn playerNameColumn = new TableColumn<Player, String>("Player Name");
+        playerNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("name"));
 
-        TableColumn playerLastNameColumn = new TableColumn<Player, Integer>("Player Lastname");
-        playerLastNameColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("Lastname"));
+        TableColumn playerLastNameColumn = new TableColumn<Player, String>("Player Lastname");
+        playerLastNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("Lastname"));
 
         tableView.getColumns().addAll(playerIdColumn,playerNameColumn, playerLastNameColumn);
 
@@ -92,7 +92,7 @@ public class PlayerMenu extends Application {
                 } else {
                     System.out.println("Failed to add customer");
                 }
-                update();
+                //update();
 
 
             } else if (input.equals("Assign Player")) {
