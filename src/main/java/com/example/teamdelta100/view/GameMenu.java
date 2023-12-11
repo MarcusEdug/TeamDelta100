@@ -1,7 +1,7 @@
 package com.example.teamdelta100.view;
 
 import com.example.teamdelta100.controller.GameController;
-import com.example.teamdelta100.entity.Games;
+import com.example.teamdelta100.entities.Games;
 
 import java.util.Scanner;
 

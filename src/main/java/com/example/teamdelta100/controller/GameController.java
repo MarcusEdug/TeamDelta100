@@ -1,6 +1,5 @@
 package com.example.teamdelta100.controller;
-import com.example.teamdelta100.entity.Games;
-import com.example.teamdelta100.entity.Player;
+import com.example.teamdelta100.entities.Games;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
