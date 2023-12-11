@@ -1,12 +1,16 @@
 package com.example.teamdelta100.view;
 
+import com.example.teamdelta100.entities.Teams;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.util.List;
 
 public class Popup {
     String userStringSubmit;
@@ -41,7 +45,7 @@ public class Popup {
         return userStringSubmit;
     }
 
-    public int deleteTeam (){
+    public int deleteTeam (List<Teams> teamsList){
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -49,13 +53,14 @@ public class Popup {
         window.setMinWidth(200);
 
 
-
-        TextField userText = new TextField();
+        ComboBox comboBox = new ComboBox();
+        for (Teams team : teamsList){
+            int id = team.getId();
+            comboBox.getItems().add(id);
+        }
         Button submit = new Button("Submit ");
         submit.setOnAction(e->{
-            userStringSubmit = userText.getText();
-            userIntSubmit = Integer.parseInt(userStringSubmit);
-            System.out.println(userIntSubmit);
+            userIntSubmit = (int) comboBox.getValue();
             window.close();
         });
 
@@ -63,7 +68,7 @@ public class Popup {
 
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(userText, submit);
+        vBox.getChildren().addAll(comboBox, submit);
         vBox.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(vBox);

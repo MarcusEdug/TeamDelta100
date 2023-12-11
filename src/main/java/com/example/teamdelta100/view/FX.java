@@ -13,18 +13,21 @@ import com.example.teamdelta100.controller.Share;
 import com.example.teamdelta100.controller.TeamsController;
 import com.example.teamdelta100.entities.Teams;
 
+import java.util.List;
+import java.util.Scanner;
 
 
 public class FX extends Application implements Share {
     TeamsController controller = new TeamsController();
     Popup popup = new Popup();
     TableView tableView;
+    Stage window;
 
 
     @Override
     public void start(Stage stage) throws Exception {
+        window = stage;
 
-        //mainThread.start();
         Button add = button("Add team");
         Button assign = button("Assign Player");
         Button delete = button("Delete team");
@@ -43,8 +46,8 @@ public class FX extends Application implements Share {
        // AnchorPane.setRightAnchor(buttonV,50.0);
 
         Scene scene = new Scene(anchorPane);
-        stage.setScene(scene);
-        stage.show();
+        window.setScene(scene);
+        window.show();
 
     }
 
@@ -66,9 +69,10 @@ public class FX extends Application implements Share {
                 //SKAPA SÅ ATT MAN SKA ASSIGN A SPELAR TIL LETT LAG
 
 
-            } /*else if (input.equals("Delete team")) {
-                controller.getAll(true);
-                if (controller.deleteTeams(popup.deleteTeam())){
+            }
+            else if (input.equals("Delete team")) {
+                List<Teams> teamsList = controller.getAll(true);
+                if (controller.deleteTeamsById(popup.deleteTeam(teamsList))){
                     System.out.println("Laget är borta");
                 }
                 else {
@@ -80,7 +84,7 @@ public class FX extends Application implements Share {
 
 
             }
-            */else if (input.equals("Update team")) {
+            else if (input.equals("Update team")) {
 
 
 
@@ -100,7 +104,7 @@ public class FX extends Application implements Share {
             }
 
             else if (input.equals("Log out")) {
-                //Skapa så att man kan stänga av programet
+                window.close();
             }
         });
 
@@ -113,8 +117,8 @@ public class FX extends Application implements Share {
         TableColumn teamIdColumn = new TableColumn<Teams, Integer>("Team ID");
         teamIdColumn.setCellValueFactory(new PropertyValueFactory<Teams, Integer>("id"));
 
-        TableColumn teamNameColumn = new TableColumn<Teams, Integer>("Team Name");
-        teamNameColumn.setCellValueFactory(new PropertyValueFactory<Teams, Integer>("name"));
+        TableColumn teamNameColumn = new TableColumn<Teams, String>("Team Name");
+        teamNameColumn.setCellValueFactory(new PropertyValueFactory<Teams, String>("name"));
 
         tableView.getColumns().addAll(teamIdColumn,teamNameColumn);
 
