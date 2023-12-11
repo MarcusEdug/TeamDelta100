@@ -5,10 +5,10 @@ import com.example.teamdelta100.entity.Games;
 
 import java.util.Scanner;
 
-public class Menu {
+public class GameMenu {
     private GameController gameController;
 
-    public Menu(GameController gameController) {
+    public GameMenu(GameController gameController) {
         this.gameController = gameController;
     }
 
@@ -58,7 +58,7 @@ public class Menu {
                 //Ta bort ett spel
                 gameController.getAll(true);
                 System.out.println("Välj spel-ID: ");
-                if (gameController.deleteGames(new Scanner(System.in).nextInt()))
+                //if (gameController.deleteGames(new Scanner(System.in).nextInt()))
                 break;
             case "4":
                 //Hämta alla spel
