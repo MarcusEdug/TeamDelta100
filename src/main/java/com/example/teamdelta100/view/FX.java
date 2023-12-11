@@ -3,6 +3,7 @@ package com.example.teamdelta100.view;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -51,7 +52,28 @@ public class FX extends Application {
         window.show();
 
     }
+    public Tab teamTab(){
+        Tab tabLayout = new Tab("Teams");
+        tabLayout.setClosable(false);
+        Button add = button("Add team");
+        Button assign = button("Assign Player");
+        Button delete = button("Delete team");
+        Button logOut = button("Log out");
 
+        tableView = table();
+
+        VBox buttonV = new VBox(10);
+        buttonV.getChildren().addAll(add,assign,delete,logOut);
+
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.getChildren().addAll(tableView, buttonV);
+        AnchorPane.setTopAnchor(buttonV,100.0);
+        AnchorPane.setLeftAnchor(buttonV,270.0);
+
+        tabLayout.setContent(anchorPane);
+
+        return tabLayout;
+    }
     public Button button(String input) {
         Button button = new Button(input);
         button.setOnAction(e-> {
@@ -106,6 +128,9 @@ public class FX extends Application {
         TableColumn teamNameColumn = new TableColumn<Teams, String>("Team Name");
         teamNameColumn.setCellValueFactory(new PropertyValueFactory<Teams, String>("name"));
         teamNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        TableColumn playersIdColumn = new TableColumn<Teams, Integer>("Players");
+        playersIdColumn.setCellValueFactory(new PropertyValueFactory<Teams, Integer>("numberOfPlayer"));
 
         tableView.getColumns().addAll(teamIdColumn,teamNameColumn);
 
