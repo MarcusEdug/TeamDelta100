@@ -121,7 +121,7 @@ public class TeamFX extends Application {
 
             }
             else if (input.equals("Log out")) {
-                teamDatabaseList();
+                //teamDatabaseList();
             }
         });
 

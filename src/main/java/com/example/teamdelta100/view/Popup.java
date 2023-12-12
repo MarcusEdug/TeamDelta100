@@ -3,10 +3,7 @@ package com.example.teamdelta100.view;
 import com.example.teamdelta100.entities.Teams;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -20,19 +17,26 @@ public class Popup {
     private int userIntSubmit;
     private Stage window;
     private ComboBox comboBox;
+    private Scene scene;
+    private String titleName;
+    private Label featureText;
 
-    public void popupWindows(Scene scene){
+    public void popupWindows(){
         window = new Stage();
         //window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Pop-up");
-        window.setHeight(100);
-        window.setWidth(250);
+        window.setTitle(titleName);
+        window.setHeight(150);
+        window.setWidth(265);
         window.setScene(scene);
         window.showAndWait();
     }
 
     public String addTeam (){
         TextField userText = new TextField();
+        userText.setMaxWidth(100);
+        titleName = "Add team";
+        featureText = new Label("What is your Team name?");
+
         Button submit = new Button("Submit");
         submit.setOnAction(e->{
             userStringSubmit = userText.getText();
@@ -40,17 +44,20 @@ public class Popup {
             window.close();
         });
 
-        VBox vBox = new VBox();
-        vBox.getChildren().addAll(userText, submit);
+        VBox vBox = new VBox(5);
+        vBox.getChildren().addAll(featureText,userText, submit);
         vBox.setAlignment(Pos.CENTER);
-        Scene scene = new Scene(vBox);
+        scene = new Scene(vBox);
 
-        popupWindows(scene);
+        popupWindows();
 
         return userStringSubmit;
     }
 
     public int deleteTeam (List<Teams> teamsList){
+        titleName = "Delete team";
+        featureText = new Label("Which team do you wanna delete?");
+
         comboBox = new ComboBox();
         for (Teams team : teamsList){
             int id = team.getId();
@@ -63,18 +70,21 @@ public class Popup {
             window.close();
         });
 
-        VBox vBox = new VBox();
-        vBox.getChildren().addAll(comboBox, submit);
+        VBox vBox = new VBox(5);
+        vBox.getChildren().addAll(featureText, comboBox, submit);
         vBox.setAlignment(Pos.CENTER);
 
-        Scene scene = new Scene(vBox);
+        scene = new Scene(vBox);
 
-        popupWindows(scene);
+        popupWindows();
 
         return userIntSubmit;
     }
     Teams tempTeam;
     public Teams updateTeam(Teams team){
+        titleName = "Change name ";
+        featureText = new Label("Select a new namn for the team");
+
         tempTeam = team;
         Text currentName = new Text(tempTeam.getName());
         TextField newName = new TextField();
@@ -90,12 +100,12 @@ public class Popup {
             window.close();
         });
 
-        VBox vBox = new VBox();
-        vBox.getChildren().addAll(hBox,submit);
+        VBox vBox = new VBox(5);
+        vBox.getChildren().addAll(featureText,hBox,submit);
         vBox.setAlignment(Pos.CENTER);
 
-        Scene scene = new Scene(vBox);
-        popupWindows(scene);
+        scene = new Scene(vBox);
+        popupWindows();
         /*
         comboBox = new ComboBox();
         for (Teams team : teamsList){
@@ -134,6 +144,8 @@ public class Popup {
     }
 
     public Teams choosTeam (List<Teams> teamsList){
+        titleName = "Change name";
+        featureText = new Label("Select which team to change namn on");
 
         comboBox = new ComboBox();
         for (Teams team : teamsList){
@@ -148,12 +160,12 @@ public class Popup {
                 window.close();
 
         });
-        VBox vBox = new VBox();
-        vBox.getChildren().addAll(comboBox, submit);
+        VBox vBox = new VBox(5);
+        vBox.getChildren().addAll(featureText,comboBox, submit);
         vBox.setAlignment(Pos.CENTER);
 
-        Scene scene = new Scene(vBox);
-        popupWindows(scene);
+        scene = new Scene(vBox);
+        popupWindows();
         return tempTeam;
     }
     public void updateTextArea(List<Teams> teamsList){
