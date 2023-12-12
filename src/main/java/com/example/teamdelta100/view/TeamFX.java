@@ -7,20 +7,17 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import com.example.teamdelta100.controller.Share;
 import com.example.teamdelta100.controller.TeamsController;
 import com.example.teamdelta100.entities.Teams;
 
 import java.util.List;
-import java.util.Scanner;
 
 
-public class FX extends Application {
+public class TeamFX extends Application {
     TeamsController controller = new TeamsController();
     Popup popup = new Popup();
     TableView tableView;
@@ -58,12 +55,13 @@ public class FX extends Application {
         Button add = button("Add team");
         Button assign = button("Assign Player");
         Button delete = button("Delete team");
+        Button update = button("Update team");
         Button logOut = button("Log out");
 
         tableView = table();
 
         VBox buttonV = new VBox(10);
-        buttonV.getChildren().addAll(add,assign,delete,logOut);
+        buttonV.getChildren().addAll(add,assign,delete,update,logOut);
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(tableView, buttonV);
@@ -107,9 +105,23 @@ public class FX extends Application {
 
 
             }
+            else if (input.equals("Update team")) {
+                List<Teams> teamsList = controller.getAll(true);
 
+                Teams temp = popup.choosTeam(teamsList);
+
+
+                if(controller.updateTeams(popup.updateTeam(temp))){
+                    System.out.println(temp);
+                } else {
+                    System.out.println("Failed to add customer");
+                }
+                update();
+
+
+            }
             else if (input.equals("Log out")) {
-                window.close();
+                teamDatabaseList();
             }
         });
 
@@ -138,11 +150,15 @@ public class FX extends Application {
     }
     public void update (){
         tableView.getItems().clear();
-        for (Teams temp : controller.tableUpdate(true) ) {
+        for (Teams temp : controller.tableUpdate() ) {
             tableView.getItems().add(temp);
         }
-
-
+    }
+    public List<Teams> teamDatabaseList (){
+        for (Teams temp : controller.tableUpdate() ){
+            System.out.println("Team: " + temp.getName() + " och ID: " + temp.getId());
+        }
+        return controller.tableUpdate();
     }
 
     public TeamsController getController() {

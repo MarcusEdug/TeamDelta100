@@ -19,15 +19,18 @@ public class Popup {
     private String userStringSubmit;
     private int userIntSubmit;
     private Stage window;
+    private ComboBox comboBox;
 
     public void popupWindows(Scene scene){
         window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL);
+        //window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Pop-up");
-        window.setMinWidth(200);
+        window.setHeight(100);
+        window.setWidth(250);
         window.setScene(scene);
         window.showAndWait();
     }
+
     public String addTeam (){
         TextField userText = new TextField();
         Button submit = new Button("Submit");
@@ -48,12 +51,11 @@ public class Popup {
     }
 
     public int deleteTeam (List<Teams> teamsList){
-        ComboBox comboBox = new ComboBox();
+        comboBox = new ComboBox();
         for (Teams team : teamsList){
             int id = team.getId();
             comboBox.getItems().add(id);
         }
-
 
         Button submit = new Button("Submit");
         submit.setOnAction(e->{
@@ -71,5 +73,90 @@ public class Popup {
 
         return userIntSubmit;
     }
+    Teams tempTeam;
+    public Teams updateTeam(Teams team){
+        tempTeam = team;
+        Text currentName = new Text(tempTeam.getName());
+        TextField newName = new TextField();
 
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(currentName, newName);
+
+
+        Button submit = new Button("Submit");
+        submit.setOnAction(e->{
+
+            tempTeam.setName(newName.getText());
+            window.close();
+        });
+
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(hBox,submit);
+        vBox.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(vBox);
+        popupWindows(scene);
+        /*
+        comboBox = new ComboBox();
+        for (Teams team : teamsList){
+            String name = team.getName();
+            comboBox.getItems().add(name);
+        }
+        comboBox.getSelectionModel().select(0);
+
+
+
+
+        TextArea newName = new TextArea();
+
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(comboBox,newName);
+
+        Button submit = new Button("Submit");
+        submit.setOnAction(e->{
+            tempTeam = (Teams) comboBox.getValue();
+            tempTeam.setName(newName.getText());
+
+            window.close();
+        });
+
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(hBox,submit);
+        vBox.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(vBox);
+        popupWindows(scene);
+
+        return tempTeam;
+
+         */
+        return tempTeam;
+    }
+
+    public Teams choosTeam (List<Teams> teamsList){
+
+        comboBox = new ComboBox();
+        for (Teams team : teamsList){
+            int id = team.getId();
+            comboBox.getItems().add(id);
+        }
+
+        Button submit = new Button("Submit");
+        submit.setOnAction(e->{
+            int selectedID = (int) comboBox.getValue();
+                tempTeam = teamsList.get(selectedID-1);
+                window.close();
+
+        });
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(comboBox, submit);
+        vBox.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(vBox);
+        popupWindows(scene);
+        return tempTeam;
+    }
+    public void updateTextArea(List<Teams> teamsList){
+
+    }
 }

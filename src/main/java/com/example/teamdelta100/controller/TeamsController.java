@@ -140,7 +140,7 @@ public class TeamsController implements Share {
         }
         return false;
     }
-    public List<Teams> tableUpdate(boolean printOut){
+    public List<Teams> tableUpdate(){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         List<Teams> teamsListToReturn = new ArrayList<>();

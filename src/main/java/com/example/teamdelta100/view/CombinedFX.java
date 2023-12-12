@@ -8,7 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class CombinedFX extends Application {
-    FX fx = new FX();
+    TeamFX fx = new TeamFX();
 
     private Stage stage;
     private TabPane tabPane;
@@ -23,7 +23,7 @@ public class CombinedFX extends Application {
         Tab tab4 = new Tab("Matchs");
 
 
-        tabPane.getTabs().add(tab3);
+        //tabPane.getTabs().add(tab3);
         tabPane.getTabs().add(fx.teamTab());
         tabPane.getTabs().add(tab2);
         tabPane.getTabs().add(tab4);
