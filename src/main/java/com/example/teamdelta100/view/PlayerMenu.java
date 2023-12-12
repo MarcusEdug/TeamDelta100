@@ -5,6 +5,7 @@ import com.example.teamdelta100.entities.Player;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -57,6 +58,28 @@ public class PlayerMenu extends Application {
         Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public Tab playerTab(){
+        Tab tabLayout = new Tab("Players");
+        tabLayout.setClosable(false);
+        Button addPlayer = button("Add Player");
+        Button deletePlayer = button("Delete Player");
+        Button logOut = button("Log out");
+
+        tableView = table();
+
+        VBox buttonV = new VBox(10);
+        buttonV.getChildren().addAll(addPlayer,deletePlayer,logOut);
+
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.getChildren().addAll(tableView, buttonV);
+        AnchorPane.setTopAnchor(buttonV,100.0);
+        AnchorPane.setLeftAnchor(buttonV,270.0);
+
+        tabLayout.setContent(anchorPane);
+
+        return tabLayout;
     }
 
     public TableView table (){

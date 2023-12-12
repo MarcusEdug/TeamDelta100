@@ -5,9 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f5e8969-0314-454c-9a5d-a8437e8b1a23" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/CombinedFX.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/InformationForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/PlayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/TeamsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/TeamsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/entities/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/entities/Teams.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/entities/Teams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/FX.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/FX.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/Popup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/Popup.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,29 +46,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "jacobawawgwg",
-    "last_opened_file_path": "D:/Github/TeamDelta100",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;jacobawawgwg&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Github/TeamDelta100&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
     </key>
   </component>
   <component name="RunManager" selected="Application.com.example.teamdelta100.Main">
-    <configuration name="FX" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.teamdelta100.view.FX" />
+    <configuration name="CombinedFX" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.teamdelta100.view.CombinedFX" />
       <module name="TeamDelta100" />
       <extension name="coverage">
         <pattern>
@@ -85,8 +93,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Menu" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.teamdelta100.view.Menu" />
+    <configuration name="PlayerMenu" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.teamdelta100.view.PlayerMenu" />
       <module name="TeamDelta100" />
       <extension name="coverage">
         <pattern>
@@ -98,8 +106,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PlayerMenu" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.teamdelta100.view.PlayerMenu" />
+    <configuration name="PlayerNEWpopup" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.teamdelta100.view.PlayerNEWpopup" />
       <module name="TeamDelta100" />
       <extension name="coverage">
         <pattern>
@@ -127,10 +135,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.com.example.teamdelta100.Main" />
+        <item itemvalue="Application.PlayerNEWpopup" />
+        <item itemvalue="Application.CombinedFX" />
         <item itemvalue="Application.PlayerMenu" />
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Menu" />
-        <item itemvalue="Application.FX" />
       </list>
     </recent_temporary>
   </component>
@@ -144,7 +152,8 @@
       <updated>1701937991447</updated>
       <workItem from="1701937992547" duration="2000" />
       <workItem from="1702283865925" duration="3931000" />
-      <workItem from="1702287862425" duration="7255000" />
+      <workItem from="1702287862425" duration="7874000" />
+      <workItem from="1702367567459" duration="2578000" />
     </task>
     <servers />
   </component>
