@@ -108,11 +108,11 @@ public class TeamFX extends Application {
             else if (input.equals("Update team")) {
                 List<Teams> teamsList = controller.getAll(true);
 
-                Teams temp = popup.choosTeam(teamsList);
+                //Teams temp = popup.choosTeam(teamsList);
 
 
-                if(controller.updateTeams(popup.updateTeam(temp))){
-                    System.out.println(temp);
+                if(controller.updateTeams(popup.updateTextArea(teamsList))){
+                    System.out.println("hej");
                 } else {
                     System.out.println("Failed to add customer");
                 }

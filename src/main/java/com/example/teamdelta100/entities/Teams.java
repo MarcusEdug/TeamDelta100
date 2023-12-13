@@ -35,6 +35,12 @@ public class Teams {
         this.playerId = playerId;
     }
 
+    @Override
+    public String toString() {
+        return "Name: " + name + ", ID: "+ id;
+
+    }
+
     public Teams(String name) {
         this.name = name;
     }

@@ -21,12 +21,15 @@ public class Popup {
     private String titleName;
     private Label featureText;
 
+    int id;
+    Teams tempTeam;
+
     public void popupWindows(){
         window = new Stage();
         //window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(titleName);
         window.setHeight(150);
-        window.setWidth(265);
+        window.setWidth(320);
         window.setScene(scene);
         window.showAndWait();
     }
@@ -80,7 +83,7 @@ public class Popup {
 
         return userIntSubmit;
     }
-    Teams tempTeam;
+
     public Teams updateTeam(Teams team){
         titleName = "Change name ";
         featureText = new Label("Select a new namn for the team");
@@ -168,7 +171,60 @@ public class Popup {
         popupWindows();
         return tempTeam;
     }
-    public void updateTextArea(List<Teams> teamsList){
 
+    public Teams updateTextArea(List<Teams> teamsList){
+        titleName = "Change name";
+        featureText = new Label("Select which team to change namn on");
+
+        Label explainText1 = new Label("Select team: ");
+        Label explainText2 = new Label("Write new name: ");
+
+        Text currentName = new Text();
+        TextField newName = new TextField();
+
+        comboBox = new ComboBox();
+        for (Teams team : teamsList){
+            comboBox.getItems().add(team);
+        }
+
+
+
+
+        /*Button select = new Button("Select");
+        select.setOnAction(e->{
+
+
+
+            currentName.setText(tempTeam.getName());
+
+        });
+
+         */
+
+        Button submit = new Button("Submit");
+        submit.setOnAction(e->{
+            tempTeam = (Teams) comboBox.getValue();
+            tempTeam.setName(newName.getText());
+            window.close();
+        });
+
+        HBox overHBox = new HBox(3);
+        overHBox.getChildren().addAll(explainText1,comboBox);
+        overHBox.setAlignment(Pos.CENTER);
+
+        HBox underHBox = new HBox(3);
+        underHBox.getChildren().addAll(explainText2, currentName, newName, submit);
+        underHBox.setAlignment(Pos.CENTER);
+
+        VBox vBox = new VBox(5);
+        vBox.getChildren().addAll(featureText,overHBox,underHBox);
+        vBox.setAlignment(Pos.CENTER);
+
+        scene = new Scene(vBox);
+
+        popupWindows();
+        return tempTeam;
     }
+
+    //public int breakOutInt ()
 }
