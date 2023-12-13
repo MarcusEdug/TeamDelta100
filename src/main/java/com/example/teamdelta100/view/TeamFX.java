@@ -95,18 +95,19 @@ public class TeamFX extends Application {
                 update();
 
 
-            } else if (input.equals("Assign Player")) {
+            }else if (input.equals("Assign Player")) {
                 List<Teams> teamsList = controller.getAll(true);
                 List<TestPlay> playList = test.getAll(true);
                 popup.assignPlayerToTeam(teamsList,playList);
 
-                if(test.updateTeams(popup.getTempPlayer())){
+                if(controller.addPlayerToCustomer(popup.getPlayerId(), popup.getTeamId())){
                     System.out.println("hej");
                 } else {
                     System.out.println("Failed to add customer");
                 }
                 update();
             }
+
             else if (input.equals("Delete team")) {
                 List<Teams> teamsList = controller.getAll(true);
                 if (controller.deleteTeamsById(popup.deleteTeam(teamsList))){
@@ -184,6 +185,8 @@ public class TeamFX extends Application {
         test.save(new TestPlay("Sara"));
         test.save(new TestPlay("Klara"));
         test.save(new TestPlay("Kim"));
+
+
     }
 
     public TeamsController getController() {

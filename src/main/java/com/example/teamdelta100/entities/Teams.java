@@ -1,6 +1,8 @@
 package com.example.teamdelta100.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Teams")
@@ -16,23 +18,33 @@ public class Teams {
     @Column(name = "Number_of_player")
     private int numberOfPlayer;
 
-    @Column(name = "Player_id")
+    /*@Column(name = "Player_id")
     private int playerId;
+
+     */
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "teams")
+    private List<TestPlay> numberOfPlayerList = new ArrayList<>();
+
 
     public Teams() {
     }
 
-    public Teams(int id, String name, int numberOfPlayer, int playerId) {
+    public Teams(int id, String name, int numberOfPlayer) {
         this.id = id;
         this.name = name;
         this.numberOfPlayer = numberOfPlayer;
-        this.playerId = playerId;
+
     }
 
-    public Teams(String name, int numberOfPlayer, int playerId) {
+    public Teams(String name, int numberOfPlayer) {
         this.name = name;
         this.numberOfPlayer = numberOfPlayer;
-        this.playerId = playerId;
+    }
+
+    public void addPlayer (TestPlay testPlay){
+        testPlay.setTeams(this);
+        numberOfPlayerList.add(testPlay);
     }
 
     @Override
@@ -69,11 +81,11 @@ public class Teams {
         this.numberOfPlayer = numberOfPlayer;
     }
 
-    public int getPlayerId() {
-        return playerId;
+    public List<TestPlay> getNumberOfPlayerList() {
+        return numberOfPlayerList;
     }
 
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
+    public void setNumberOfPlayerList(List<TestPlay> numberOfPlayerList) {
+        this.numberOfPlayerList = numberOfPlayerList;
     }
 }

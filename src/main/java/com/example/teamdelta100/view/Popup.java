@@ -21,9 +21,10 @@ public class Popup {
     private Scene scene;
     private String titleName;
     private Label featureText;
+    private int teamId;
+    private int playerId;
     private Teams tempTeam;
-    private TestPlay tempPlayer;
-
+    private Text error = new Text();
     public void popupWindows(){
         window = new Stage();
         //window.initModality(Modality.APPLICATION_MODAL);
@@ -226,27 +227,32 @@ public class Popup {
         return tempTeam;
     }
 
-    public void assignPlayerToTeam(List<Teams> teamsList, List<TestPlay> playListt){
+    public void assignPlayerToTeam(List<Teams> teamsList, List<TestPlay> playList){
         titleName = "Assign player";
         featureText = new Label("Assign player to a team");
-
-        Label errorAssign = new Label();
 
         ComboBox comboBoxTeams = new ComboBox();
         for (Teams team : teamsList){
             comboBoxTeams.getItems().add(team);
         }
         ComboBox comboBoxPlayer = new ComboBox();
-        for (TestPlay player : playListt){
+        for (TestPlay player : playList){
             comboBoxPlayer.getItems().add(player);
         }
 
         Button submit = new Button("Submit");
         submit.setOnAction(e->{
+            error.setText("");
             tempTeam = (Teams) comboBoxTeams.getValue();
-            tempPlayer = (TestPlay) comboBoxPlayer.getValue();
-            if(tempPlayer.getTeamId() == null){
-                tempPlayer.setTeamId(String.valueOf(tempTeam.getId()));
+            TestPlay tempPlayer = (TestPlay) comboBoxPlayer.getValue();
+            if(tempPlayer.getTeams() == null){
+                tempPlayer.setTeams(tempTeam);
+                teamId = tempTeam.getId();
+                playerId = tempPlayer.getId();
+                window.close();
+            }
+            else {
+                error.setText("Spelaren har redan ett lag");
             }
         });
         Button close = new Button("Close");
@@ -261,7 +267,7 @@ public class Popup {
         underHBox.setAlignment(Pos.CENTER);
 
         VBox vBox = new VBox(5);
-        vBox.getChildren().addAll(featureText,overHBox,underHBox);
+        vBox.getChildren().addAll(featureText,overHBox,underHBox,error);
         vBox.setAlignment(Pos.CENTER);
 
         scene = new Scene(vBox);
@@ -271,20 +277,20 @@ public class Popup {
 
     }
 
-    public Teams getTempTeam() {
-        return tempTeam;
+    public int getTeamId() {
+        return teamId;
     }
 
-    public void setTempTeam(Teams tempTeam) {
-        this.tempTeam = tempTeam;
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
     }
 
-    public TestPlay getTempPlayer() {
-        return tempPlayer;
+    public int getPlayerId() {
+        return playerId;
     }
 
-    public void setTempPlayer(TestPlay tempPlayer) {
-        this.tempPlayer = tempPlayer;
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
     }
 
     //public int breakOutInt ()
