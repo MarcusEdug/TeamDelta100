@@ -61,6 +61,7 @@ public class PlayerController {
         }
         return null;
     }
+
     // Overloaded method with a default value for printOut
     public List<Player> getAll() {
         return getAll(true); // Set default value to true (print results)

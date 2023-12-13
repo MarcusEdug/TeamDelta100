@@ -17,21 +17,9 @@ public class PlayerMenu extends Application {
 
     PlayerController playerController = new PlayerController();
     Popup popup = new Popup();
-
     InformationForm info = new InformationForm();
     TableView tableView;
     public static void main(String[] args) {
-
-        Player newPlayer = new Player();
-
-
-        PlayerController playerController = new PlayerController();
-        if (playerController.save(newPlayer)) {
-            System.out.println("Player data saved successfully!");
-        } else {
-            System.out.println("Failed to save player data.");
-        }
-        playerController.printAll();
 
         launch();
     }
@@ -81,6 +69,7 @@ public class PlayerMenu extends Application {
         return tabLayout;
     }
 
+
     public TableView table (){
         tableView = new TableView<Player>();
         tableView.setEditable(true);
@@ -108,21 +97,15 @@ public class PlayerMenu extends Application {
         Button button = new Button(input);
         button.setOnAction(e-> {
             if (input.equals("Add Player")) {
-                InformationForm info = new InformationForm();
                 try {
                     PlayerPopup playerPopup = new PlayerPopup();
                     playerPopup.addPlayer();
                 } catch (Exception ex) {
                     ex.printStackTrace(); // Handle the exception appropriately (e.g., log or display an error message)
                 }
-                if(playerController.save(new Player())){
-                    System.out.println(info.getFirstNameField() + " added");
-                } else {
-                    System.out.println("Failed to add player");
-                }
 
 
-
+                update();
             } else if (input.equals("Assign Player")) {
                 //SKAPA SÅ ATT MAN SKA ASSIGN A SPELAR TIL LETT LAG
 

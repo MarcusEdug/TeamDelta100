@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.w3c.dom.Text;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -25,6 +26,8 @@ public class InformationForm extends Application {
     private TextField cityField;
     private TextField countryField;
     private TextField emailField;
+    private String userStringInput;
+    Button submitButton = new Button("Submit");
 
     private static final String PERSISTENCE_UNIT_NAME = "hibernate"; // Change this to your actual persistence unit name
 
@@ -86,8 +89,8 @@ public class InformationForm extends Application {
         grid.add(emailLabel, 0, 7);
         grid.add(emailField, 1, 7);
 
+        TextField userText = new TextField();
 
-        Button submitButton = new Button("Submit");
         GridPane.setColumnSpan(submitButton, 2);
         grid.add(submitButton, 0, 8);
 
@@ -183,7 +186,7 @@ public class InformationForm extends Application {
             ex.printStackTrace();
             System.out.println("Failed to save data to the database.");
         } finally {
-            emf.close();
+            em.close();
 
         }
     }
