@@ -3,30 +3,30 @@ package com.example.teamdelta100.view;
 import com.example.teamdelta100.entities.Player;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 public class InformationForm extends Application {
+    private Stage window;
+    private TextField firstNameField;
+    private TextField lastNameField;
+    private TextField nicknameField;
+    private TextField adressField;
+    private TextField postalCodeField;
+    private TextField cityField;
+    private TextField countryField;
+    private TextField emailField;
 
-    private static final SessionFactory sessionFactory;
-
-    static {
-        try {
-            Configuration configuration = new Configuration();
-            configuration.addAnnotatedClass(Player.class);
-            configuration.configure();
-
-            sessionFactory = configuration.buildSessionFactory();
-        } catch (Throwable ex) {
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
+    private static final String PERSISTENCE_UNIT_NAME = "hibernate"; // Change this to your actual persistence unit name
 
     @Override
     public void start(Stage primaryStage) {
@@ -36,6 +36,7 @@ public class InformationForm extends Application {
         grid.setPadding(new Insets(20, 20, 20, 20));
         grid.setVgap(10);
         grid.setHgap(10);
+
 
         Label firstNameLabel = new Label("Förnamn:");
         TextField firstNameField = new TextField();
@@ -85,6 +86,7 @@ public class InformationForm extends Application {
         grid.add(emailLabel, 0, 7);
         grid.add(emailField, 1, 7);
 
+
         Button submitButton = new Button("Submit");
         GridPane.setColumnSpan(submitButton, 2);
         grid.add(submitButton, 0, 8);
@@ -100,21 +102,72 @@ public class InformationForm extends Application {
                 emailField.getText()
         ));
 
+
         Scene scene = new Scene(grid, 300, 400);
         primaryStage.setScene(scene);
 
         primaryStage.show();
     }
 
-    private void saveToDatabase(String firstName, String lastName, String nickname,
-                                String address, String postalCode, String city,
-                                String country, String email) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
+
+    public TextField getFirstNameField() {
+        return firstNameField;
+    }
+
+    public TextField getLastNameField() {
+        return lastNameField;
+    }
+
+    public TextField getNicknameField() {
+        return nicknameField;
+    }
+
+    public TextField getAdressField() {
+        return adressField;
+    }
+
+    public TextField getPostalCodeField() {
+        return postalCodeField;
+    }
+
+    public TextField getCityField() {
+        return cityField;
+    }
+
+    public TextField getCountryField() {
+        return countryField;
+    }
+
+    public TextField getEmailField() {
+        return emailField;
+    }
+
+    public void popupWindows(Scene scene){
+        window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Pop-up");
+        window.setMinWidth(200);
+        window.setScene(scene);
+        window.showAndWait();
+    }
+
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    public void saveToDatabase(String firstName, String lastName, String nickname,
+                               String address, String postalCode, String city,
+                               String country, String email) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
 
             Player person = new Player();
-            person.setFirstName(firstName);
-            person.setLastName(lastName);
+            person.setPlayerName(firstName);
+            person.setPlayerLastname(lastName);
             person.setNickname(nickname);
             person.setAddress(address);
             person.setPostalCode(postalCode);
@@ -122,17 +175,17 @@ public class InformationForm extends Application {
             person.setCountry(country);
             person.setEmail(email);
 
-            session.save(person);
+            em.persist(person);
 
-            session.getTransaction().commit();
+            em.getTransaction().commit();
             System.out.println("Data saved to the database successfully!");
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("Failed to save data to the database.");
+        } finally {
+            emf.close();
+
         }
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 }

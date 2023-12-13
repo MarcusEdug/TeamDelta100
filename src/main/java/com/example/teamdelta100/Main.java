@@ -25,11 +25,11 @@ public class Main extends Application {
         /*PlayerMenu pm = new PlayerMenu();
         pm.start(stage);*/
 
-        /*CombinedFX fx = new CombinedFX();
-        fx.start(stage);*/
+        CombinedFX fx = new CombinedFX();
+        fx.start(stage);
 
-        InformationForm infoForm = new InformationForm();
-        infoForm.start(stage);
+        /*InformationForm infoForm = new InformationForm();
+        infoForm.start(stage);*/
 
     }
 }

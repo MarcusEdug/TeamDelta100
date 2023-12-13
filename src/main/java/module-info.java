@@ -1,6 +1,7 @@
 module com.example.teamdelta100 {
     requires javafx.controls;
     requires java.persistence;
+    requires java.naming;
     requires java.sql;
     requires org.hibernate.orm.core;
     requires hibernate.entitymanager;

@@ -17,12 +17,12 @@ public class PlayerMenu extends Application {
 
     PlayerController playerController = new PlayerController();
     Popup popup = new Popup();
+
+    InformationForm info = new InformationForm();
     TableView tableView;
     public static void main(String[] args) {
-        // Example: Creating a new player and saving it to the database
+
         Player newPlayer = new Player();
-        newPlayer.setPlayerName("John");
-        newPlayer.setPlayerLastname("Doe");
 
 
         PlayerController playerController = new PlayerController();
@@ -31,8 +31,6 @@ public class PlayerMenu extends Application {
         } else {
             System.out.println("Failed to save player data.");
         }
-
-        // Example: Retrieving and printing all players
         playerController.printAll();
 
         launch();
@@ -40,6 +38,7 @@ public class PlayerMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        PlayerPopup playerPopup = new PlayerPopup();
         Button addplayer = button("Add Player");
 
         TableView viewPlayers = table();
@@ -84,14 +83,15 @@ public class PlayerMenu extends Application {
 
     public TableView table (){
         tableView = new TableView<Player>();
-        TableColumn playerIdColumn = new TableColumn<Player, Integer>("Player ID");
-        playerIdColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("ID"));
+        tableView.setEditable(true);
+        TableColumn playerIdColumn = new TableColumn("Player ID");
+        playerIdColumn.setCellValueFactory(new PropertyValueFactory("ID"));
 
-        TableColumn playerNameColumn = new TableColumn<Player, String>("Player Name");
-        playerNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("name"));
+        TableColumn playerNameColumn = new TableColumn("Player Name");
+        playerNameColumn.setCellValueFactory(new PropertyValueFactory("name"));
 
-        TableColumn playerLastNameColumn = new TableColumn<Player, String>("Player Lastname");
-        playerLastNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("Lastname"));
+        TableColumn playerLastNameColumn = new TableColumn("Player Lastname");
+        playerLastNameColumn.setCellValueFactory(new PropertyValueFactory("Lastname"));
 
         tableView.getColumns().addAll(playerIdColumn,playerNameColumn, playerLastNameColumn);
 
@@ -108,14 +108,19 @@ public class PlayerMenu extends Application {
         Button button = new Button(input);
         button.setOnAction(e-> {
             if (input.equals("Add Player")) {
-                String playerName = popup.addTeam();
-
-                if(playerController.save(new Player(playerName))){
-                    System.out.println(playerName + " added");
-                } else {
-                    System.out.println("Failed to add customer");
+                InformationForm info = new InformationForm();
+                try {
+                    PlayerPopup playerPopup = new PlayerPopup();
+                    playerPopup.addPlayer();
+                } catch (Exception ex) {
+                    ex.printStackTrace(); // Handle the exception appropriately (e.g., log or display an error message)
                 }
-                //update();
+                if(playerController.save(new Player())){
+                    System.out.println(info.getFirstNameField() + " added");
+                } else {
+                    System.out.println("Failed to add player");
+                }
+
 
 
             } else if (input.equals("Assign Player")) {
