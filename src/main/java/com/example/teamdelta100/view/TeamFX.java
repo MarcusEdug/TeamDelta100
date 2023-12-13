@@ -1,5 +1,7 @@
 package com.example.teamdelta100.view;
 
+import com.example.teamdelta100.controller.Testcontroll;
+import com.example.teamdelta100.entities.TestPlay;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,14 +21,20 @@ import java.util.List;
 
 public class TeamFX extends Application {
     TeamsController controller = new TeamsController();
+    Testcontroll test = new Testcontroll();
+
     Popup popup = new Popup();
     TableView tableView;
     Stage window;
 
 
+
+
     @Override
     public void start(Stage stage) throws Exception {
         window = stage;
+
+
 
         Button add = button("Add team");
         Button assign = button("Assign Player");
@@ -50,6 +58,7 @@ public class TeamFX extends Application {
 
     }
     public Tab teamTab(){
+        createPlayer();
         Tab tabLayout = new Tab("Teams");
         tabLayout.setClosable(false);
         Button add = button("Add team");
@@ -87,9 +96,16 @@ public class TeamFX extends Application {
 
 
             } else if (input.equals("Assign Player")) {
-                //SKAPA SÅ ATT MAN SKA ASSIGN A SPELAR TIL LETT LAG
+                List<Teams> teamsList = controller.getAll(true);
+                List<TestPlay> playList = test.getAll(true);
+                popup.assignPlayerToTeam(teamsList,playList);
 
-
+                if(test.updateTeams(popup.getTempPlayer())){
+                    System.out.println("hej");
+                } else {
+                    System.out.println("Failed to add customer");
+                }
+                update();
             }
             else if (input.equals("Delete team")) {
                 List<Teams> teamsList = controller.getAll(true);
@@ -159,6 +175,15 @@ public class TeamFX extends Application {
             System.out.println("Team: " + temp.getName() + " och ID: " + temp.getId());
         }
         return controller.tableUpdate();
+    }
+
+    public void createPlayer(){
+
+        test.save(new TestPlay("Hug"));
+        test.save(new TestPlay("Hans"));
+        test.save(new TestPlay("Sara"));
+        test.save(new TestPlay("Klara"));
+        test.save(new TestPlay("Kim"));
     }
 
     public TeamsController getController() {

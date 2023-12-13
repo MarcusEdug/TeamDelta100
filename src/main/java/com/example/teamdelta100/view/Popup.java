@@ -1,6 +1,7 @@
 package com.example.teamdelta100.view;
 
 import com.example.teamdelta100.entities.Teams;
+import com.example.teamdelta100.entities.TestPlay;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -20,9 +21,8 @@ public class Popup {
     private Scene scene;
     private String titleName;
     private Label featureText;
-
-    int id;
-    Teams tempTeam;
+    private Teams tempTeam;
+    private TestPlay tempPlayer;
 
     public void popupWindows(){
         window = new Stage();
@@ -224,6 +224,67 @@ public class Popup {
 
         popupWindows();
         return tempTeam;
+    }
+
+    public void assignPlayerToTeam(List<Teams> teamsList, List<TestPlay> playListt){
+        titleName = "Assign player";
+        featureText = new Label("Assign player to a team");
+
+        Label errorAssign = new Label();
+
+        ComboBox comboBoxTeams = new ComboBox();
+        for (Teams team : teamsList){
+            comboBoxTeams.getItems().add(team);
+        }
+        ComboBox comboBoxPlayer = new ComboBox();
+        for (TestPlay player : playListt){
+            comboBoxPlayer.getItems().add(player);
+        }
+
+        Button submit = new Button("Submit");
+        submit.setOnAction(e->{
+            tempTeam = (Teams) comboBoxTeams.getValue();
+            tempPlayer = (TestPlay) comboBoxPlayer.getValue();
+            if(tempPlayer.getTeamId() == null){
+                tempPlayer.setTeamId(String.valueOf(tempTeam.getId()));
+            }
+        });
+        Button close = new Button("Close");
+        close.setOnAction(e-> window.close());
+
+        HBox overHBox = new HBox(3);
+        overHBox.getChildren().addAll(comboBoxPlayer,comboBoxTeams);
+        overHBox.setAlignment(Pos.CENTER);
+
+        HBox underHBox = new HBox(3);
+        underHBox.getChildren().addAll(submit, close);
+        underHBox.setAlignment(Pos.CENTER);
+
+        VBox vBox = new VBox(5);
+        vBox.getChildren().addAll(featureText,overHBox,underHBox);
+        vBox.setAlignment(Pos.CENTER);
+
+        scene = new Scene(vBox);
+
+        popupWindows();
+
+
+    }
+
+    public Teams getTempTeam() {
+        return tempTeam;
+    }
+
+    public void setTempTeam(Teams tempTeam) {
+        this.tempTeam = tempTeam;
+    }
+
+    public TestPlay getTempPlayer() {
+        return tempPlayer;
+    }
+
+    public void setTempPlayer(TestPlay tempPlayer) {
+        this.tempPlayer = tempPlayer;
     }
 
     //public int breakOutInt ()
