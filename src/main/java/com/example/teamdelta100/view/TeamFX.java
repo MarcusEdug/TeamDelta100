@@ -161,7 +161,7 @@ public class TeamFX extends Application {
         TableColumn playersIdColumn = new TableColumn<Teams, Integer>("Players");
         playersIdColumn.setCellValueFactory(new PropertyValueFactory<Teams, Integer>("numberOfPlayer"));
 
-        tableView.getColumns().addAll(teamIdColumn,teamNameColumn);
+        tableView.getColumns().addAll(teamIdColumn,teamNameColumn,playersIdColumn);
 
         return tableView;
     }
