@@ -67,6 +67,10 @@ public class Games {
         this.gameName = gameName;
     }
 
+    public Games(int id, String genre) {
+    }
+
+
     public String getGameName() {
         return gameName;
     }

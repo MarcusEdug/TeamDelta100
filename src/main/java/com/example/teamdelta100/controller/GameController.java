@@ -165,7 +165,7 @@ public class GameController {
         }
         return false;
     }
-    public List<Games> tableUpdate (boolean printOut) {
+    public List<Games> tableUpdate () {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         List<Games> gamesListToReturn = new ArrayList<>();

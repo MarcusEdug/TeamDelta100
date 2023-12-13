@@ -8,23 +8,22 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class CombinedFX extends Application {
-
+    GamesFX fx = new GamesFX();
     private Stage stage;
     private TabPane tabPane;
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-        stage.setTitle("Main");
+        stage.setTitle("Piper Games");
         BorderPane bPane = new BorderPane();
 
         tabPane = new TabPane();
-        GamesFX fx = new GamesFX();
-        Tab tab2 = new Tab("Games");
+        Tab tab2 = new Tab("Teams");
         Tab tab3 = new Tab("Players");
         Tab tab4 = new Tab("Matches");
 
-        //tabPane.getTabs().add(tab2);
         tabPane.getTabs().add(fx.gameTab());
+        tabPane.getTabs().add(tab2);
         tabPane.getTabs().add(tab3);
         tabPane.getTabs().add(tab4);
 
@@ -37,5 +36,29 @@ public class CombinedFX extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public GamesFX getFx() {
+        return fx;
+    }
+
+    public void setFx(GamesFX fx) {
+        this.fx = fx;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public TabPane getTabPane() {
+        return tabPane;
+    }
+
+    public void setTabPane(TabPane tabPane) {
+        this.tabPane = tabPane;
     }
 }
