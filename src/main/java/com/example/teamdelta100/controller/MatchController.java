@@ -6,25 +6,20 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// Klasskommmentar
-//
-
+// Hantera kommunikationen med databasen för Match tabellen.
+// Evelina Daun
 
 public class MatchController {
 
-    // Förslag på metoder:
-    // addMatches() - lag vs lag, player vs player
-
-    // getAll
-    // Hämta match med id
-    // Ta bort med id
-
-
     // EntityManagerFactory
-    public static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("h");
+    public static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("hibernate");
 
+    // Konstruktor
+    public MatchController(){
 
-    // Metod för att spara en match till databasen
+    }
+
+    // Metod: Lägga till Match objekt i databasen
     public void addMatch(Match m){
         EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -43,13 +38,14 @@ public class MatchController {
         }
     }
 
-    public void changeMatch(Match m){ // Skicka in vald match att ändra
+    // Metod: Uppdatera ett inskickat Match objekt
+    public void updateMatchObject(Match m){ // Skicka in vald match att ändra
         EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         try{
             transaction = em.getTransaction();
             transaction.begin();
-            em.persist(m);
+            em.merge(m);
             transaction.commit();
         }catch(Exception e){
             if(transaction != null){
@@ -61,13 +57,16 @@ public class MatchController {
         }
     }
 
-    public void removeMatch(Match m){ // Skicka in vald match att ta bort
+
+    // Metod: Ta bord inskickat Match objekt
+    public void deleteMatchObject(Match m){ // Skicka in vald match att ta bort
         EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         try{
             transaction = em.getTransaction();
             transaction.begin();
-            em.persist(m);
+            // If the entity is attached then remove customer, else merge(attach/update) entity and then remove
+            em.remove(em.contains(m) ? m:em.merge(m));
             transaction.commit();
         }catch(Exception e){
             if(transaction != null){
@@ -79,11 +78,33 @@ public class MatchController {
         }
     }
 
-    public List<Match> tableUpdate(boolean printOut){
+    // Metod: Ta bort Match objekt med inskickat id
+    public void deleteMatchWithId(int id){
+        EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+        try{
+            transaction = em.getTransaction();
+            transaction.begin();
+            // If the entity is attached then remove customer, else merge(attach/update) entity and then remove
+            em.remove(em.contains(id) ? id : em.merge(id));
+            transaction.commit();
+        }catch(Exception e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }finally {
+            em.close();
+        }
+    }
+
+    // Metod: Hämta alla Match objekt från databasen
+    // Metod: Uppdatera den visuella tabellen
+    public List<Match> getAllMatchObjects(){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
+        List<Match> returnList = new ArrayList<>(); // Listan som objekten läggs i
 
-        List<Match> returnList = new ArrayList<>();
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
@@ -101,6 +122,8 @@ public class MatchController {
         }
         return null;
     }
+
+
 
 
 }

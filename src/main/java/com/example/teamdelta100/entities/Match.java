@@ -3,8 +3,8 @@ package com.example.teamdelta100.entities;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-// Klasskommmentar
-//
+// Match objekt som kan placeras i databasen.
+// Evelina Daun
 
 
 @Entity
@@ -15,33 +15,35 @@ public class Match {
     @Column(name = "matchId")
     private int matchId;
 
-    @Column(name = "PlayerOrTeam")
-    private String playerOrTeam;  // Player or Team "team" "player"
+    @Column(name = "playerOrTeam")
+    private String playerOrTeam;  // "team",  "player"
 
-    @Column(name = "playerTeamOne") // id player team
+    @Column(name = "playerTeamOneId")  // Player eller Team id
     private int playerTeamOneId;
-    @Column(name = "playerTeamTwo") // id player team
+    @Column(name = "playerTeamTwoId")
     private int playerTeamTwoId;
 
-    @Column(name = "playerTeamOne") // Namnet på team/player
-    private String playerTeamOne;
-    @Column(name = "playerTeamTwo") //  Namnet på team/player
-    private String playerTeamTwo;
+    @Column(name = "playerTeamOneName") // Player eller Team namn
+    private String playerTeamOneName;
+    @Column(name = "playerTeamTwoName")
+    private String playerTeamTwoName;
 
-    @Column(name = "match_date")
+    @Column(name = "matchDate") // Datum
     private LocalDate matchDate;
 
-    @Column(name = "Played/NotPlayed")
-    private Boolean played; // True avgjord, False oavgjord
+    @Column(name = "playedNotPlayed")
+    private String played; // "played", "Not played"
 
+
+    // ÄNDRA TULL INT
     @Column(name = "resultOne")
-    private int resultOne; // Lag eller spelare 1
+    private String resultOne; // Lag eller spelare 1
 
     @Column(name = "resultTwo")
-    private int resultTwo; // Lag eller spelare 2
+    private String resultTwo; // Lag eller spelare 2
 
     @Column(name = "winner")
-    private String winner; // Team eller Player
+    private String winner; // Team eller Player namnet
 
 
 
@@ -56,19 +58,34 @@ public class Match {
     }
 
     // Konstruktor med allt utom matchId - Primary key
-    public Match(int r, LocalDate date){
 
-        this.matchDate = date;
+
+    public Match(String playerOrTeam, int playerTeamOneId, int playerTeamTwoId,
+                 String playerTeamOneName, String playerTeamTwoName, LocalDate matchDate,
+                 String played, String resultOne, String resultTwo, String winner) {
+        this.playerOrTeam = playerOrTeam;
+        this.playerTeamOneId = playerTeamOneId;
+        this.playerTeamTwoId = playerTeamTwoId;
+        this.playerTeamOneName = playerTeamOneName;
+        this.playerTeamTwoName = playerTeamTwoName;
+        this.matchDate = matchDate;
+        this.played = played;
+        this.resultOne = resultOne;
+        this.resultTwo = resultTwo;
+        this.winner = winner;
     }
 
+    @Override
+    public String toString() {
+        return "Match: " + playerTeamOneName +
+                " vs. " + playerTeamTwoName +
+                ", Date: " + matchDate ;
+    }
 
     // Getters & Setters
-
-
     public int getMatchId() {
         return matchId;
     }
-
 
     public String getPlayerOrTeam() {
         return playerOrTeam;
@@ -76,22 +93,6 @@ public class Match {
 
     public void setPlayerOrTeam(String playerOrTeam) {
         this.playerOrTeam = playerOrTeam;
-    }
-
-    public String getPlayerTeamOne() {
-        return playerTeamOne;
-    }
-
-    public void setPlayerTeamOne(String playerTeamOne) {
-        this.playerTeamOne = playerTeamOne;
-    }
-
-    public String getPlayerTeamTwo() {
-        return playerTeamTwo;
-    }
-
-    public void setPlayerTeamTwo(String playerTeamTwo) {
-        this.playerTeamTwo = playerTeamTwo;
     }
 
     public LocalDate getMatchDate() {
@@ -102,27 +103,27 @@ public class Match {
         this.matchDate = matchDate;
     }
 
-    public Boolean getPlayed() {
+    public String getPlayed() {
         return played;
     }
 
-    public void setPlayed(Boolean played) {
+    public void setPlayed(String played) {
         this.played = played;
     }
 
-    public int getResultOne() {
+    public String getResultOne() {
         return resultOne;
     }
 
-    public void setResultOne(int resultOne) {
+    public void setResultOne(String resultOne) {
         this.resultOne = resultOne;
     }
 
-    public int getResultTwo() {
+    public String getResultTwo() {
         return resultTwo;
     }
 
-    public void setResultTwo(int resultTwo) {
+    public void setResultTwo(String resultTwo) {
         this.resultTwo = resultTwo;
     }
 
@@ -148,5 +149,21 @@ public class Match {
 
     public void setPlayerTeamTwoId(int playerTeamTwoId) {
         this.playerTeamTwoId = playerTeamTwoId;
+    }
+
+    public String getPlayerTeamOneName() {
+        return playerTeamOneName;
+    }
+
+    public void setPlayerTeamOneName(String playerTeamOneName) {
+        this.playerTeamOneName = playerTeamOneName;
+    }
+
+    public String getPlayerTeamTwoName() {
+        return playerTeamTwoName;
+    }
+
+    public void setPlayerTeamTwoName(String playerTeamTwoName) {
+        this.playerTeamTwoName = playerTeamTwoName;
     }
 }
