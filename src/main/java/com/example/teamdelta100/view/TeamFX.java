@@ -22,13 +22,9 @@ import java.util.List;
 public class TeamFX extends Application {
     TeamsController controller = new TeamsController();
     Testcontroll test = new Testcontroll();
-
     Popup popup = new Popup();
     TableView tableView;
     Stage window;
-
-
-
 
     @Override
     public void start(Stage stage) throws Exception {

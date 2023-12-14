@@ -44,7 +44,7 @@ public class CombinedFX extends Application {
         tabPane.getTabs().add(tab4);
 
 
-        //tabPane.getTabs().add(tab3);
+        //tabPane.getTabs().add(tab3); Lägg in player här
         tabPane.getTabs().add(teamFX.teamTab());
         //tabPane.getTabs().add(gamesFX.gameTab());
         tabPane.getTabs().add(matchTab.createAndReturnTabMatch());
