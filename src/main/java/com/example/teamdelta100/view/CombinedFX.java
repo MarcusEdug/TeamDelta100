@@ -10,13 +10,10 @@ import javafx.stage.Stage;
 public class CombinedFX extends Application {
 
     PlayerMenu pm = new PlayerMenu();
-    TeamFX fx = new TeamFX();
-
-
     TeamFX teamFX = new TeamFX();
     //Hejehj
     MatchTab matchTab = new MatchTab(teamFX);
-    //GamesFX gamesFX = new GamesFX();
+    GamesFX gamesFX = new GamesFX();
     private Stage window;
 
     private Stage stage;
@@ -24,8 +21,6 @@ public class CombinedFX extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
-
         window = stage;
 
         stage.setTitle("test");
@@ -33,20 +28,9 @@ public class CombinedFX extends Application {
 
         tabPane = new TabPane();
 
-        Tab tab2 = new Tab("Game");
-        Tab tab3 = new Tab("Players");
-        Tab tab4 = new Tab("Matchs");
-
-
         tabPane.getTabs().add(pm.playerTab());
-        tabPane.getTabs().add(fx.teamTab());
-        tabPane.getTabs().add(tab2);
-        tabPane.getTabs().add(tab4);
-
-
-        //tabPane.getTabs().add(tab3);
         tabPane.getTabs().add(teamFX.teamTab());
-        //tabPane.getTabs().add(gamesFX.gameTab());
+        tabPane.getTabs().add(gamesFX.gameTab());
         tabPane.getTabs().add(matchTab.createAndReturnTabMatch());
 
 

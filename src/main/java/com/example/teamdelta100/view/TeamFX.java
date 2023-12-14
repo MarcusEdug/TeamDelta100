@@ -22,13 +22,9 @@ import java.util.List;
 public class TeamFX extends Application {
     TeamsController controller = new TeamsController();
     Testcontroll test = new Testcontroll();
-
     Popup popup = new Popup();
     TableView tableView;
     Stage window;
-
-
-
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -96,11 +92,11 @@ public class TeamFX extends Application {
 
 
             }else if (input.equals("Assign Player")) {
-                List<Teams> teamsList = controller.getAll(true);
+                List<Teams> teamsList = controller.getAll();
                 List<TestPlay> playList = test.getAll(true);
                 popup.assignPlayerToTeam(teamsList,playList);
 
-                if(controller.addPlayerToCustomer(popup.getPlayerId(), popup.getTeamId())){
+                if(controller.addPlayerToTeams(popup.getPlayerId(), popup.getTeamId())){
                     System.out.println("hej");
                 } else {
                     System.out.println("Failed to add.");
@@ -109,7 +105,7 @@ public class TeamFX extends Application {
             }
 
             else if (input.equals("Delete team")) {
-                List<Teams> teamsList = controller.getAll(true);
+                List<Teams> teamsList = controller.getAll();
                 if (controller.deleteTeamsById(popup.deleteTeam(teamsList))){
                     System.out.println("Laget är borta");
                 }
@@ -123,7 +119,7 @@ public class TeamFX extends Application {
 
             }
             else if (input.equals("Update team")) {
-                List<Teams> teamsList = controller.getAll(true);
+                List<Teams> teamsList = controller.getAll();
 
                 //Teams temp = popup.choosTeam(teamsList);
 

@@ -28,12 +28,11 @@ public class TeamsController implements Share {
             e.printStackTrace();
         }
         finally {
-            System.out.println("har nått finally");
             entityManager.close();
         }
         return false;
     }
-    public List<Teams> getAll(boolean printOut){
+    public List<Teams> getAll(){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         List<Teams> teamsListToReturn = new ArrayList<>();
@@ -43,12 +42,6 @@ public class TeamsController implements Share {
             TypedQuery<Teams> resultList = entityManager.createQuery("FROM Teams", Teams.class);
             teamsListToReturn.addAll(resultList.getResultList());
             transaction.commit();
-            if(printOut){
-                for (Teams teams :
-                        teamsListToReturn) {
-                    System.out.println(teams.getId() + ". " + teams.getName() + ". Antal medlemmar " + teams.getNumberOfPlayer());
-                }
-            }
             return teamsListToReturn;
         } catch (Exception e){
             if(transaction != null){
@@ -85,7 +78,6 @@ public class TeamsController implements Share {
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-            // If the entity is attached then remove customer, else merge(attach/update) entity and then remove
             entityManager.remove(entityManager.contains(teams) ? teams:entityManager.merge(teams));
             transaction.commit();
             return true;
@@ -106,8 +98,6 @@ public class TeamsController implements Share {
             transaction = entityManager.getTransaction();
             transaction.begin();
             Teams teams = entityManager.find(Teams.class, Id);
-            // If the entity is attached then remove customer, else merge(attach/update) entity and then remove
-            //entityManager.remove(entityManager.contains(Id) ? Id :entityManager.merge(Id));
             if(teams != null){
                 entityManager.remove(teams);
             }
@@ -163,7 +153,7 @@ public class TeamsController implements Share {
         }
         return null;
     }
-    public boolean addPlayerToCustomer(int playerId, int teamsId){
+    public boolean addPlayerToTeams(int playerId, int teamsId){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         Teams team;
