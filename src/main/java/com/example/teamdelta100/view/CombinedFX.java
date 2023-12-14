@@ -14,6 +14,7 @@ public class CombinedFX extends Application {
 
 =======
     TeamFX teamFX = new TeamFX();
+    //Hejehj
     MatchTab matchTab = new MatchTab(teamFX);
     //GamesFX gamesFX = new GamesFX();
     private Stage window;

@@ -8,4 +8,9 @@ module com.example.teamdelta100 {
     exports com.example.teamdelta100;
     opens com.example.teamdelta100.entities to org.hibernate.orm.core;
     exports com.example.teamdelta100.entities;
+
+    //Måste finnas för att CombinedFX ska funka
+    opens com.example.teamdelta100.view to javafx.graphics;
+
+    exports com.example.teamdelta100.view;
 }
