@@ -10,11 +10,14 @@ import javafx.stage.Stage;
 public class CombinedFX extends Application {
     TeamFX fx = new TeamFX();
 
+    private Stage window;
+
     private Stage stage;
     private TabPane tabPane;
     @Override
     public void start(Stage stage) throws Exception {
-    stage.setTitle("test");
+        window = stage;
+        stage.setTitle("test");
         BorderPane root = new BorderPane();
 
         tabPane = new TabPane();

@@ -18,7 +18,7 @@ public class Teams {
     private List<TestPlay> numberOfPlayerList = new ArrayList<>();
 
     @Column(name = "Number_of_player")
-    private int numberOfPlayer = numberOfPlayerList.size();
+    private int numberOfPlayer;
 
     /*@Column(name = "Player_id")
     private int playerId;
@@ -46,6 +46,10 @@ public class Teams {
     public void addPlayer (TestPlay testPlay){
         testPlay.setTeams(this);
         numberOfPlayerList.add(testPlay);
+    }
+
+    public void countPlayer(){
+        setNumberOfPlayer(getNumberOfPlayerList().size());
     }
 
     @Override

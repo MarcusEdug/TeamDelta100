@@ -138,6 +138,7 @@ public class TeamFX extends Application {
 
             }
             else if (input.equals("Log out")) {
+                window.close();
                 //teamDatabaseList();
             }
         });
@@ -168,6 +169,7 @@ public class TeamFX extends Application {
     public void update (){
         tableView.getItems().clear();
         for (Teams temp : controller.tableUpdate() ) {
+            temp.countPlayer();
             tableView.getItems().add(temp);
         }
     }
