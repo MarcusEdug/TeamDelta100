@@ -90,7 +90,7 @@ public class TeamFX extends Application {
                 if(controller.save(new Teams(teamName))){
                     System.out.println(teamName + " added");
                 } else {
-                    System.out.println("Failed to add customer");
+                    System.out.println("Failed to add.");
                 }
                 update();
 
@@ -103,7 +103,7 @@ public class TeamFX extends Application {
                 if(controller.addPlayerToCustomer(popup.getPlayerId(), popup.getTeamId())){
                     System.out.println("hej");
                 } else {
-                    System.out.println("Failed to add customer");
+                    System.out.println("Failed to add.");
                 }
                 update();
             }
@@ -131,7 +131,7 @@ public class TeamFX extends Application {
                 if(controller.updateTeams(popup.updateTextArea(teamsList))){
                     System.out.println("hej");
                 } else {
-                    System.out.println("Failed to add customer");
+                    System.out.println("Failed to add.");
                 }
                 update();
 

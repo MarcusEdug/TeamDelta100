@@ -27,12 +27,14 @@ public class MatchTab {
     private Button delete;
     private Button update;
     private Button logOut;
+    private TeamFX fx;
 
 
     // Konstruktor
-    public MatchTab() {
+    public MatchTab(TeamFX fx) {
         matchController  = new MatchController();
         popup = new MatchPopUp(matchController);
+        this.fx = fx;
     }
 
 
