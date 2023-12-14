@@ -9,6 +9,10 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/PlayerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/InformationForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/InformationForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" afterDir="false" />
+    </list>
+    <list id="dd3f48ce-caae-4472-ae04-a1eae7a497c5" name="Changes by MichaelGranbäck" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/InformationForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/InformationForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerPopup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerPopup.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,6 +35,29 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java">
+      <ranges>
+        <range start1="28" end1="29" start2="28" end2="29" changelist="dd3f48ce-caae-4472-ae04-a1eae7a497c5" />
+        <range start1="76" end1="77" start2="76" end2="77" changelist="1f5e8969-0314-454c-9a5d-a8437e8b1a23" />
+        <range start1="79" end1="80" start2="79" end2="80" changelist="1f5e8969-0314-454c-9a5d-a8437e8b1a23" />
+        <range start1="82" end1="83" start2="82" end2="83" changelist="1f5e8969-0314-454c-9a5d-a8437e8b1a23" />
+        <range start1="100" end1="101" start2="100" end2="101" changelist="dd3f48ce-caae-4472-ae04-a1eae7a497c5" />
+        <range start1="106" end1="108" start2="106" end2="106" changelist="1f5e8969-0314-454c-9a5d-a8437e8b1a23" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/InformationForm.java">
+      <ranges>
+        <range start1="2" end1="2" start2="2" end2="3" changelist="dd3f48ce-caae-4472-ae04-a1eae7a497c5" />
+        <range start1="4" end1="4" start2="5" end2="6" changelist="1f5e8969-0314-454c-9a5d-a8437e8b1a23" />
+        <range start1="29" end1="29" start2="31" end2="33" changelist="dd3f48ce-caae-4472-ae04-a1eae7a497c5" />
+        <range start1="36" end1="37" start2="40" end2="41" changelist="dd3f48ce-caae-4472-ae04-a1eae7a497c5" />
+        <range start1="96" end1="97" start2="100" end2="101" changelist="1f5e8969-0314-454c-9a5d-a8437e8b1a23" />
+        <range start1="104" end1="106" start2="108" end2="111" changelist="1f5e8969-0314-454c-9a5d-a8437e8b1a23" />
+        <range start1="193" end1="193" start2="198" end2="209" changelist="dd3f48ce-caae-4472-ae04-a1eae7a497c5" />
+      </ranges>
+    </file>
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -46,6 +73,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "jacobawawgwg",
     "last_opened_file_path": "D:/Github/TeamDelta100",
     "node.js.detected.package.eslint": "true",
@@ -150,6 +178,8 @@
       <workItem from="1702367567459" duration="9715000" />
       <workItem from="1702419966278" duration="22000" />
       <workItem from="1702453484574" duration="16069000" />
+      <workItem from="1702483907760" duration="114000" />
+      <workItem from="1702540658968" duration="6897000" />
     </task>
     <servers />
   </component>

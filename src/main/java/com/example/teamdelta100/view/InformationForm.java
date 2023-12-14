@@ -1,7 +1,9 @@
 package com.example.teamdelta100.view;
 
+import com.example.teamdelta100.controller.PlayerController;
 import com.example.teamdelta100.entities.Player;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -27,6 +29,8 @@ public class InformationForm extends Application {
     private TextField countryField;
     private TextField emailField;
     private String userStringInput;
+    private TableView tableView;
+    private PlayerController playerController;
     Button submitButton = new Button("Submit");
 
     private static final String PERSISTENCE_UNIT_NAME = "hibernate"; // Change this to your actual persistence unit name
@@ -34,7 +38,7 @@ public class InformationForm extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Information Form");
-
+        this.window = primaryStage;
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(20, 20, 20, 20));
         grid.setVgap(10);
@@ -94,7 +98,7 @@ public class InformationForm extends Application {
         GridPane.setColumnSpan(submitButton, 2);
         grid.add(submitButton, 0, 8);
 
-        submitButton.setOnAction(e -> saveToDatabase(
+        submitButton.setOnAction(e -> { saveToDatabase(
                 firstNameField.getText(),
                 lastNameField.getText(),
                 nicknameField.getText(),
@@ -102,8 +106,9 @@ public class InformationForm extends Application {
                 postalCodeField.getText(),
                 cityField.getText(),
                 countryField.getText(),
-                emailField.getText()
-        ));
+                emailField.getText());
+                update();
+        });
 
 
         Scene scene = new Scene(grid, 300, 400);
@@ -191,4 +196,15 @@ public class InformationForm extends Application {
         }
     }
 
+    public void addComponents(TableView tableView, PlayerController playerController) {
+        this.tableView = tableView;
+        this.playerController = playerController;
+    }
+    private void update(){
+        tableView.getItems().clear();
+        for (Player temp : playerController.tableUpdate(true) ) {
+            tableView.getItems().add(temp);
+        }
+        window.close();
+    }
 }

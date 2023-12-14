@@ -82,8 +82,9 @@ public class PlayerController {
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-            TypedQuery<Player> resultList = entityManager.createQuery("FROM Player ", Player.class);
+            TypedQuery<Player> resultList = entityManager.createQuery("FROM Player", Player.class);
             playerListToReturn.addAll(resultList.getResultList());
+            System.out.println(playerListToReturn.size());
             transaction.commit();
             return playerListToReturn;
         } catch (Exception e){

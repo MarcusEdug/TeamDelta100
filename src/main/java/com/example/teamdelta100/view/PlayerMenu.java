@@ -26,7 +26,7 @@ public class PlayerMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        PlayerPopup playerPopup = new PlayerPopup();
+        PlayerPopup playerPopup = new PlayerPopup(tableView, playerController);
         Button addplayer = button("Add Player");
 
         TableView viewPlayers = table();
@@ -74,13 +74,13 @@ public class PlayerMenu extends Application {
         tableView = new TableView<Player>();
         tableView.setEditable(true);
         TableColumn playerIdColumn = new TableColumn("Player ID");
-        playerIdColumn.setCellValueFactory(new PropertyValueFactory("ID"));
+        playerIdColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>("Id"));
 
         TableColumn playerNameColumn = new TableColumn("Player Name");
-        playerNameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        playerNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("playerName"));
 
         TableColumn playerLastNameColumn = new TableColumn("Player Lastname");
-        playerLastNameColumn.setCellValueFactory(new PropertyValueFactory("Lastname"));
+        playerLastNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("playerLastname"));
 
         tableView.getColumns().addAll(playerIdColumn,playerNameColumn, playerLastNameColumn);
 
@@ -98,14 +98,12 @@ public class PlayerMenu extends Application {
         button.setOnAction(e-> {
             if (input.equals("Add Player")) {
                 try {
-                    PlayerPopup playerPopup = new PlayerPopup();
+                    PlayerPopup playerPopup = new PlayerPopup(tableView, playerController);
                     playerPopup.addPlayer();
                 } catch (Exception ex) {
                     ex.printStackTrace(); // Handle the exception appropriately (e.g., log or display an error message)
                 }
 
-
-                update();
             } else if (input.equals("Assign Player")) {
                 //SKAPA SÅ ATT MAN SKA ASSIGN A SPELAR TIL LETT LAG
 
