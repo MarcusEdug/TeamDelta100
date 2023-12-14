@@ -9,7 +9,7 @@
             <!--            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>-->
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/Tournament"/>
             <property name="javax.persistence.jdbc.user" value="user2"/>
-            <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="javax.persistence.jdbc.password" value="user2"/>
             <property name="hibernate.show_sql" value="true"/> <!-- Ändra denna till true för att se sql-kommandon -->
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
         </properties>

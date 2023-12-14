@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 public class CombinedFX extends Application {
     TeamFX teamFX = new TeamFX();
     MatchTab matchTab = new MatchTab(teamFX);
-    GamesFX gamesFX = new GamesFX();
+    //GamesFX gamesFX = new GamesFX();
     private Stage window;
     private Stage stage;
     private TabPane tabPane;
@@ -27,7 +27,7 @@ public class CombinedFX extends Application {
 
         //tabPane.getTabs().add(tab3);
         tabPane.getTabs().add(teamFX.teamTab());
-        tabPane.getTabs().add(gamesFX.gameTab());
+        //tabPane.getTabs().add(gamesFX.gameTab());
         tabPane.getTabs().add(matchTab.createAndReturnTabMatch());
 
 
