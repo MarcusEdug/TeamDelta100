@@ -1,0 +1,225 @@
+Index: src/main/java/com/example/teamdelta100/view/CombinedFX.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.teamdelta100.view;\r\n\r\nimport javafx.application.Application;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.Tab;\r\nimport javafx.scene.control.TabPane;\r\nimport javafx.scene.layout.BorderPane;\r\nimport javafx.stage.Stage;\r\n\r\npublic class CombinedFX extends Application {\r\n<<<<<<< HEAD\r\n    PlayerMenu pm = new PlayerMenu();\r\n    FX fx = new FX();\r\n\r\n=======\r\n    TeamFX teamFX = new TeamFX();\r\n    MatchTab matchTab = new MatchTab(teamFX);\r\n    //GamesFX gamesFX = new GamesFX();\r\n    private Stage window;\r\n>>>>>>> master\r\n    private Stage stage;\r\n    private TabPane tabPane;\r\n    @Override\r\n    public void start(Stage stage) throws Exception {\r\n<<<<<<< HEAD\r\n=======\r\n\r\n\r\n        window = stage;\r\n>>>>>>> master\r\n        stage.setTitle(\"test\");\r\n        BorderPane root = new BorderPane();\r\n\r\n        tabPane = new TabPane();\r\n<<<<<<< HEAD\r\n        Tab tab2 = new Tab(\"Game\");\r\n        Tab tab3 = new Tab(\"Players\");\r\n        Tab tab4 = new Tab(\"Matchs\");\r\n\r\n\r\n        tabPane.getTabs().add(pm.playerTab());\r\n        tabPane.getTabs().add(fx.teamTab());\r\n        tabPane.getTabs().add(tab2);\r\n        tabPane.getTabs().add(tab4);\r\n=======\r\n\r\n\r\n        //tabPane.getTabs().add(tab3);\r\n        tabPane.getTabs().add(teamFX.teamTab());\r\n        //tabPane.getTabs().add(gamesFX.gameTab());\r\n        tabPane.getTabs().add(matchTab.createAndReturnTabMatch());\r\n>>>>>>> master\r\n\r\n\r\n        root.setCenter(tabPane);\r\n\r\n        Scene scene = new Scene(root, 800,500);\r\n        stage.setScene(scene);\r\n        stage.show();\r\n\r\n    }\r\n\r\n    public static void main(String[] args) {\r\n        launch(args);\r\n    }\r\n<<<<<<< HEAD\r\n}\r\n=======\r\n}\r\n>>>>>>> master\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/teamdelta100/view/CombinedFX.java b/src/main/java/com/example/teamdelta100/view/CombinedFX.java
+--- a/src/main/java/com/example/teamdelta100/view/CombinedFX.java	(revision 746e869567e7294209663be95765ad993d0d8184)
++++ b/src/main/java/com/example/teamdelta100/view/CombinedFX.java	(date 1702559958835)
+@@ -8,31 +8,30 @@
+ import javafx.stage.Stage;
+ 
+ public class CombinedFX extends Application {
+-<<<<<<< HEAD
++
+     PlayerMenu pm = new PlayerMenu();
+-    FX fx = new FX();
++    TeamFX fx = new TeamFX();
+ 
+-=======
++
+     TeamFX teamFX = new TeamFX();
+     MatchTab matchTab = new MatchTab(teamFX);
+     //GamesFX gamesFX = new GamesFX();
+     private Stage window;
+->>>>>>> master
++
+     private Stage stage;
+     private TabPane tabPane;
++
+     @Override
+     public void start(Stage stage) throws Exception {
+-<<<<<<< HEAD
+-=======
+ 
+ 
+         window = stage;
+->>>>>>> master
++
+         stage.setTitle("test");
+         BorderPane root = new BorderPane();
+ 
+         tabPane = new TabPane();
+-<<<<<<< HEAD
++
+         Tab tab2 = new Tab("Game");
+         Tab tab3 = new Tab("Players");
+         Tab tab4 = new Tab("Matchs");
+@@ -42,19 +41,17 @@
+         tabPane.getTabs().add(fx.teamTab());
+         tabPane.getTabs().add(tab2);
+         tabPane.getTabs().add(tab4);
+-=======
+ 
+ 
+         //tabPane.getTabs().add(tab3);
+         tabPane.getTabs().add(teamFX.teamTab());
+         //tabPane.getTabs().add(gamesFX.gameTab());
+         tabPane.getTabs().add(matchTab.createAndReturnTabMatch());
+->>>>>>> master
+ 
+ 
+         root.setCenter(tabPane);
+ 
+-        Scene scene = new Scene(root, 800,500);
++        Scene scene = new Scene(root, 800, 500);
+         stage.setScene(scene);
+         stage.show();
+ 
+@@ -63,8 +60,5 @@
+     public static void main(String[] args) {
+         launch(args);
+     }
+-<<<<<<< HEAD
+ }
+-=======
+-}
+->>>>>>> master
++
+Index: src/main/java/com/example/teamdelta100/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.teamdelta100;\r\n\r\nimport com.example.teamdelta100.view.FX;\r\nimport javafx.application.Application;\r\n\r\nimport javafx.stage.Stage;\r\n\r\npublic class Main extends Application {\r\n\r\n\r\n    public static void main(String[] args) {\r\n       launch();\r\n    }\r\n\r\n    @Override\r\n    public void start(Stage stage) throws Exception {\r\n        FX fx = new FX();\r\n        fx.start(stage);\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/teamdelta100/Main.java b/src/main/java/com/example/teamdelta100/Main.java
+--- a/src/main/java/com/example/teamdelta100/Main.java	(revision 746e869567e7294209663be95765ad993d0d8184)
++++ b/src/main/java/com/example/teamdelta100/Main.java	(date 1702559958835)
+@@ -1,6 +1,7 @@
+ package com.example.teamdelta100;
+ 
+-import com.example.teamdelta100.view.FX;
++import com.example.teamdelta100.view.CombinedFX;
++import com.example.teamdelta100.view.TeamFX;
+ import javafx.application.Application;
+ 
+ import javafx.stage.Stage;
+@@ -14,8 +15,8 @@
+ 
+     @Override
+     public void start(Stage stage) throws Exception {
+-        FX fx = new FX();
+-        fx.start(stage);
++        CombinedFX combinedFX = new CombinedFX();
++        combinedFX.start(stage);
+ 
+     }
+ }
+\ No newline at end of file
+Index: src/main/java/com/example/teamdelta100/view/PlayerMenu.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.teamdelta100.view;\r\n\r\nimport com.example.teamdelta100.controller.PlayerController;\r\nimport com.example.teamdelta100.entities.Player;\r\nimport javafx.application.Application;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.Tab;\r\nimport javafx.scene.control.TableColumn;\r\nimport javafx.scene.control.TableView;\r\nimport javafx.scene.control.cell.PropertyValueFactory;\r\nimport javafx.scene.layout.AnchorPane;\r\nimport javafx.scene.layout.VBox;\r\nimport javafx.stage.Stage;\r\n\r\npublic class PlayerMenu extends Application {\r\n\r\n    PlayerController playerController = new PlayerController();\r\n    Popup popup = new Popup();\r\n    InformationForm info = new InformationForm();\r\n    TableView tableView;\r\n    public static void main(String[] args) {\r\n\r\n        launch();\r\n    }\r\n\r\n    @Override\r\n    public void start(Stage stage) throws Exception {\r\n        PlayerPopup playerPopup = new PlayerPopup(tableView, playerController);\r\n        Button addplayer = button(\"Add Player\");\r\n\r\n        TableView viewPlayers = table();\r\n\r\n        VBox buttonV = new VBox(10);\r\n        buttonV.getChildren().addAll(addplayer);\r\n\r\n        AnchorPane anchorPane = new AnchorPane();\r\n        anchorPane.getChildren().addAll(viewPlayers, buttonV);\r\n        AnchorPane.setTopAnchor(buttonV,100.0);\r\n        AnchorPane.setLeftAnchor(buttonV,650.0);\r\n\r\n        anchorPane.setPrefSize(800, 500);\r\n        tableView.setPrefSize(600, 400);\r\n\r\n        Scene scene = new Scene(anchorPane);\r\n        stage.setScene(scene);\r\n        stage.show();\r\n    }\r\n\r\n    public Tab playerTab(){\r\n        Tab tabLayout = new Tab(\"Players\");\r\n        tabLayout.setClosable(false);\r\n        Button addPlayer = button(\"Add Player\");\r\n        Button deletePlayer = button(\"Delete Player\");\r\n        Button logOut = button(\"Log out\");\r\n\r\n        tableView = table();\r\n\r\n        VBox buttonV = new VBox(10);\r\n        buttonV.getChildren().addAll(addPlayer,deletePlayer,logOut);\r\n\r\n        AnchorPane anchorPane = new AnchorPane();\r\n        anchorPane.getChildren().addAll(tableView, buttonV);\r\n        AnchorPane.setTopAnchor(buttonV,100.0);\r\n        AnchorPane.setLeftAnchor(buttonV,270.0);\r\n\r\n        tabLayout.setContent(anchorPane);\r\n\r\n        return tabLayout;\r\n    }\r\n\r\n\r\n    public TableView table (){\r\n        tableView = new TableView<Player>();\r\n        tableView.setEditable(true);\r\n        TableColumn playerIdColumn = new TableColumn(\"Player ID\");\r\n        playerIdColumn.setCellValueFactory(new PropertyValueFactory<Player, Integer>(\"Id\"));\r\n\r\n        TableColumn playerNameColumn = new TableColumn(\"Player Name\");\r\n        playerNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>(\"playerName\"));\r\n\r\n        TableColumn playerLastNameColumn = new TableColumn(\"Player Lastname\");\r\n        playerLastNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>(\"playerLastname\"));\r\n\r\n        tableView.getColumns().addAll(playerIdColumn,playerNameColumn, playerLastNameColumn);\r\n\r\n        return tableView;\r\n    }\r\n    public void update (){\r\n        tableView.getItems().clear();\r\n        for (Player temp : playerController.tableUpdate(true) ) {\r\n            tableView.getItems().add(temp);\r\n        }\r\n\r\n    }\r\n    public Button button(String input) {\r\n        Button button = new Button(input);\r\n        button.setOnAction(e-> {\r\n            if (input.equals(\"Add Player\")) {\r\n                try {\r\n                    PlayerPopup playerPopup = new PlayerPopup(tableView, playerController);\r\n                    playerPopup.addPlayer();\r\n                } catch (Exception ex) {\r\n                    ex.printStackTrace(); // Handle the exception appropriately (e.g., log or display an error message)\r\n                }\r\n\r\n            } else if (input.equals(\"Assign Player\")) {\r\n                //SKAPA SÅ ATT MAN SKA ASSIGN A SPELAR TIL LETT LAG\r\n\r\n\r\n            } /*else if (input.equals(\"Delete team\")) {\r\n                controller.getAll(true);\r\n                if (controller.deleteTeams(popup.deleteTeam())){\r\n                    System.out.println(\"Laget är borta\");\r\n                }\r\n                else {\r\n                    System.out.println(\"misslyckades att ta bort laget\");\r\n                }\r\n\r\n\r\n                update();\r\n\r\n\r\n            }\r\n            */else if (input.equals(\"Update team\")) {\r\n\r\n\r\n\r\n\r\n                /*controller.getAll(true);\r\n                System.out.print(\"Välj id:\");\r\n                Teams teamsToUpdate = controller.getTeamsById(new Scanner(System.in).nextInt());\r\n                System.out.print(\"Ändra namn från \" + teamsToUpdate.getName() + \" till?: \");\r\n                teamsToUpdate.setName(new Scanner(System.in).nextLine());\r\n                if(controller.updateTeams(teamsToUpdate)){\r\n                    System.out.println(\"Teams updated\");\r\n                } else {\r\n                    System.out.println(\"Teams update failed\");\r\n                };\r\n\r\n                 */\r\n            }\r\n\r\n            else if (input.equals(\"Log out\")) {\r\n                //Skapa så att man kan stänga av programet\r\n            }\r\n        });\r\n\r\n\r\n        return button;\r\n    }\r\n    public PlayerController getController() {\r\n        return playerController;\r\n    }\r\n\r\n    public void setController(PlayerController playerController) {\r\n        this.playerController = playerController;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/teamdelta100/view/PlayerMenu.java b/src/main/java/com/example/teamdelta100/view/PlayerMenu.java
+--- a/src/main/java/com/example/teamdelta100/view/PlayerMenu.java	(revision 746e869567e7294209663be95765ad993d0d8184)
++++ b/src/main/java/com/example/teamdelta100/view/PlayerMenu.java	(date 1702559958836)
+@@ -109,19 +109,7 @@
+ 
+ 
+             } /*else if (input.equals("Delete team")) {
+-                controller.getAll(true);
+-                if (controller.deleteTeams(popup.deleteTeam())){
+-                    System.out.println("Laget är borta");
+-                }
+-                else {
+-                    System.out.println("misslyckades att ta bort laget");
+-                }
+-
+ 
+-                update();
+-
+-
+-            }
+             */else if (input.equals("Update team")) {
+ 
+ 
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"1f5e8969-0314-454c-9a5d-a8437e8b1a23\" name=\"Changes\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/PlayerController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/PlayerController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/InformationForm.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/InformationForm.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java\" afterDir=\"false\" />\r\n    </list>\r\n    <list id=\"dd3f48ce-caae-4472-ae04-a1eae7a497c5\" name=\"Changes by MichaelGranbäck\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/InformationForm.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/InformationForm.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerPopup.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerPopup.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"jacob-branchNMR30512\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"LineStatusTrackerManager\">\r\n    <file path=\"$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java\">\r\n      <ranges>\r\n        <range start1=\"28\" end1=\"29\" start2=\"28\" end2=\"29\" changelist=\"dd3f48ce-caae-4472-ae04-a1eae7a497c5\" />\r\n        <range start1=\"76\" end1=\"77\" start2=\"76\" end2=\"77\" changelist=\"1f5e8969-0314-454c-9a5d-a8437e8b1a23\" />\r\n        <range start1=\"79\" end1=\"80\" start2=\"79\" end2=\"80\" changelist=\"1f5e8969-0314-454c-9a5d-a8437e8b1a23\" />\r\n        <range start1=\"82\" end1=\"83\" start2=\"82\" end2=\"83\" changelist=\"1f5e8969-0314-454c-9a5d-a8437e8b1a23\" />\r\n        <range start1=\"100\" end1=\"101\" start2=\"100\" end2=\"101\" changelist=\"dd3f48ce-caae-4472-ae04-a1eae7a497c5\" />\r\n        <range start1=\"106\" end1=\"108\" start2=\"106\" end2=\"106\" changelist=\"1f5e8969-0314-454c-9a5d-a8437e8b1a23\" />\r\n      </ranges>\r\n    </file>\r\n    <file path=\"$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/InformationForm.java\">\r\n      <ranges>\r\n        <range start1=\"2\" end1=\"2\" start2=\"2\" end2=\"3\" changelist=\"dd3f48ce-caae-4472-ae04-a1eae7a497c5\" />\r\n        <range start1=\"4\" end1=\"4\" start2=\"5\" end2=\"6\" changelist=\"1f5e8969-0314-454c-9a5d-a8437e8b1a23\" />\r\n        <range start1=\"29\" end1=\"29\" start2=\"31\" end2=\"33\" changelist=\"dd3f48ce-caae-4472-ae04-a1eae7a497c5\" />\r\n        <range start1=\"36\" end1=\"37\" start2=\"40\" end2=\"41\" changelist=\"dd3f48ce-caae-4472-ae04-a1eae7a497c5\" />\r\n        <range start1=\"96\" end1=\"97\" start2=\"100\" end2=\"101\" changelist=\"1f5e8969-0314-454c-9a5d-a8437e8b1a23\" />\r\n        <range start1=\"104\" end1=\"106\" start2=\"108\" end2=\"111\" changelist=\"1f5e8969-0314-454c-9a5d-a8437e8b1a23\" />\r\n        <range start1=\"193\" end1=\"193\" start2=\"198\" end2=\"209\" changelist=\"dd3f48ce-caae-4472-ae04-a1eae7a497c5\" />\r\n      </ranges>\r\n    </file>\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 0\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2ZCtem1fi5gQm86VW7AKBwC1JTO\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"codeWithMe.voiceChat.enabledByDefault\": \"false\",\r\n    \"git-widget-placeholder\": \"jacobawawgwg\",\r\n    \"last_opened_file_path\": \"D:/Github/TeamDelta100\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveClassesOrPackagesDialog.RECENTS_KEY\">\r\n      <recent name=\"\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Application.com.example.teamdelta100.Main\">\r\n    <configuration name=\"CombinedFX\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.example.teamdelta100.view.CombinedFX\" />\r\n      <module name=\"TeamDelta100\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.example.teamdelta100.view.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.example.teamdelta100.view.Main\" />\r\n      <module name=\"TeamDelta100\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.example.teamdelta100.view.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"PlayerMenu\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.example.teamdelta100.view.PlayerMenu\" />\r\n      <module name=\"TeamDelta100\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.example.teamdelta100.view.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"PlayerNEWpopup\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.example.teamdelta100.view.PlayerNEWpopup\" />\r\n      <module name=\"TeamDelta100\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.example.teamdelta100.view.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"com.example.teamdelta100.Main\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.example.teamdelta100.Main\" />\r\n      <module name=\"TeamDelta100\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.example.teamdelta100.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.com.example.teamdelta100.Main\" />\r\n        <item itemvalue=\"Application.CombinedFX\" />\r\n        <item itemvalue=\"Application.PlayerNEWpopup\" />\r\n        <item itemvalue=\"Application.PlayerMenu\" />\r\n        <item itemvalue=\"Application.Main\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"1f5e8969-0314-454c-9a5d-a8437e8b1a23\" name=\"Changes\" comment=\"\" />\r\n      <created>1701937991447</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1701937991447</updated>\r\n      <workItem from=\"1701937992547\" duration=\"2000\" />\r\n      <workItem from=\"1702283865925\" duration=\"3931000\" />\r\n      <workItem from=\"1702287862425\" duration=\"7874000\" />\r\n      <workItem from=\"1702367567459\" duration=\"9715000\" />\r\n      <workItem from=\"1702419966278\" duration=\"22000\" />\r\n      <workItem from=\"1702453484574\" duration=\"16069000\" />\r\n      <workItem from=\"1702483907760\" duration=\"114000\" />\r\n      <workItem from=\"1702540658968\" duration=\"6897000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 746e869567e7294209663be95765ad993d0d8184)
++++ b/.idea/workspace.xml	(date 1702559958835)
+@@ -6,15 +6,11 @@
+   <component name="ChangeListManager">
+     <list default="true" id="1f5e8969-0314-454c-9a5d-a8437e8b1a23" name="Changes" comment="">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/PlayerController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/InformationForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/InformationForm.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" afterDir="false" />
+-    </list>
+-    <list id="dd3f48ce-caae-4472-ae04-a1eae7a497c5" name="Changes by MichaelGranbäck" comment="">
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/InformationForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/InformationForm.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/Main.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/CombinedFX.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/CombinedFX.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerPopup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerPopup.java" afterDir="false" />
+     </list>
++    <list id="dd3f48ce-caae-4472-ae04-a1eae7a497c5" name="Changes by MichaelGranbäck" comment="" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -34,29 +30,6 @@
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+-  </component>
+-  <component name="LineStatusTrackerManager">
+-    <file path="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/PlayerMenu.java">
+-      <ranges>
+-        <range start1="28" end1="29" start2="28" end2="29" changelist="dd3f48ce-caae-4472-ae04-a1eae7a497c5" />
+-        <range start1="76" end1="77" start2="76" end2="77" changelist="1f5e8969-0314-454c-9a5d-a8437e8b1a23" />
+-        <range start1="79" end1="80" start2="79" end2="80" changelist="1f5e8969-0314-454c-9a5d-a8437e8b1a23" />
+-        <range start1="82" end1="83" start2="82" end2="83" changelist="1f5e8969-0314-454c-9a5d-a8437e8b1a23" />
+-        <range start1="100" end1="101" start2="100" end2="101" changelist="dd3f48ce-caae-4472-ae04-a1eae7a497c5" />
+-        <range start1="106" end1="108" start2="106" end2="106" changelist="1f5e8969-0314-454c-9a5d-a8437e8b1a23" />
+-      </ranges>
+-    </file>
+-    <file path="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/InformationForm.java">
+-      <ranges>
+-        <range start1="2" end1="2" start2="2" end2="3" changelist="dd3f48ce-caae-4472-ae04-a1eae7a497c5" />
+-        <range start1="4" end1="4" start2="5" end2="6" changelist="1f5e8969-0314-454c-9a5d-a8437e8b1a23" />
+-        <range start1="29" end1="29" start2="31" end2="33" changelist="dd3f48ce-caae-4472-ae04-a1eae7a497c5" />
+-        <range start1="36" end1="37" start2="40" end2="41" changelist="dd3f48ce-caae-4472-ae04-a1eae7a497c5" />
+-        <range start1="96" end1="97" start2="100" end2="101" changelist="1f5e8969-0314-454c-9a5d-a8437e8b1a23" />
+-        <range start1="104" end1="106" start2="108" end2="111" changelist="1f5e8969-0314-454c-9a5d-a8437e8b1a23" />
+-        <range start1="193" end1="193" start2="198" end2="209" changelist="dd3f48ce-caae-4472-ae04-a1eae7a497c5" />
+-      </ranges>
+-    </file>
+   </component>
+   <component name="ProjectColorInfo">{
+   &quot;associatedIndex&quot;: 0
+@@ -179,11 +152,22 @@
+       <workItem from="1702419966278" duration="22000" />
+       <workItem from="1702453484574" duration="16069000" />
+       <workItem from="1702483907760" duration="114000" />
+-      <workItem from="1702540658968" duration="6897000" />
++      <workItem from="1702540658968" duration="9008000" />
+     </task>
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+     <option name="version" value="3" />
+   </component>
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="TAB_STATES">
++      <map>
++        <entry key="MAIN">
++          <value>
++            <State />
++          </value>
++        </entry>
++      </map>
++    </option>
++  </component>
+ </project>
+\ No newline at end of file

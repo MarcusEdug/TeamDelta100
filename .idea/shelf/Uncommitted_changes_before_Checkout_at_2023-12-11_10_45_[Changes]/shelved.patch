@@ -1,0 +1,1177 @@
+Index: src/main/resources/META-INF/persistence.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\" ?>\r\n<persistence xmlns=\"http://java.sun.com/xml/ns/persistence\"\r\n             xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n             xsi:schemaLocation=\"http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd\"\r\n             version=\"2.0\">\r\n    <persistence-unit name=\"hibernate\" transaction-type=\"RESOURCE_LOCAL\">\r\n        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>\r\n        <properties>\r\n            <!--            <property name=\"javax.persistence.jdbc.driver\" value=\"com.mysql.cj.jdbc.Driver\"/>-->\r\n            <property name=\"javax.persistence.jdbc.url\" value=\"jdbc:mysql://127.0.0.1:3306/Tournament\"/>\r\n            <property name=\"javax.persistence.jdbc.user\" value=\"user2\"/>\r\n            <property name=\"javax.persistence.jdbc.password\" value=\"\"/>\r\n            <property name=\"hibernate.show_sql\" value=\"true\"/> <!-- Ändra denna till true för att se sql-kommandon -->\r\n            <property name=\"hibernate.hbm2ddl.auto\" value=\"create-drop\"/>\r\n        </properties>\r\n    </persistence-unit>\r\n</persistence>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/META-INF/persistence.xml b/src/main/resources/META-INF/persistence.xml
+--- a/src/main/resources/META-INF/persistence.xml	(revision 5f5b1b3c8b9ac009984c1f5f62ed5c2bdc3ba4eb)
++++ b/src/main/resources/META-INF/persistence.xml	(date 1702286848086)
+@@ -8,8 +8,8 @@
+         <properties>
+             <!--            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>-->
+             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/Tournament"/>
+-            <property name="javax.persistence.jdbc.user" value="user2"/>
+-            <property name="javax.persistence.jdbc.password" value=""/>
++            <property name="javax.persistence.jdbc.user" value="Jacob"/>
++            <property name="javax.persistence.jdbc.password" value="root"/>
+             <property name="hibernate.show_sql" value="true"/> <!-- Ändra denna till true för att se sql-kommandon -->
+             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+         </properties>
+Index: src/main/java/com/example/teamdelta100/view/Menu.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.teamdelta100.view;\r\n\r\npublic class Menu {\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/teamdelta100/view/Menu.java b/src/main/java/com/example/teamdelta100/view/Menu.java
+--- a/src/main/java/com/example/teamdelta100/view/Menu.java	(revision 5f5b1b3c8b9ac009984c1f5f62ed5c2bdc3ba4eb)
++++ b/src/main/java/com/example/teamdelta100/view/Menu.java	(date 1702287493748)
+@@ -1,4 +1,11 @@
+ package com.example.teamdelta100.view;
+ 
++import com.example.teamdelta100.controller.PlayerController;
++import com.example.teamdelta100.entities.Player;
++
+ public class Menu {
+-}
++
++    public static void main(String[] args) {
++
++    }
++}
+\ No newline at end of file
+Index: src/main/java/module-info.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>module com.example.teamdelta100 {\r\n    requires javafx.controls;\r\n    requires java.persistence;\r\n    requires java.sql;\r\n    requires org.hibernate.orm.core;\r\n    requires hibernate.entitymanager;\r\n    exports com.example.teamdelta100;\r\n    opens com.example.teamdelta100 to org.hibernate.orm.core;\r\n    exports com.example.teamdelta100.entities;\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/module-info.java b/src/main/java/module-info.java
+--- a/src/main/java/module-info.java	(revision 5f5b1b3c8b9ac009984c1f5f62ed5c2bdc3ba4eb)
++++ b/src/main/java/module-info.java	(date 1702287493753)
+@@ -5,6 +5,6 @@
+     requires org.hibernate.orm.core;
+     requires hibernate.entitymanager;
+     exports com.example.teamdelta100;
+-    opens com.example.teamdelta100 to org.hibernate.orm.core;
++    opens com.example.teamdelta100.entities to org.hibernate.orm.core;
+     exports com.example.teamdelta100.entities;
+ }
+\ No newline at end of file
+Index: src/main/java/com/example/teamdelta100/controller/PlayerController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.teamdelta100.controller;\r\n\r\npublic class PlayerController {\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/teamdelta100/controller/PlayerController.java b/src/main/java/com/example/teamdelta100/controller/PlayerController.java
+--- a/src/main/java/com/example/teamdelta100/controller/PlayerController.java	(revision 5f5b1b3c8b9ac009984c1f5f62ed5c2bdc3ba4eb)
++++ b/src/main/java/com/example/teamdelta100/controller/PlayerController.java	(date 1702287679273)
+@@ -1,4 +1,134 @@
+ package com.example.teamdelta100.controller;
+ 
++import com.example.teamdelta100.entities.Player;
++
++import javax.persistence.EntityManager;
++import javax.persistence.EntityManagerFactory;
++import javax.persistence.EntityTransaction;
++import javax.persistence.Persistence;
++import java.util.ArrayList;
++import java.util.List;
++
+ public class PlayerController {
+-}
++
++
++    public static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("hibernate");
++
++
++    // CREATE
++
++    public boolean save(Player player) {
++        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
++        EntityTransaction transaction = null;
++        try {
++            transaction = entityManager.getTransaction();
++            transaction.begin();
++            entityManager.persist(player);
++            transaction.commit();
++            return true;
++        } catch (Exception e){
++            if (transaction != null){
++                transaction.rollback();
++            }
++            e.printStackTrace();
++        } finally {
++            entityManager.close();
++        }
++        return false;
++    }
++
++    public List<Player> getAll(boolean printOut){
++        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
++        EntityTransaction transaction = null;
++        try{
++            transaction = entityManager.getTransaction();
++            transaction.begin();
++            List<Player> listToReturn = new ArrayList<>(entityManager.createQuery("FROM Player", Player.class).getResultList());
++            transaction.commit();
++            if (printOut){
++                for (Player player :
++                        listToReturn){
++                    System.out.println(player.getId() + ". " + player.getPlayer_name() + " " + player.getPlayer_lastname());
++                }
++            }
++            return  listToReturn;
++        } catch (Exception e){
++            if (transaction != null){
++                transaction.rollback();
++            }
++            e.printStackTrace();
++        } finally {
++            entityManager.close();
++        }
++        return null;
++    }
++    public boolean deletePlayerById(int id){
++        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
++        EntityTransaction transaction = null;
++        try {
++            transaction = entityManager.getTransaction();
++            transaction.begin();
++            // If the entity is attached then remove customer, else merge(attach/update) entity and then remove
++            entityManager.remove(entityManager.contains(id) ? id : entityManager.merge(id));
++            transaction.commit();
++            return true;
++        } catch (Exception e){
++            if(transaction != null){
++                transaction.rollback();
++            }
++            e.printStackTrace();
++        } finally {
++            entityManager.close();
++        }
++        return false;
++    }
++    public Player getPlayerById(int id){
++        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
++        EntityTransaction transaction = null;
++        try {
++            transaction = entityManager.getTransaction();
++            transaction.begin();
++            Player playerToReturn = entityManager.find(Player.class, id);
++            transaction.commit();
++            return playerToReturn;
++        } catch (Exception e){
++            if(transaction != null){
++                transaction.rollback();
++            }
++            e.printStackTrace();
++        } finally {
++            entityManager.close();
++        }
++        return null;
++    }
++    public boolean updatePlayer(Player player){
++        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
++        EntityTransaction transaction = null;
++        try {
++            transaction = entityManager.getTransaction();
++            transaction.begin();
++            entityManager.merge(player);
++            transaction.commit();
++            return true;
++        } catch (Exception e){
++            if(transaction != null){
++                transaction.rollback();
++            }
++            e.printStackTrace();
++        } finally {
++            entityManager.close();
++        }
++        return false;
++    }
++    public List<Player> getAll() {
++        return getAll(true); // Set default value to true (print results)
++    }
++    public void printAll() {
++        List<Player> players = getAll();
++        if (players != null) {
++            for (Player player : players) {
++                System.out.println(player.getId() + ". " + player.getPlayer_name() + " " + player.getPlayer_lastname());
++            }
++        }
++    }
++}
+\ No newline at end of file
+Index: src/main/java/com/example/teamdelta100/entities/Player.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.teamdelta100.entities;\r\n\r\npublic class Player {\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/teamdelta100/entities/Player.java b/src/main/java/com/example/teamdelta100/entities/Player.java
+--- a/src/main/java/com/example/teamdelta100/entities/Player.java	(revision 5f5b1b3c8b9ac009984c1f5f62ed5c2bdc3ba4eb)
++++ b/src/main/java/com/example/teamdelta100/entities/Player.java	(date 1702287634794)
+@@ -1,4 +1,112 @@
+ package com.example.teamdelta100.entities;
++import javax.persistence.*;
++
++
++@Entity
++
++@Table(name = "players")
+ 
+ public class Player {
+-}
++    // We declare where the primary key is
++    @Id
++
++    // The id will be generetad by the database
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    @Column(name = "player_id")
++    private int id;
++
++    @Column(length = 50)
++    private String player_name;
++
++    @Column(length = 50)
++    private String player_lastname;
++
++    @Column(length = 100)
++    private String player_nickname;
++
++    @Column (length = 50)
++    private String street_adress;
++
++    private int postnumber;
++
++    @Column (length = 50)
++    private String post_town;
++
++    @Column (length = 50)
++    private String country;
++
++    @Column (length = 100)
++    private String email;
++
++    public int getId() {
++        return id;
++    }
++
++    public void setId(int id) {
++        this.id = id;
++    }
++
++    public String getPlayer_name() {
++        return player_name;
++    }
++
++    public void setPlayer_name(String player_name) {
++        this.player_name = player_name;
++    }
++
++    public String getPlayer_lastname() {
++        return player_lastname;
++    }
++
++    public void setPlayer_lastname(String player_lastname) {
++        this.player_lastname = player_lastname;
++    }
++
++    public String getPlayer_nickname() {
++        return player_nickname;
++    }
++
++    public void setPlayer_nickname(String player_nickname) {
++        this.player_nickname = player_nickname;
++    }
++
++    public String getStreet_adress() {
++        return street_adress;
++    }
++
++    public void setStreet_adress(String street_adress) {
++        this.street_adress = street_adress;
++    }
++
++    public int getPostnumber() {
++        return postnumber;
++    }
++
++    public void setPostnumber(int postnumber) {
++        this.postnumber = postnumber;
++    }
++
++    public String getPost_town() {
++        return post_town;
++    }
++
++    public void setPost_town(String post_town) {
++        this.post_town = post_town;
++    }
++
++    public String getCountry() {
++        return country;
++    }
++
++    public void setCountry(String country) {
++        this.country = country;
++    }
++
++    public String getEmail() {
++        return email;
++    }
++
++    public void setEmail(String email) {
++        this.email = email;
++    }
++}
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"1f5e8969-0314-454c-9a5d-a8437e8b1a23\" name=\"Changes\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/pom.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/pom.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/resources/com/example/teamdelta100/hello-view.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/resources/com/example/teamdelta100/hello-view.fxml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\"><![CDATA[{\r\n  \"associatedIndex\": 0\r\n}]]></component>\r\n  <component name=\"ProjectId\" id=\"2ZCtem1fi5gQm86VW7AKBwC1JTO\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"git-widget-placeholder\": \"master\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"1f5e8969-0314-454c-9a5d-a8437e8b1a23\" name=\"Changes\" comment=\"\" />\r\n      <created>1701937991447</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1701937991447</updated>\r\n      <workItem from=\"1701937992547\" duration=\"2000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 5f5b1b3c8b9ac009984c1f5f62ed5c2bdc3ba4eb)
++++ b/.idea/workspace.xml	(date 1702287800287)
+@@ -5,20 +5,40 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="1f5e8969-0314-454c-9a5d-a8437e8b1a23" name="Changes" comment="">
+-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/teamdelta100/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/teamdelta100/hello-view.fxml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/TeamController.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/Main.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/controller/PlayerController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/entities/Player.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/teamdelta100/view/Menu.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="Class" />
++      </list>
++    </option>
+   </component>
+   <component name="Git.Settings">
++    <option name="RECENT_BRANCH_BY_REPOSITORY">
++      <map>
++        <entry key="$PROJECT_DIR$" value="master" />
++      </map>
++    </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+-  <component name="ProjectColorInfo"><![CDATA[{
+-  "associatedIndex": 0
+-}]]></component>
++  <component name="ProjectColorInfo">{
++  &quot;associatedIndex&quot;: 0
++}</component>
+   <component name="ProjectId" id="2ZCtem1fi5gQm86VW7AKBwC1JTO" />
+   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+   <component name="ProjectViewState">
+@@ -29,11 +49,56 @@
+   "keyToString": {
+     "RunOnceActivity.OpenProjectViewOnStart": "true",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
++    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+     "WebServerToolWindowFactoryState": "false",
+-    "git-widget-placeholder": "master",
++    "git-widget-placeholder": "Jacob-gren",
++    "last_opened_file_path": "D:/Github/TeamDelta100",
++    "node.js.detected.package.eslint": "true",
++    "node.js.detected.package.tslint": "true",
++    "node.js.selected.package.eslint": "(autodetect)",
++    "node.js.selected.package.tslint": "(autodetect)",
+     "vue.rearranger.settings.migration": "true"
+   }
+ }]]></component>
++  <component name="RecentsManager">
++    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
++      <recent name="" />
++    </key>
++  </component>
++  <component name="RunManager">
++    <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="com.example.teamdelta100.HelloApplication" />
++      <module name="TeamDelta100" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="com.example.teamdelta100.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="com.example.teamdelta100.view.Main" />
++      <module name="TeamDelta100" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="com.example.teamdelta100.view.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <recent_temporary>
++      <list>
++        <item itemvalue="Application.Main" />
++        <item itemvalue="Application.HelloApplication" />
++      </list>
++    </recent_temporary>
++  </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+@@ -43,7 +108,11 @@
+       <option name="presentableId" value="Default" />
+       <updated>1701937991447</updated>
+       <workItem from="1701937992547" duration="2000" />
++      <workItem from="1702283865925" duration="3931000" />
+     </task>
+     <servers />
+   </component>
++  <component name="TypeScriptGeneratedFilesManager">
++    <option name="version" value="3" />
++  </component>
+ </project>
+\ No newline at end of file
+Index: src/main/java/com/example/teamdelta100/controller/TeamController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/teamdelta100/controller/TeamController.java b/src/main/java/com/example/teamdelta100/controller/TeamController.java
+new file mode 100644
+--- /dev/null	(date 1702284579675)
++++ b/src/main/java/com/example/teamdelta100/controller/TeamController.java	(date 1702284579675)
+@@ -0,0 +1,4 @@
++package com.example.teamdelta100.controller;
++
++public class TeamController {
++}
+Index: .idea/dbnavigator.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/dbnavigator.xml b/.idea/dbnavigator.xml
+new file mode 100644
+--- /dev/null	(date 1702285513826)
++++ b/.idea/dbnavigator.xml	(date 1702285513826)
+@@ -0,0 +1,514 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="DBNavigator.Project.DatabaseConsoleManager">
++    <connection id="0ba35803-60c1-43b6-8c5c-37b08e3e7551">
++      <console name="MySQL Connection" type="STANDARD" schema="" session="Main" />
++    </connection>
++  </component>
++  <component name="DBNavigator.Project.DatabaseFileManager">
++    <open-files />
++  </component>
++  <component name="DBNavigator.Project.Settings">
++    <connections>
++      <connection id="0ba35803-60c1-43b6-8c5c-37b08e3e7551" active="true" signed="true">
++        <database>
++          <name value="MySQL Connection" />
++          <description value="" />
++          <database-type value="MYSQL" />
++          <config-type value="BASIC" />
++          <database-version value="8.0" />
++          <driver-source value="BUNDLED" />
++          <driver-library value="" />
++          <driver value="" />
++          <url-type value="DATABASE" />
++          <host value="localhost" />
++          <port value="3306" />
++          <database value="Tournament" />
++          <tns-folder value="" />
++          <tns-profile value="" />
++          <type value="USER_PASSWORD" />
++          <user value="root" />
++          <deprecated-pwd value="cm9vdA==" />
++        </database>
++        <properties>
++          <auto-commit value="false" />
++          <properties>
++            <property key="serverTimezone" value="UTC" />
++          </properties>
++        </properties>
++        <ssh-settings>
++          <active value="false" />
++          <proxy-host value="" />
++          <proxy-port value="22" />
++          <proxy-user value="" />
++          <deprecated-proxy-pwd value="" />
++          <auth-type value="PASSWORD" />
++          <key-file value="" />
++          <key-passphrase value="" />
++        </ssh-settings>
++        <ssl-settings>
++          <active value="false" />
++          <certificate-authority-file value="" />
++          <client-certificate-file value="" />
++          <client-key-file value="" />
++        </ssl-settings>
++        <details>
++          <charset value="UTF-8" />
++          <session-management value="true" />
++          <ddl-file-binding value="true" />
++          <database-logging value="true" />
++          <connect-automatically value="true" />
++          <restore-workspace value="true" />
++          <restore-workspace-deep value="false" />
++          <environment-type value="default" />
++          <connectivity-timeout value="30" />
++          <idle-time-to-disconnect value="30" />
++          <idle-time-to-disconnect-pool value="5" />
++          <credential-expiry-time value="10" />
++          <max-connection-pool-size value="7" />
++          <alternative-statement-delimiter value="" />
++        </details>
++        <debugger>
++          <compile-dependencies value="true" />
++          <tcp-driver-tunneling value="false" />
++          <tcp-host-address value="" />
++          <tcp-port-from value="4000" />
++          <tcp-port-to value="4999" />
++        </debugger>
++        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false" hide-audit-columns="false">
++          <object-type-filter>
++            <object-type name="SCHEMA" enabled="true" />
++            <object-type name="USER" enabled="true" />
++            <object-type name="ROLE" enabled="true" />
++            <object-type name="PRIVILEGE" enabled="true" />
++            <object-type name="CHARSET" enabled="true" />
++            <object-type name="TABLE" enabled="true" />
++            <object-type name="VIEW" enabled="true" />
++            <object-type name="MATERIALIZED_VIEW" enabled="true" />
++            <object-type name="NESTED_TABLE" enabled="true" />
++            <object-type name="COLUMN" enabled="true" />
++            <object-type name="INDEX" enabled="true" />
++            <object-type name="CONSTRAINT" enabled="true" />
++            <object-type name="DATASET_TRIGGER" enabled="true" />
++            <object-type name="DATABASE_TRIGGER" enabled="true" />
++            <object-type name="SYNONYM" enabled="true" />
++            <object-type name="SEQUENCE" enabled="true" />
++            <object-type name="PROCEDURE" enabled="true" />
++            <object-type name="FUNCTION" enabled="true" />
++            <object-type name="PACKAGE" enabled="true" />
++            <object-type name="TYPE" enabled="true" />
++            <object-type name="TYPE_ATTRIBUTE" enabled="true" />
++            <object-type name="ARGUMENT" enabled="true" />
++            <object-type name="DIMENSION" enabled="true" />
++            <object-type name="CLUSTER" enabled="true" />
++            <object-type name="DBLINK" enabled="true" />
++          </object-type-filter>
++          <object-name-filters />
++        </object-filters>
++      </connection>
++    </connections>
++    <browser-settings>
++      <general>
++        <display-mode value="TABBED" />
++        <navigation-history-size value="100" />
++        <show-object-details value="false" />
++      </general>
++      <filters>
++        <object-type-filter>
++          <object-type name="SCHEMA" enabled="true" />
++          <object-type name="USER" enabled="true" />
++          <object-type name="ROLE" enabled="true" />
++          <object-type name="PRIVILEGE" enabled="true" />
++          <object-type name="CHARSET" enabled="true" />
++          <object-type name="TABLE" enabled="true" />
++          <object-type name="VIEW" enabled="true" />
++          <object-type name="MATERIALIZED_VIEW" enabled="true" />
++          <object-type name="NESTED_TABLE" enabled="true" />
++          <object-type name="COLUMN" enabled="true" />
++          <object-type name="INDEX" enabled="true" />
++          <object-type name="CONSTRAINT" enabled="true" />
++          <object-type name="DATASET_TRIGGER" enabled="true" />
++          <object-type name="DATABASE_TRIGGER" enabled="true" />
++          <object-type name="SYNONYM" enabled="true" />
++          <object-type name="SEQUENCE" enabled="true" />
++          <object-type name="PROCEDURE" enabled="true" />
++          <object-type name="FUNCTION" enabled="true" />
++          <object-type name="PACKAGE" enabled="true" />
++          <object-type name="TYPE" enabled="true" />
++          <object-type name="TYPE_ATTRIBUTE" enabled="true" />
++          <object-type name="ARGUMENT" enabled="true" />
++          <object-type name="DIMENSION" enabled="true" />
++          <object-type name="CLUSTER" enabled="true" />
++          <object-type name="DBLINK" enabled="true" />
++        </object-type-filter>
++      </filters>
++      <sorting>
++        <object-type name="COLUMN" sorting-type="NAME" />
++        <object-type name="FUNCTION" sorting-type="NAME" />
++        <object-type name="PROCEDURE" sorting-type="NAME" />
++        <object-type name="ARGUMENT" sorting-type="POSITION" />
++        <object-type name="TYPE ATTRIBUTE" sorting-type="POSITION" />
++      </sorting>
++      <default-editors>
++        <object-type name="VIEW" editor-type="SELECTION" />
++        <object-type name="PACKAGE" editor-type="SELECTION" />
++        <object-type name="TYPE" editor-type="SELECTION" />
++      </default-editors>
++    </browser-settings>
++    <navigation-settings>
++      <lookup-filters>
++        <lookup-objects>
++          <object-type name="SCHEMA" enabled="true" />
++          <object-type name="USER" enabled="false" />
++          <object-type name="ROLE" enabled="false" />
++          <object-type name="PRIVILEGE" enabled="false" />
++          <object-type name="CHARSET" enabled="false" />
++          <object-type name="TABLE" enabled="true" />
++          <object-type name="VIEW" enabled="true" />
++          <object-type name="MATERIALIZED VIEW" enabled="true" />
++          <object-type name="INDEX" enabled="true" />
++          <object-type name="CONSTRAINT" enabled="true" />
++          <object-type name="DATASET TRIGGER" enabled="true" />
++          <object-type name="DATABASE TRIGGER" enabled="true" />
++          <object-type name="SYNONYM" enabled="false" />
++          <object-type name="SEQUENCE" enabled="true" />
++          <object-type name="PROCEDURE" enabled="true" />
++          <object-type name="FUNCTION" enabled="true" />
++          <object-type name="PACKAGE" enabled="true" />
++          <object-type name="TYPE" enabled="true" />
++          <object-type name="DIMENSION" enabled="false" />
++          <object-type name="CLUSTER" enabled="false" />
++          <object-type name="DBLINK" enabled="true" />
++        </lookup-objects>
++        <force-database-load value="false" />
++        <prompt-connection-selection value="true" />
++        <prompt-schema-selection value="true" />
++      </lookup-filters>
++    </navigation-settings>
++    <dataset-grid-settings>
++      <general>
++        <enable-zooming value="true" />
++        <enable-column-tooltip value="true" />
++      </general>
++      <sorting>
++        <nulls-first value="true" />
++        <max-sorting-columns value="4" />
++      </sorting>
++      <audit-columns>
++        <column-names value="" />
++        <visible value="true" />
++        <editable value="false" />
++      </audit-columns>
++    </dataset-grid-settings>
++    <dataset-editor-settings>
++      <text-editor-popup>
++        <active value="false" />
++        <active-if-empty value="false" />
++        <data-length-threshold value="100" />
++        <popup-delay value="1000" />
++      </text-editor-popup>
++      <values-actions-popup>
++        <show-popup-button value="true" />
++        <element-count-threshold value="1000" />
++        <data-length-threshold value="250" />
++      </values-actions-popup>
++      <general>
++        <fetch-block-size value="100" />
++        <fetch-timeout value="30" />
++        <trim-whitespaces value="true" />
++        <convert-empty-strings-to-null value="true" />
++        <select-content-on-cell-edit value="true" />
++        <large-value-preview-active value="true" />
++      </general>
++      <filters>
++        <prompt-filter-dialog value="true" />
++        <default-filter-type value="BASIC" />
++      </filters>
++      <qualified-text-editor text-length-threshold="300">
++        <content-types>
++          <content-type name="Text" enabled="true" />
++          <content-type name="Properties" enabled="true" />
++          <content-type name="XML" enabled="true" />
++          <content-type name="DTD" enabled="true" />
++          <content-type name="HTML" enabled="true" />
++          <content-type name="XHTML" enabled="true" />
++          <content-type name="CSS" enabled="true" />
++          <content-type name="Java" enabled="true" />
++          <content-type name="SQL" enabled="true" />
++          <content-type name="PL/SQL" enabled="true" />
++          <content-type name="JavaScript" enabled="true" />
++          <content-type name="JSON" enabled="true" />
++          <content-type name="JSON5" enabled="true" />
++          <content-type name="JSP" enabled="true" />
++          <content-type name="JSPx" enabled="true" />
++          <content-type name="Groovy" enabled="true" />
++          <content-type name="FTL" enabled="true" />
++          <content-type name="VTL" enabled="true" />
++          <content-type name="AIDL" enabled="true" />
++          <content-type name="YAML" enabled="true" />
++          <content-type name="Manifest" enabled="true" />
++        </content-types>
++      </qualified-text-editor>
++      <record-navigation>
++        <navigation-target value="VIEWER" />
++      </record-navigation>
++    </dataset-editor-settings>
++    <code-editor-settings>
++      <general>
++        <show-object-navigation-gutter value="false" />
++        <show-spec-declaration-navigation-gutter value="true" />
++        <enable-spellchecking value="true" />
++        <enable-reference-spellchecking value="false" />
++      </general>
++      <confirmations>
++        <save-changes value="false" />
++        <revert-changes value="true" />
++        <exit-on-changes value="ASK" />
++      </confirmations>
++    </code-editor-settings>
++    <code-completion-settings>
++      <filters>
++        <basic-filter>
++          <filter-element type="RESERVED_WORD" id="keyword" selected="true" />
++          <filter-element type="RESERVED_WORD" id="function" selected="true" />
++          <filter-element type="RESERVED_WORD" id="parameter" selected="true" />
++          <filter-element type="RESERVED_WORD" id="datatype" selected="true" />
++          <filter-element type="RESERVED_WORD" id="exception" selected="true" />
++          <filter-element type="OBJECT" id="schema" selected="true" />
++          <filter-element type="OBJECT" id="role" selected="true" />
++          <filter-element type="OBJECT" id="user" selected="true" />
++          <filter-element type="OBJECT" id="privilege" selected="true" />
++          <user-schema>
++            <filter-element type="OBJECT" id="table" selected="true" />
++            <filter-element type="OBJECT" id="view" selected="true" />
++            <filter-element type="OBJECT" id="materialized view" selected="true" />
++            <filter-element type="OBJECT" id="index" selected="true" />
++            <filter-element type="OBJECT" id="constraint" selected="true" />
++            <filter-element type="OBJECT" id="trigger" selected="true" />
++            <filter-element type="OBJECT" id="synonym" selected="false" />
++            <filter-element type="OBJECT" id="sequence" selected="true" />
++            <filter-element type="OBJECT" id="procedure" selected="true" />
++            <filter-element type="OBJECT" id="function" selected="true" />
++            <filter-element type="OBJECT" id="package" selected="true" />
++            <filter-element type="OBJECT" id="type" selected="true" />
++            <filter-element type="OBJECT" id="dimension" selected="true" />
++            <filter-element type="OBJECT" id="cluster" selected="true" />
++            <filter-element type="OBJECT" id="dblink" selected="true" />
++          </user-schema>
++          <public-schema>
++            <filter-element type="OBJECT" id="table" selected="false" />
++            <filter-element type="OBJECT" id="view" selected="false" />
++            <filter-element type="OBJECT" id="materialized view" selected="false" />
++            <filter-element type="OBJECT" id="index" selected="false" />
++            <filter-element type="OBJECT" id="constraint" selected="false" />
++            <filter-element type="OBJECT" id="trigger" selected="false" />
++            <filter-element type="OBJECT" id="synonym" selected="false" />
++            <filter-element type="OBJECT" id="sequence" selected="false" />
++            <filter-element type="OBJECT" id="procedure" selected="false" />
++            <filter-element type="OBJECT" id="function" selected="false" />
++            <filter-element type="OBJECT" id="package" selected="false" />
++            <filter-element type="OBJECT" id="type" selected="false" />
++            <filter-element type="OBJECT" id="dimension" selected="false" />
++            <filter-element type="OBJECT" id="cluster" selected="false" />
++            <filter-element type="OBJECT" id="dblink" selected="false" />
++          </public-schema>
++          <any-schema>
++            <filter-element type="OBJECT" id="table" selected="true" />
++            <filter-element type="OBJECT" id="view" selected="true" />
++            <filter-element type="OBJECT" id="materialized view" selected="true" />
++            <filter-element type="OBJECT" id="index" selected="true" />
++            <filter-element type="OBJECT" id="constraint" selected="true" />
++            <filter-element type="OBJECT" id="trigger" selected="true" />
++            <filter-element type="OBJECT" id="synonym" selected="true" />
++            <filter-element type="OBJECT" id="sequence" selected="true" />
++            <filter-element type="OBJECT" id="procedure" selected="true" />
++            <filter-element type="OBJECT" id="function" selected="true" />
++            <filter-element type="OBJECT" id="package" selected="true" />
++            <filter-element type="OBJECT" id="type" selected="true" />
++            <filter-element type="OBJECT" id="dimension" selected="true" />
++            <filter-element type="OBJECT" id="cluster" selected="true" />
++            <filter-element type="OBJECT" id="dblink" selected="true" />
++          </any-schema>
++        </basic-filter>
++        <extended-filter>
++          <filter-element type="RESERVED_WORD" id="keyword" selected="true" />
++          <filter-element type="RESERVED_WORD" id="function" selected="true" />
++          <filter-element type="RESERVED_WORD" id="parameter" selected="true" />
++          <filter-element type="RESERVED_WORD" id="datatype" selected="true" />
++          <filter-element type="RESERVED_WORD" id="exception" selected="true" />
++          <filter-element type="OBJECT" id="schema" selected="true" />
++          <filter-element type="OBJECT" id="user" selected="true" />
++          <filter-element type="OBJECT" id="role" selected="true" />
++          <filter-element type="OBJECT" id="privilege" selected="true" />
++          <user-schema>
++            <filter-element type="OBJECT" id="table" selected="true" />
++            <filter-element type="OBJECT" id="view" selected="true" />
++            <filter-element type="OBJECT" id="materialized view" selected="true" />
++            <filter-element type="OBJECT" id="index" selected="true" />
++            <filter-element type="OBJECT" id="constraint" selected="true" />
++            <filter-element type="OBJECT" id="trigger" selected="true" />
++            <filter-element type="OBJECT" id="synonym" selected="true" />
++            <filter-element type="OBJECT" id="sequence" selected="true" />
++            <filter-element type="OBJECT" id="procedure" selected="true" />
++            <filter-element type="OBJECT" id="function" selected="true" />
++            <filter-element type="OBJECT" id="package" selected="true" />
++            <filter-element type="OBJECT" id="type" selected="true" />
++            <filter-element type="OBJECT" id="dimension" selected="true" />
++            <filter-element type="OBJECT" id="cluster" selected="true" />
++            <filter-element type="OBJECT" id="dblink" selected="true" />
++          </user-schema>
++          <public-schema>
++            <filter-element type="OBJECT" id="table" selected="true" />
++            <filter-element type="OBJECT" id="view" selected="true" />
++            <filter-element type="OBJECT" id="materialized view" selected="true" />
++            <filter-element type="OBJECT" id="index" selected="true" />
++            <filter-element type="OBJECT" id="constraint" selected="true" />
++            <filter-element type="OBJECT" id="trigger" selected="true" />
++            <filter-element type="OBJECT" id="synonym" selected="true" />
++            <filter-element type="OBJECT" id="sequence" selected="true" />
++            <filter-element type="OBJECT" id="procedure" selected="true" />
++            <filter-element type="OBJECT" id="function" selected="true" />
++            <filter-element type="OBJECT" id="package" selected="true" />
++            <filter-element type="OBJECT" id="type" selected="true" />
++            <filter-element type="OBJECT" id="dimension" selected="true" />
++            <filter-element type="OBJECT" id="cluster" selected="true" />
++            <filter-element type="OBJECT" id="dblink" selected="true" />
++          </public-schema>
++          <any-schema>
++            <filter-element type="OBJECT" id="table" selected="true" />
++            <filter-element type="OBJECT" id="view" selected="true" />
++            <filter-element type="OBJECT" id="materialized view" selected="true" />
++            <filter-element type="OBJECT" id="index" selected="true" />
++            <filter-element type="OBJECT" id="constraint" selected="true" />
++            <filter-element type="OBJECT" id="trigger" selected="true" />
++            <filter-element type="OBJECT" id="synonym" selected="true" />
++            <filter-element type="OBJECT" id="sequence" selected="true" />
++            <filter-element type="OBJECT" id="procedure" selected="true" />
++            <filter-element type="OBJECT" id="function" selected="true" />
++            <filter-element type="OBJECT" id="package" selected="true" />
++            <filter-element type="OBJECT" id="type" selected="true" />
++            <filter-element type="OBJECT" id="dimension" selected="true" />
++            <filter-element type="OBJECT" id="cluster" selected="true" />
++            <filter-element type="OBJECT" id="dblink" selected="true" />
++          </any-schema>
++        </extended-filter>
++      </filters>
++      <sorting enabled="true">
++        <sorting-element type="RESERVED_WORD" id="keyword" />
++        <sorting-element type="RESERVED_WORD" id="datatype" />
++        <sorting-element type="OBJECT" id="column" />
++        <sorting-element type="OBJECT" id="table" />
++        <sorting-element type="OBJECT" id="view" />
++        <sorting-element type="OBJECT" id="materialized view" />
++        <sorting-element type="OBJECT" id="index" />
++        <sorting-element type="OBJECT" id="constraint" />
++        <sorting-element type="OBJECT" id="trigger" />
++        <sorting-element type="OBJECT" id="synonym" />
++        <sorting-element type="OBJECT" id="sequence" />
++        <sorting-element type="OBJECT" id="procedure" />
++        <sorting-element type="OBJECT" id="function" />
++        <sorting-element type="OBJECT" id="package" />
++        <sorting-element type="OBJECT" id="type" />
++        <sorting-element type="OBJECT" id="dimension" />
++        <sorting-element type="OBJECT" id="cluster" />
++        <sorting-element type="OBJECT" id="dblink" />
++        <sorting-element type="OBJECT" id="schema" />
++        <sorting-element type="OBJECT" id="role" />
++        <sorting-element type="OBJECT" id="user" />
++        <sorting-element type="RESERVED_WORD" id="function" />
++        <sorting-element type="RESERVED_WORD" id="parameter" />
++      </sorting>
++      <format>
++        <enforce-code-style-case value="true" />
++      </format>
++    </code-completion-settings>
++    <execution-engine-settings>
++      <statement-execution>
++        <fetch-block-size value="100" />
++        <execution-timeout value="20" />
++        <debug-execution-timeout value="600" />
++        <focus-result value="false" />
++        <prompt-execution value="false" />
++      </statement-execution>
++      <script-execution>
++        <command-line-interfaces />
++        <execution-timeout value="300" />
++      </script-execution>
++      <method-execution>
++        <execution-timeout value="30" />
++        <debug-execution-timeout value="600" />
++        <parameter-history-size value="10" />
++      </method-execution>
++    </execution-engine-settings>
++    <operation-settings>
++      <transactions>
++        <uncommitted-changes>
++          <on-project-close value="ASK" />
++          <on-disconnect value="ASK" />
++          <on-autocommit-toggle value="ASK" />
++        </uncommitted-changes>
++        <multiple-uncommitted-changes>
++          <on-commit value="ASK" />
++          <on-rollback value="ASK" />
++        </multiple-uncommitted-changes>
++      </transactions>
++      <session-browser>
++        <disconnect-session value="ASK" />
++        <kill-session value="ASK" />
++        <reload-on-filter-change value="false" />
++      </session-browser>
++      <compiler>
++        <compile-type value="KEEP" />
++        <compile-dependencies value="ASK" />
++        <always-show-controls value="false" />
++      </compiler>
++      <debugger>
++        <debugger-type value="ASK" />
++      </debugger>
++    </operation-settings>
++    <ddl-file-settings>
++      <extensions>
++        <mapping file-type-id="VIEW" extensions="vw" />
++        <mapping file-type-id="TRIGGER" extensions="trg" />
++        <mapping file-type-id="PROCEDURE" extensions="prc" />
++        <mapping file-type-id="FUNCTION" extensions="fnc" />
++        <mapping file-type-id="PACKAGE" extensions="pkg" />
++        <mapping file-type-id="PACKAGE_SPEC" extensions="pks" />
++        <mapping file-type-id="PACKAGE_BODY" extensions="pkb" />
++        <mapping file-type-id="TYPE" extensions="tpe" />
++        <mapping file-type-id="TYPE_SPEC" extensions="tps" />
++        <mapping file-type-id="TYPE_BODY" extensions="tpb" />
++      </extensions>
++      <general>
++        <lookup-ddl-files value="true" />
++        <create-ddl-files value="false" />
++        <synchronize-ddl-files value="true" />
++        <use-qualified-names value="false" />
++        <make-scripts-rerunnable value="true" />
++      </general>
++    </ddl-file-settings>
++    <general-settings>
++      <regional-settings>
++        <date-format value="MEDIUM" />
++        <number-format value="UNGROUPED" />
++        <locale value="SYSTEM_DEFAULT" />
++        <use-custom-formats value="false" />
++      </regional-settings>
++      <environment>
++        <environment-types>
++          <environment-type id="development" name="Development" description="Development environment" color="-2430209/-12296320" readonly-code="false" readonly-data="false" />
++          <environment-type id="integration" name="Integration" description="Integration environment" color="-2621494/-12163514" readonly-code="true" readonly-data="false" />
++          <environment-type id="production" name="Production" description="Productive environment" color="-11574/-10271420" readonly-code="true" readonly-data="true" />
++          <environment-type id="other" name="Other" description="" color="-1576/-10724543" readonly-code="false" readonly-data="false" />
++        </environment-types>
++        <visibility-settings>
++          <connection-tabs value="true" />
++          <dialog-headers value="true" />
++          <object-editor-tabs value="true" />
++          <script-editor-tabs value="false" />
++          <execution-result-tabs value="true" />
++        </visibility-settings>
++      </environment>
++    </general-settings>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/uiDesigner.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/uiDesigner.xml b/.idea/uiDesigner.xml
+new file mode 100644
+--- /dev/null	(date 1702287420631)
++++ b/.idea/uiDesigner.xml	(date 1702287420631)
+@@ -0,0 +1,124 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Palette2">
++    <group name="Swing">
++      <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="1" hsize-policy="6" anchor="0" fill="1" />
++      </item>
++      <item class="com.intellij.uiDesigner.VSpacer" tooltip-text="Vertical Spacer" icon="/com/intellij/uiDesigner/icons/vspacer.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="1" anchor="0" fill="2" />
++      </item>
++      <item class="javax.swing.JPanel" icon="/com/intellij/uiDesigner/icons/panel.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JScrollPane" icon="/com/intellij/uiDesigner/icons/scrollPane.svg" removable="false" auto-create-binding="false" can-attach-label="true">
++        <default-constraints vsize-policy="7" hsize-policy="7" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JButton" icon="/com/intellij/uiDesigner/icons/button.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="0" fill="1" />
++        <initial-values>
++          <property name="text" value="Button" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JRadioButton" icon="/com/intellij/uiDesigner/icons/radioButton.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="RadioButton" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JCheckBox" icon="/com/intellij/uiDesigner/icons/checkBox.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="CheckBox" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JLabel" icon="/com/intellij/uiDesigner/icons/label.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="0" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="Label" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JTextField" icon="/com/intellij/uiDesigner/icons/textField.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JPasswordField" icon="/com/intellij/uiDesigner/icons/passwordField.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JFormattedTextField" icon="/com/intellij/uiDesigner/icons/formattedTextField.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTextArea" icon="/com/intellij/uiDesigner/icons/textArea.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTextPane" icon="/com/intellij/uiDesigner/icons/textPane.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JEditorPane" icon="/com/intellij/uiDesigner/icons/editorPane.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JComboBox" icon="/com/intellij/uiDesigner/icons/comboBox.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="2" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JTable" icon="/com/intellij/uiDesigner/icons/table.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JList" icon="/com/intellij/uiDesigner/icons/list.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="2" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTree" icon="/com/intellij/uiDesigner/icons/tree.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTabbedPane" icon="/com/intellij/uiDesigner/icons/tabbedPane.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
++          <preferred-size width="200" height="200" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JSplitPane" icon="/com/intellij/uiDesigner/icons/splitPane.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
++          <preferred-size width="200" height="200" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JSpinner" icon="/com/intellij/uiDesigner/icons/spinner.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JSlider" icon="/com/intellij/uiDesigner/icons/slider.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JSeparator" icon="/com/intellij/uiDesigner/icons/separator.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JProgressBar" icon="/com/intellij/uiDesigner/icons/progressbar.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1" />
++      </item>
++      <item class="javax.swing.JToolBar" icon="/com/intellij/uiDesigner/icons/toolbar.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1">
++          <preferred-size width="-1" height="20" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JToolBar$Separator" icon="/com/intellij/uiDesigner/icons/toolbarSeparator.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="0" anchor="0" fill="1" />
++      </item>
++      <item class="javax.swing.JScrollBar" icon="/com/intellij/uiDesigner/icons/scrollbar.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />
++      </item>
++    </group>
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/java/com/example/teamdelta100/view/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/teamdelta100/view/Main.java b/src/main/java/com/example/teamdelta100/view/Main.java
+new file mode 100644
+--- /dev/null	(date 1702287420594)
++++ b/src/main/java/com/example/teamdelta100/view/Main.java	(date 1702287420594)
+@@ -0,0 +1,30 @@
++package com.example.teamdelta100.view;
++
++import com.example.teamdelta100.controller.PlayerController;
++import com.example.teamdelta100.entities.Player;
++
++public class Main {
++
++    public static void main(String[] args) {
++        // Example: Creating a new player and saving it to the database
++        Player newPlayer = new Player();
++        newPlayer.setPlayer_name("John");
++        newPlayer.setPlayer_lastname("Doe");
++        newPlayer.setPlayer_nickname("JD123");
++        newPlayer.setStreet_adress("123 Main Street");
++        newPlayer.setPostnumber(56789);
++        newPlayer.setPost_town("Cityville");
++        newPlayer.setCountry("Countryland");
++        newPlayer.setEmail("john.doe@example.com");
++
++        PlayerController playerController = new PlayerController();
++        if (playerController.save(newPlayer)) {
++            System.out.println("Player data saved successfully!");
++        } else {
++            System.out.println("Failed to save player data.");
++        }
++
++        // Example: Retrieving and printing all players
++        playerController.printAll();
++    }
++}
