@@ -32,15 +32,13 @@ public class Match {
     private LocalDate matchDate;
 
     @Column(name = "playedNotPlayed")
-    private String played; // "played", "Not played"
+    private String played; // "Played", "Not played"
 
-
-    // ÄNDRA TULL INT
     @Column(name = "resultOne")
-    private String resultOne; // Lag eller spelare 1
+    private int resultOne; // Lag eller spelare 1
 
     @Column(name = "resultTwo")
-    private String resultTwo; // Lag eller spelare 2
+    private int resultTwo; // Lag eller spelare 2
 
     @Column(name = "winner")
     private String winner; // Team eller Player namnet
@@ -58,11 +56,9 @@ public class Match {
     }
 
     // Konstruktor med allt utom matchId - Primary key
-
-
     public Match(String playerOrTeam, int playerTeamOneId, int playerTeamTwoId,
                  String playerTeamOneName, String playerTeamTwoName, LocalDate matchDate,
-                 String played, String resultOne, String resultTwo, String winner) {
+                 String played, int resultOne, int resultTwo, String winner) {
         this.playerOrTeam = playerOrTeam;
         this.playerTeamOneId = playerTeamOneId;
         this.playerTeamTwoId = playerTeamTwoId;
@@ -111,19 +107,19 @@ public class Match {
         this.played = played;
     }
 
-    public String getResultOne() {
+    public int getResultOne() {
         return resultOne;
     }
 
-    public void setResultOne(String resultOne) {
+    public void setResultOne(int resultOne) {
         this.resultOne = resultOne;
     }
 
-    public String getResultTwo() {
+    public int getResultTwo() {
         return resultTwo;
     }
 
-    public void setResultTwo(String resultTwo) {
+    public void setResultTwo(int resultTwo) {
         this.resultTwo = resultTwo;
     }
 

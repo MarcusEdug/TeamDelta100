@@ -9,7 +9,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-
 import java.time.LocalDate;
 
 
@@ -21,6 +20,7 @@ public class MatchTab {
     private MatchPopUp popup; // Ruta som syns vid knapptryck
     private TableView<Match> matchTableView; // Tabell som syns med innehåll från databasen
 
+    // Knapparna bredvid tabellen
     private Button addPlayerMatch;
     private Button addTeamMatch;
     private Button addResult;
@@ -97,7 +97,7 @@ public class MatchTab {
     }
 
 
-    // Metod: Skapa knapparna & händelselyssnare
+    // Metod: Skapa knapparna
     public VBox createButtons(){
         VBox tempButtonBox = new VBox();
 
@@ -108,18 +108,16 @@ public class MatchTab {
         update = new Button("Update Match");
         logOut = new Button("Log out");
 
-        // Lägga till knapparna i vboxen
-        tempButtonBox.getChildren().addAll(addPlayerMatch, addTeamMatch, addResult, delete, update, logOut);
-
+        tempButtonBox.getChildren().addAll(addPlayerMatch, addTeamMatch, addResult, delete, update, logOut); // Lägga till knapparna i vboxen
         return tempButtonBox;
     }
 
-    // Metod: Knappar
+    // Metod: Sätta händelselyssnare till knapparna
     public void setButtonAction(){
 
-        addPlayerMatch.setOnAction(event -> {
-            popup.createMatch("player"); // Visa och hantera popup fönster
-            updateTable(); // Uppdatera tabellen
+        addPlayerMatch.setOnAction(event -> {         // Vad som händer vid knapptryck
+            popup.createMatch("player");  // Visa och hantera popup fönster
+            updateTable();                            // Uppdatera tabellen
         });
 
         addTeamMatch.setOnAction(event -> {
@@ -149,11 +147,11 @@ public class MatchTab {
     }
 
 
-    // Metod: Uppdatera tabellen vid förändringar
+    // Metod: Uppdatera tabellen efter popupfönstret
     public void updateTable(){
         matchTableView.getItems().clear(); // Tömma tabellen
-        for(Match t : matchController.getAllMatchObjects()){ // Hämta och gå igenom listan
-            matchTableView.getItems().add(t);
+        for(Match m : matchController.getAllMatchObjects()){ // Hämta och gå igenom listan
+            matchTableView.getItems().add(m);
         }
     }
 

@@ -57,24 +57,26 @@ public class MatchPopUp {
 
         changeLabels(teamOrPlayer);
 
-        ComboBox comboBoxOne;
-        ComboBox comboBoxTwo;
-
+        HBox comboBoxOne = new HBox();
+        HBox comboBoxTwo = new HBox();
+        ComboBox<Player> comboBoxOnePlayer = new ComboBox<>();
+        ComboBox<Player> comboBoxTwoPlayer = new ComboBox<>();
+        ComboBox<Teams> comboBoxOneTeam = new ComboBox<>();
+        ComboBox<Teams> comboBoxTwoTeam = new ComboBox<>();
 
         // Om det är Player eller Teams
         if(teamOrPlayer.equals("player")){
             title.setText("Player vs. Player");
             popup.setTitle("Add Match Player vs. Player");
+            comboBoxOne.getChildren().add(comboBoxOnePlayer);
+            comboBoxTwo.getChildren().add(comboBoxTwoPlayer);
 
-            // Spelare 1 & 2
-            comboBoxOne = new ComboBox<Player>();
             List<Player> listPlayerOne = new ArrayList<>();
             for(Player p : listPlayerOne){
                 // Player player = tempList.getName();
                 //comboBoxOne.getItems().add(player);
             }
 
-            comboBoxTwo = new ComboBox<Player>();
             List<Player> listPlayerTwo = new ArrayList<>();
             for(Player p : listPlayerTwo){
                 // Player player = tempList.getName();
@@ -83,16 +85,16 @@ public class MatchPopUp {
         }else{
             title.setText("Team vs. Team");
             popup.setTitle("Add Match Team vs. Team");
+            comboBoxOne.getChildren().add(comboBoxOneTeam);
+            comboBoxTwo.getChildren().add(comboBoxTwoTeam);
 
             // Team 1 & 2
-            comboBoxOne = new ComboBox<Teams>();
             List<Teams> listPlayerOne = new ArrayList<>();
             for(Teams t : listPlayerOne){
                 // Player player = tempList.getName();
                 //comboBoxOne.getItems().add(player);
             }
 
-            comboBoxTwo = new ComboBox<Teams>();
             List<Teams> listPlayerTwo = new ArrayList<>();
             for(Teams t : listPlayerTwo){
                 // Player player = tempList.getName();
@@ -109,6 +111,7 @@ public class MatchPopUp {
         ToggleGroup group = new ToggleGroup();
         played.setToggleGroup(group);
         notPlayed.setToggleGroup(group);
+        group.selectToggle(notPlayed);
 
         // Resultat
         TextField resultOne = new TextField();
@@ -142,49 +145,65 @@ public class MatchPopUp {
         buttonBox.getChildren().addAll(createButton, cancel);
         buttonBox.setSpacing(10);
 
-        // Varningstext för resultatinmatningen
-        Text warningText = new Text();
+        // Varningstext
+        Text warningText = new Text(); // Resultat, Datum, Played/Not Played
 
         createButton.setOnAction(event -> {
             // Kolla att spelare el lag är valt
 
-            int idOne = 0;
-            int idTwo = 0;
-            String nameOne = "";
-            String nameTwo = "";
-
-            if(teamOrPlayer.equals("player")){
-                Player playerOne = (Player) comboBoxOne.getSelectionModel().getSelectedItem();
-                Player playerTwo = (Player) comboBoxTwo.getSelectionModel().getSelectedItem();
-                // idOne = 0; // playerOne.getId();
-                // idTwo; // playerTwo.getId();
-            }else if (teamOrPlayer.equals("team")){
-                Teams teamOne = (Teams) comboBoxOne.getSelectionModel().getSelectedItem();
-                Teams teamTwo = (Teams) comboBoxTwo.getSelectionModel().getSelectedItem();
-                // idOne = teamOne.getId();
-                // idTwo = teamTwo.getId();
-            }
-
-
-            LocalDate tempDate = date.getValue();
-            RadioButton tempPlayedSelected = (RadioButton) group.getSelectedToggle();
-            String tempPlayed = tempPlayedSelected.getText();
-
-            boolean testResultOne = testTextField(resultOne.getText());
-            boolean testResultTwo = testTextField(resultTwo.getText());
-
-            if(testResultOne && testResultTwo){
-                warningText.setText("");
-                String tempResultOne = resultOne.getText(); // Ändra till int
-                String tempResultTwo = resultTwo.getText(); // Ändra till int
-                String tempWinner = winnerField.getText();
-
-                matchController.addMatch(new Match(teamOrPlayer, idOne, idTwo, nameOne, nameTwo, tempDate, tempPlayed, tempResultOne, tempResultTwo, tempWinner));
-                popup.close();
+             if(date.getValue() == null){
+                warningText.setText("Pick a date and try again! ");
             }else{
-                // Lägga till en text
-                warningText.setText("Put only numbers in the result field. Try again!");
+
+                int idOne = 0;
+                int idTwo = 0;
+                String nameOne = "";
+                String nameTwo = "";
+
+                if(teamOrPlayer.equals("player")){
+                    Player playerOne = comboBoxOnePlayer.getSelectionModel().getSelectedItem();
+                    Player playerTwo = comboBoxTwoPlayer.getSelectionModel().getSelectedItem();
+                    // idOne = 0; // playerOne.getId();
+                    // idTwo; // playerTwo.getId();
+                }else if (teamOrPlayer.equals("team")){
+                    Teams teamOne = comboBoxOneTeam.getSelectionModel().getSelectedItem();
+                    Teams teamTwo = comboBoxTwoTeam.getSelectionModel().getSelectedItem();
+                    // idOne = teamOne.getId();
+                    // idTwo = teamTwo.getId();
+                }
+
+
+                LocalDate tempDate = date.getValue();
+                RadioButton tempPlayedSelected = (RadioButton) group.getSelectedToggle();
+                String tempPlayed = tempPlayedSelected.getText();
+
+                boolean testResultOne = testTextField(resultOne.getText());
+                boolean testResultTwo = testTextField(resultTwo.getText());
+
+                if(testResultOne && testResultTwo){
+                    warningText.setText("");
+
+                    int tempResultOne = 0;
+                    int tempResultTwo = 0;
+                    if(!resultOne.getText().isEmpty()){
+                        tempResultOne = Integer.parseInt(resultOne.getText());
+                    }
+
+                    if(!resultTwo.getText().isEmpty()){
+                        tempResultTwo = Integer.parseInt(resultTwo.getText());
+                    }
+
+                    String tempWinner = winnerField.getText();
+
+                    matchController.addMatch(new Match(teamOrPlayer, idOne, idTwo, nameOne, nameTwo, tempDate, tempPlayed, tempResultOne, tempResultTwo, tempWinner));
+                    popup.close();
+                }else{
+                    // Lägga till en text
+                    warningText.setText("Put numbers in the result field and try again!");
+                }
             }
+
+
         });
 
         VBox box = new VBox();
@@ -209,23 +228,7 @@ public class MatchPopUp {
         resultLabelTwo.setText("Result 2: ");
 
         // Välja match att lägga till resultat på
-        List<Match> matchList = matchController.getAllMatchObjects();
-        ListView<Match> listView = new ListView<Match>();
-        listView.setPrefHeight(250);
-        listView.setPrefWidth(250);
-
-        ObservableList<Match> obList = FXCollections.observableArrayList(matchList);
-        listView.setItems(obList);
-        listView.setCellFactory(param -> new ListCell<Match>(){
-             protected void updateItem(Match m, boolean empty){
-                 super.updateItem(m, empty);
-                 if(empty || m == null){
-                     setText(null);
-                 } else {
-                     setText(m.toString());
-                 }
-             }
-        });
+        ListView<Match> listView = createMatchList();
 
         // Knapp välja match att lägga till resultat på
         Button chooseButton = new Button("Choose Match");
@@ -272,10 +275,10 @@ public class MatchPopUp {
 
         addButton.setOnAction(event -> {
             if(resultOne.getText().isEmpty() ||  resultTwo.getText().isEmpty() || winnerField.getText().isEmpty()){
-                warningText.setText(" Fill in result form.");
+                warningText.setText(" Fill in result form and try again! ");
             }else{
-                selected.setResultOne(resultOne.getText());
-                selected.setResultTwo(resultTwo.getText());
+                selected.setResultOne(Integer.parseInt(resultOne.getText()));
+                selected.setResultTwo(Integer.parseInt(resultOne.getText()));
                 selected.setWinner(winnerField.getText());
                 matchController.updateMatchObject(selected);
                 popup.close();
@@ -299,25 +302,9 @@ public class MatchPopUp {
         popup.setMinWidth(450);
         popup.setMinHeight(450);
         popup.setTitle("Remove Match");
-        List<Match> matchList = matchController.getAllMatchObjects();
 
         // Skapa upp en lista att visa för användaren
-        ListView<Match> listView = new ListView<Match>();
-        listView.setPrefHeight(200);
-        listView.setPrefWidth(200);
-        ObservableList<Match> obList = FXCollections.observableArrayList(matchList);
-        listView.setItems(obList);
-
-        listView.setCellFactory(param -> new ListCell<Match>(){
-            protected void updateItem(Match m, boolean empty){
-                super.updateItem(m, empty);
-                if(empty || m == null){
-                    setText(null);
-                } else {
-                    setText(m.toString());
-                }
-            }
-        });
+        ListView<Match> listView = createMatchList();
 
         // Knappar
         Button removeButton = new Button("Delete Match");
@@ -378,25 +365,9 @@ public class MatchPopUp {
         popup.setMinWidth(600);
         popup.setMinHeight(550);
         popup.setTitle("Update Match");
-        List<Match> matchList = matchController.getAllMatchObjects();
 
         // Skapa upp en lista att visa för användaren
-        ListView<Match> listView = new ListView<Match>();
-        ObservableList<Match> obList = FXCollections.observableArrayList(matchList);
-        listView.setItems(obList);
-        listView.setPrefHeight(200);
-        listView.setPrefWidth(230);
-
-        listView.setCellFactory(param -> new ListCell<Match>(){
-            protected void updateItem(Match m, boolean empty){
-                super.updateItem(m, empty);
-                if(empty || m == null){
-                    setText(null);
-                } else {
-                    setText(m.toString());
-                }
-            }
-        });
+        ListView<Match> listView = createMatchList();
 
         // Välj match att ändra
         Button chooseButton = new Button("Choose Match");
@@ -410,8 +381,8 @@ public class MatchPopUp {
         TextField resultTwo = new TextField();
         TextField winnerField = new TextField();
         DatePicker date = new DatePicker();
-        RadioButton played = new RadioButton(" Played ");
-        RadioButton notPlayed = new RadioButton(" Not Played ");
+        RadioButton played = new RadioButton("Played");
+        RadioButton notPlayed = new RadioButton("Not Played");
         ToggleGroup group = new ToggleGroup();
         played.setToggleGroup(group);
         notPlayed.setToggleGroup(group);
@@ -432,6 +403,8 @@ public class MatchPopUp {
         HBox rowSix = new HBox();       // Result 2
         HBox rowSeven = new HBox();     // Winner
 
+        Text warningNumbers = new Text();
+
         // Välja match att update
         chooseButton.setOnAction( event -> {
             selected = listView.getSelectionModel().getSelectedItem();
@@ -451,14 +424,14 @@ public class MatchPopUp {
 
             date.setValue(selected.getMatchDate());
 
-            if(selected.getPlayed().equals("played")){
+            if(selected.getPlayed().equals("Played")){
                 played.setSelected(true);
             }else{
                 notPlayed.setSelected(true);
             }
 
-            resultOne.setText(selected.getResultOne());
-            resultTwo.setText(selected.getResultTwo());
+            resultOne.setText(String.valueOf(selected.getResultOne()));
+            resultTwo.setText(String.valueOf(selected.getResultOne()));
             winnerField.setText(selected.getWinner());
 
         });
@@ -500,13 +473,18 @@ public class MatchPopUp {
 
             selected.setMatchDate(date.getValue());
             selected.setPlayed(tempPlayedSelected.getText());
-            selected.setResultOne(resultOne.getText());
-            selected.setResultTwo(resultTwo.getText());
-            selected.setWinner(winnerField.getText());
 
-            // Lägga in i databasen
-            matchController.updateMatchObject(selected);
-            popup.close();
+            // Kontrollera att innehållet är en int
+            if(testTextField(resultOne.getText()) && testTextField(resultTwo.getText())){
+                selected.setResultOne(Integer.parseInt(resultOne.getText()));
+                selected.setResultTwo(Integer.parseInt(resultTwo.getText()));
+                selected.setWinner(winnerField.getText());
+
+                matchController.updateMatchObject(selected);
+                popup.close();
+            }else {
+                warningNumbers.setText("Put numbers in the result field and try again!");
+            }
         });
 
         rowOne.getChildren().addAll(playerTeamOne, tempOne);
@@ -521,7 +499,7 @@ public class MatchPopUp {
         VBox formBox = new VBox();
         formBox.setSpacing(15);
         box.setSpacing(15);
-        formBox.getChildren().addAll(title, rowOne, rowTwo, rowThree, rowFour, rowFive, rowSix, rowSeven, updateButton);
+        formBox.getChildren().addAll(title, rowOne, rowTwo, rowThree, rowFour, rowFive, rowSix, rowSeven, warningNumbers, updateButton);
         box.setAlignment(Pos.CENTER);
         box.getChildren().addAll(listView, buttonBoxOne, formBox);
 
@@ -572,6 +550,29 @@ public class MatchPopUp {
                 return false;
             }
         }
+    }
+
+
+    // Metod: Skapa upp en ListView med innehållet från Match listan
+    public ListView<Match> createMatchList(){
+        ListView<Match> listView = new ListView<Match>();
+        List<Match> matchList = matchController.getAllMatchObjects();
+        ObservableList<Match> obList = FXCollections.observableArrayList(matchList);
+        listView.setItems(obList);
+        listView.setPrefHeight(230);
+        listView.setPrefWidth(230);
+
+        listView.setCellFactory(param -> new ListCell<Match>(){
+            protected void updateItem(Match m, boolean empty){
+                super.updateItem(m, empty);
+                if(empty || m == null){
+                    setText(null);
+                } else {
+                    setText(m.toString());
+                }
+            }
+        });
+        return listView;
     }
 
 }
