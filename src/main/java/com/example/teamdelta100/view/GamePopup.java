@@ -14,7 +14,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.util.Iterator;
 import java.util.List;
 
 public class GamePopup {
@@ -30,7 +29,7 @@ public class GamePopup {
     int id;
     Games tempGame;
 
-    public void popupWindow () {
+    public void popupWindow() {
         window = new Stage();
         //window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(titleName);
@@ -39,7 +38,7 @@ public class GamePopup {
         window.showAndWait();
     }
 
-    public String addGame () {
+    public String addGame() {
         /*TextField userText = new TextField();
         userText.setMaxWidth(100);
         titleName = "Add game";
@@ -52,7 +51,7 @@ public class GamePopup {
 
         TextField userText = new TextField();
         Button submit = new Button("Submit");
-        submit.setOnAction(e->  {
+        submit.setOnAction(e -> {
             userStringInput = userText.getText();
             System.out.println(userStringInput);
             window.close();
@@ -71,6 +70,7 @@ public class GamePopup {
 
         return userStringInput;
     }
+
     public String addGameGenre(int id) {
 
         Stage window = new Stage();
@@ -81,7 +81,7 @@ public class GamePopup {
 
         TextField userText = new TextField();
         Button submit = new Button("Submit");
-        submit.setOnAction(e->  {
+        submit.setOnAction(e -> {
             userStringInput = userText.getText();
             System.out.println(userStringInput);
             window.close();
@@ -95,26 +95,28 @@ public class GamePopup {
         window.setScene(scene);
         window.showAndWait();
 
-       return userStringInput;
+        return userStringInput;
     }
+
     public int deleteGame(List<Games> gamesList) {
+
         titleName = "Delete game";
         featureText = new Label("Which game do you want to delete?");
 
         comboBox = new ComboBox<>();
-        for (Games games: gamesList) {
+        for (Games games : gamesList) {
             int id = games.getGameId();
             comboBox.getItems().add(id);
         }
 
         Button submit = new Button("Submit");
-        submit.setOnAction(e-> {
-           userIntInput = (int) comboBox.getValue();
-           window.close();
+        submit.setOnAction(e -> {
+            userIntInput = (int) comboBox.getValue();
+            window.close();
         });
 
         VBox vBox = new VBox(5);
-        vBox.getChildren().addAll(featureText,comboBox,submit);
+        vBox.getChildren().addAll(featureText, comboBox, submit);
         vBox.setAlignment(Pos.CENTER);
 
         scene = new Scene(vBox);
@@ -123,13 +125,20 @@ public class GamePopup {
 
         return userIntInput;
     }
-    public Games updateGames (Games games) {
+
+    public Games updateGames(Games games) {
         titleName = "Change name";
         featureText = new Label("Select a new name for the game");
 
         tempGame = games;
         Text currentName = new Text(tempGame.getGameName());
         TextField newName = new TextField();
+
+      /*  comboBox = new ComboBox<>();
+        for (Games games : gamesList) {
+            int id = games.getGameId();
+            comboBox.getItems().add(id);
+        }*/
 
         HBox hbox = new HBox();
         hbox.getChildren().addAll(currentName, newName);
@@ -141,12 +150,51 @@ public class GamePopup {
         });
 
         VBox vBox = new VBox(5);
-        vBox.getChildren().addAll(featureText,hbox,submit);
+        vBox.getChildren().addAll(featureText, comboBox, submit);
         vBox.setAlignment(Pos.CENTER);
 
         scene = new Scene(vBox);
         //popupWindow();
 
+        return tempGame;
+    }
+
+    public Games updateGameName(List<Games> gamesList) {
+        titleName = "Change name";
+        featureText = new Label("Select which game you want to change");
+
+        Label explainText1 = new Label("Select game: ");
+        Label explainText2 = new Label("Select a new name: ");
+
+        Text currentName = new Text();
+        TextField newName = new TextField();
+
+        comboBox = new ComboBox();
+        for (Games games : gamesList) {
+            comboBox.getItems().add(games);
+        }
+        Button submit = new Button("Submit");
+        submit.setOnAction(e -> {
+            tempGame = (Games) comboBox.getValue();
+            tempGame.setGameName(newName.getText());
+            window.close();
+        });
+
+        HBox overHBox = new HBox(3);
+        overHBox.getChildren().addAll(explainText1, comboBox);
+        overHBox.setAlignment(Pos.CENTER);
+
+        HBox underHBox = new HBox(3);
+        underHBox.getChildren().addAll(explainText2, currentName, newName, submit);
+        underHBox.setAlignment(Pos.CENTER);
+
+        VBox vBox = new VBox(5);
+        vBox.getChildren().addAll(featureText, overHBox, underHBox);
+        vBox.setAlignment(Pos.CENTER);
+
+        scene = new Scene(vBox);
+
+        popupWindow();
         return tempGame;
     }
 }

@@ -118,6 +118,11 @@ public class Games {
     public void setPlayerId(int playerId) {
         this.playerId = playerId;
     }
+    //För att få ut text i comboboxen vid uppdatering av namn
+    @Override
+    public String toString() {
+        return gameName;
+    }
 
   /*  public List<Games> getGamesToChose() {
         return gamesToChose;

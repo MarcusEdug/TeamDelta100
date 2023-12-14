@@ -1,6 +1,7 @@
 package com.example.teamdelta100;
 
 import com.example.teamdelta100.controller.GameController;
+import com.example.teamdelta100.view.CombinedFX;
 import com.example.teamdelta100.view.GameMenu;
 import com.example.teamdelta100.view.GamesFX;
 import javafx.application.Application;
@@ -16,8 +17,10 @@ public class HelloApplication extends Application {
 
         stage.setTitle("Piper Games");
 
-        GamesFX gamesFX = new GamesFX();
-        gamesFX.start(stage);
+        /*GamesFX gamesFX = new GamesFX();
+        gamesFX.start(stage);*/
+        CombinedFX Cfx = new CombinedFX();
+        Cfx.start(stage);
     }
 
     public static void main(String[] args) {

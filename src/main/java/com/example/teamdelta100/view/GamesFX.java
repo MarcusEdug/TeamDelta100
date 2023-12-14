@@ -2,23 +2,17 @@ package com.example.teamdelta100.view;
 import com.example.teamdelta100.controller.GameController;
 import com.example.teamdelta100.entities.Games;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class GamesFX extends Application {
     TableView tableView;
@@ -35,11 +29,12 @@ public class GamesFX extends Application {
     Button delete = button("Delete Game");
     Button update = button("Update Game");
     Button listAll = button("List all games");
+    Button logOut = button("Log out");
 
     tableView = table();
 
     VBox buttonV = new VBox(10);
-    buttonV.getChildren().addAll(add,delete,update,listAll);
+    buttonV.getChildren().addAll(add,delete,update,listAll,logOut);
 
     AnchorPane anchorPane = new AnchorPane();
     anchorPane.getChildren().addAll(tableView,buttonV);
@@ -57,8 +52,8 @@ public class GamesFX extends Application {
         Tab tabLayout = new Tab("Games");
         tabLayout.setClosable(false);
         Button add = button("Add Game");
-        Button addGenre = button("Add Game Genre");
-        Button delete = button("Delete game");
+        //Button addGenre = button("Add Game Genre");
+        Button delete = button("Delete Game");
         Button update = button("Update Game");
         Button listAll = button("List all games");
         Button logOut = button("Log out");
@@ -66,7 +61,7 @@ public class GamesFX extends Application {
         tableView = table();
 
         VBox buttonV = new VBox(10);
-        buttonV.getChildren().addAll(add,addGenre,delete,update,listAll,logOut);
+        buttonV.getChildren().addAll(add,delete,update,listAll,logOut);
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(tableView,buttonV);
@@ -116,29 +111,28 @@ public class GamesFX extends Application {
                     update();
 
                 } else if (input.equals("Update Game")) {
-                gameController.getAll(true);
-                System.out.print("Välj id:");
-                Games GamesToUpdate = gameController.getGameById(new Scanner(System.in).nextInt());
-                System.out.print("Ändra namn från " + GamesToUpdate.getGameName() + " till?: ");
-                GamesToUpdate.setGameName(new Scanner(System.in).nextLine());
-                if (gameController.updateGames(gamePopup.updateGames(GamesToUpdate))) {
-                    System.out.println("Games updated");
-                } else {
-                    System.out.println("Games update failed");
-               /* }else if (input.equals("Log out")) {
-                //Skapa så att man kan stänga av programet
+                    List<Games> gamesToUpDate = gameController.getAll(true);
 
-                */
-                }
-                update();
+                    if (gameController.updateGames(gamePopup.updateGameName(gamesToUpDate))) {
+                        System.out.println("Games updated");
+                    } else {
+                        System.out.println("Games update failed");
+                    }
+                    update();
 
-                } else if (input.equals("List all games")) {
-                gameController.getAll(true);
+                /*} else if (input.equals("List all games")) {
+                    gameController.getAll(true);
                 }
-                update();
+                update();*/
+
+
+                }else if (input.equals("Log out")) {
+                window.close();
+            }
         });
         return button;
     }
+
     public TableView table() {
         tableView = new TableView<Games>();
         tableView.setEditable(true);
@@ -152,8 +146,6 @@ public class GamesFX extends Application {
 
         TableColumn<Games, String> gameGenreColumn = new TableColumn("Game genre");
         gameGenreColumn.setCellValueFactory(new PropertyValueFactory("gameGenre"));
-
-        //tableView.setItems(FXCollections.observableList(gameController.getAll(true)));
 
         tableView.getColumns().addAll(gameIdColumn, gameNameColumn, gameGenreColumn);
 
@@ -170,7 +162,7 @@ public class GamesFX extends Application {
     }
     public List<Games> gameDatabaseList() {
         for (Games temp : gameController.tableUpdate()){
-            System.out.println("Game: " + temp.getGameName() + "och ID: " + temp.getGameId());
+            System.out.println("Game: " + temp.getGameName() + "and ID: " + temp.getGameId());
         }
         return gameController.tableUpdate();
     }
