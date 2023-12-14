@@ -1,6 +1,7 @@
 package com.example.teamdelta100;
 
-import com.example.teamdelta100.view.FX;
+import com.example.teamdelta100.view.CombinedFX;
+import com.example.teamdelta100.view.TeamFX;
 import javafx.application.Application;
 
 import javafx.stage.Stage;
@@ -14,8 +15,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FX fx = new FX();
-        fx.start(stage);
+        CombinedFX combinedFX = new CombinedFX();
+        combinedFX.start(stage);
 
     }
 }

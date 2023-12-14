@@ -109,19 +109,7 @@ public class PlayerMenu extends Application {
 
 
             } /*else if (input.equals("Delete team")) {
-                controller.getAll(true);
-                if (controller.deleteTeams(popup.deleteTeam())){
-                    System.out.println("Laget är borta");
-                }
-                else {
-                    System.out.println("misslyckades att ta bort laget");
-                }
 
-
-                update();
-
-
-            }
             */else if (input.equals("Update team")) {
 
 
