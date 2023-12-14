@@ -20,7 +20,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-// Hantera popup fönster och kommunikation med controller mot databasen
+// Hantera popup fönster och kommunikation med controller.
 // Evelina Daun
 
 

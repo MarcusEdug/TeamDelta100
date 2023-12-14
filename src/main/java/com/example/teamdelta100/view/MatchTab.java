@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import java.time.LocalDate;
 
 
-// Skapar och skickar tillbaka en tab för matcherna.
+// Skapar och skickar tillbaka en tab för matcherna samt innehåller koppling till popupfönster.
 // Evelina Daun
 
 public class MatchTab {

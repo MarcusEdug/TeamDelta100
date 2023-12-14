@@ -28,7 +28,7 @@ public class Match {
     @Column(name = "playerTeamTwoName")
     private String playerTeamTwoName;
 
-    @Column(name = "matchDate") // Datum
+    @Column(name = "matchDate")
     private LocalDate matchDate;
 
     @Column(name = "playedNotPlayed")
@@ -48,17 +48,27 @@ public class Match {
     // Tom konstruktor
     public Match(){}
 
-    // Konstruktor med allt
-    public Match(int id, int r, LocalDate date){
-        this.matchId = id;
-
-        this.matchDate = date;
-    }
-
     // Konstruktor med allt utom matchId - Primary key
     public Match(String playerOrTeam, int playerTeamOneId, int playerTeamTwoId,
                  String playerTeamOneName, String playerTeamTwoName, LocalDate matchDate,
                  String played, int resultOne, int resultTwo, String winner) {
+        this.playerOrTeam = playerOrTeam;
+        this.playerTeamOneId = playerTeamOneId;
+        this.playerTeamTwoId = playerTeamTwoId;
+        this.playerTeamOneName = playerTeamOneName;
+        this.playerTeamTwoName = playerTeamTwoName;
+        this.matchDate = matchDate;
+        this.played = played;
+        this.resultOne = resultOne;
+        this.resultTwo = resultTwo;
+        this.winner = winner;
+    }
+
+    // Konstruktor med allt inkluderat
+    public Match(int matchId, String playerOrTeam, int playerTeamOneId, int playerTeamTwoId,
+                 String playerTeamOneName, String playerTeamTwoName, LocalDate matchDate,
+                 String played, int resultOne, int resultTwo, String winner) {
+        this.matchId = matchId;
         this.playerOrTeam = playerOrTeam;
         this.playerTeamOneId = playerTeamOneId;
         this.playerTeamTwoId = playerTeamTwoId;
@@ -89,7 +99,7 @@ public class Match {
 
     public void setPlayerOrTeam(String playerOrTeam) {
         this.playerOrTeam = playerOrTeam;
-    }
+    } // TA BORT ???
 
     public LocalDate getMatchDate() {
         return matchDate;

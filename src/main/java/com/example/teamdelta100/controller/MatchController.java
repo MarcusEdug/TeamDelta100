@@ -10,14 +10,12 @@ import java.util.List;
 // Evelina Daun
 
 public class MatchController {
-
-    // EntityManagerFactory
     public static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("hibernate");
 
-    // Konstruktor
-    public MatchController(){
 
-    }
+    // Tom konstruktor
+    public MatchController(){}
+
 
     // Metod: Lägga till Match objekt i databasen
     public void addMatch(Match m){
@@ -26,7 +24,7 @@ public class MatchController {
         try{
             transaction = em.getTransaction();
             transaction.begin();
-            em.persist(m);
+            em.persist(m); // Lägga in nytt objekt
             transaction.commit();
         }catch(Exception e){
             if(transaction != null){
@@ -45,7 +43,7 @@ public class MatchController {
         try{
             transaction = em.getTransaction();
             transaction.begin();
-            em.merge(m);
+            em.merge(m); // Uppdatera objekt
             transaction.commit();
         }catch(Exception e){
             if(transaction != null){
@@ -65,8 +63,7 @@ public class MatchController {
         try{
             transaction = em.getTransaction();
             transaction.begin();
-            // If the entity is attached then remove customer, else merge(attach/update) entity and then remove
-            em.remove(em.contains(m) ? m:em.merge(m));
+            em.remove(em.contains(m) ? m:em.merge(m)); // Ta bort objekt
             transaction.commit();
         }catch(Exception e){
             if(transaction != null){
@@ -78,28 +75,8 @@ public class MatchController {
         }
     }
 
-    // Metod: Ta bort Match objekt med inskickat id
-    public void deleteMatchWithId(int id){
-        EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
-        EntityTransaction transaction = null;
-        try{
-            transaction = em.getTransaction();
-            transaction.begin();
-            // If the entity is attached then remove customer, else merge(attach/update) entity and then remove
-            em.remove(em.contains(id) ? id : em.merge(id));
-            transaction.commit();
-        }catch(Exception e){
-            if(transaction != null){
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }finally {
-            em.close();
-        }
-    }
 
-    // Metod: Hämta alla Match objekt från databasen
-    // Metod: Uppdatera den visuella tabellen
+    // Metod: Hämta alla Match objekt från databasen till en lista och skicka tillbaka
     public List<Match> getAllMatchObjects(){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -123,9 +100,4 @@ public class MatchController {
         return null;
     }
 
-
-
-
 }
-
-
