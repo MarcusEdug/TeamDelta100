@@ -6,12 +6,12 @@ import com.example.teamdelta100.entities.TestPlay;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class TeamsController implements Share {
+public class Testcontroll {
+
     public static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("hibernate");
 
-    public boolean save (Teams player){
+    public boolean save (TestPlay player){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
 
@@ -33,23 +33,23 @@ public class TeamsController implements Share {
         }
         return false;
     }
-    public List<Teams> getAll(boolean printOut){
+    public List<TestPlay> getAll(boolean printOut){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
-        List<Teams> teamsListToReturn = new ArrayList<>();
+        List<TestPlay> TestPlayListToReturn = new ArrayList<>();
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-            TypedQuery<Teams> resultList = entityManager.createQuery("FROM Teams", Teams.class);
-            teamsListToReturn.addAll(resultList.getResultList());
+            TypedQuery<TestPlay> resultList = entityManager.createQuery("FROM TestPlay", TestPlay.class);
+            TestPlayListToReturn.addAll(resultList.getResultList());
             transaction.commit();
             if(printOut){
-                for (Teams teams :
-                        teamsListToReturn) {
-                    System.out.println(teams.getId() + ". " + teams.getName() + ". Antal medlemmar " + teams.getNumberOfPlayer());
+                for (TestPlay player :
+                        TestPlayListToReturn) {
+                    System.out.println(player.getId() + ". " + player.getName());
                 }
             }
-            return teamsListToReturn;
+            return TestPlayListToReturn;
         } catch (Exception e){
             if(transaction != null){
                 transaction.rollback();
@@ -79,7 +79,7 @@ public class TeamsController implements Share {
         }
         return null;
     }
-    public boolean deleteTeams(Teams teams){
+    public boolean deleteTeams(TestPlay teams){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         try {
@@ -123,13 +123,13 @@ public class TeamsController implements Share {
         }
         return false;
     }
-    public boolean updateTeams(Teams teams){
+    public boolean updateTeams(TestPlay player){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-            entityManager.merge(teams);
+            entityManager.merge(player);
             transaction.commit();
             return true;
         } catch (Exception e){
@@ -163,33 +163,4 @@ public class TeamsController implements Share {
         }
         return null;
     }
-    public boolean addPlayerToCustomer(int playerId, int teamsId){
-        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        EntityTransaction transaction = null;
-        Teams team;
-        try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-
-            Optional<TestPlay> selectPlayer = Optional.ofNullable(entityManager.find(TestPlay.class,playerId));
-            Optional<Teams> selectTeam = Optional.ofNullable(entityManager.find(Teams.class, teamsId));
-
-            TestPlay player = selectPlayer.get();
-            team = selectTeam.get();
-            team.addPlayer(player);
-
-            transaction.commit();
-            return true;
-        } catch (Exception e){
-            if(transaction != null){
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
-        }
-        return false;
-    }
-
-
 }
