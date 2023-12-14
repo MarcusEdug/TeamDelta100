@@ -174,10 +174,8 @@ public class TeamFX extends Application {
         }
     }
     public List<Teams> teamDatabaseList (){
-        for (Teams temp : controller.tableUpdate() ){
-            System.out.println("Team: " + temp.getName() + " och ID: " + temp.getId());
-        }
-        return controller.tableUpdate();
+        List <Teams> teamlista = controller.tableUpdate();
+        return teamlista;
     }
 
     public void createPlayer(){

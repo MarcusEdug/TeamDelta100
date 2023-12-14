@@ -9,13 +9,14 @@ import javafx.stage.Stage;
 
 public class CombinedFX extends Application {
     TeamFX fx = new TeamFX();
-
+    MatchTab matchTab = new MatchTab(fx);
     private Stage window;
-
     private Stage stage;
     private TabPane tabPane;
     @Override
     public void start(Stage stage) throws Exception {
+
+
         window = stage;
         stage.setTitle("test");
         BorderPane root = new BorderPane();
@@ -29,7 +30,7 @@ public class CombinedFX extends Application {
         //tabPane.getTabs().add(tab3);
         tabPane.getTabs().add(fx.teamTab());
         tabPane.getTabs().add(tab2);
-        tabPane.getTabs().add(tab4);
+        tabPane.getTabs().add(matchTab.createAndReturnTabMatch());
 
 
         root.setCenter(tabPane);
