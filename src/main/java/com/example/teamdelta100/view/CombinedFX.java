@@ -1,6 +1,5 @@
 package com.example.teamdelta100.view;
 
-import com.example.teamdelta100.controller.MatchController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -9,27 +8,27 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class CombinedFX extends Application {
-    FX fx = new FX();
-
+    TeamFX teamFX = new TeamFX();
+    MatchTab matchTab = new MatchTab(teamFX);
+    GamesFX gamesFX = new GamesFX();
+    private Stage window;
     private Stage stage;
     private TabPane tabPane;
     @Override
     public void start(Stage stage) throws Exception {
-    stage.setTitle("test");
+
+
+        window = stage;
+        stage.setTitle("test");
         BorderPane root = new BorderPane();
 
         tabPane = new TabPane();
-        Tab tab2 = new Tab("Game");
-        Tab tab3 = new Tab("Players");
-        // Tab tab4 = new Tab("Matchs");
 
 
-        MatchTab ms = new MatchTab();
-
-        tabPane.getTabs().add(tab3);
-        tabPane.getTabs().add(fx.teamTab());
-        tabPane.getTabs().add(tab2);
-        tabPane.getTabs().add(ms.createAndReturnTabMatch()); // tab4
+        //tabPane.getTabs().add(tab3);
+        tabPane.getTabs().add(teamFX.teamTab());
+        tabPane.getTabs().add(gamesFX.gameTab());
+        tabPane.getTabs().add(matchTab.createAndReturnTabMatch());
 
 
         root.setCenter(tabPane);
