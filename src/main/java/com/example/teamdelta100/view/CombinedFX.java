@@ -8,17 +8,31 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class CombinedFX extends Application {
+<<<<<<< HEAD
     PlayerMenu pm = new PlayerMenu();
     FX fx = new FX();
 
+=======
+    TeamFX teamFX = new TeamFX();
+    MatchTab matchTab = new MatchTab(teamFX);
+    //GamesFX gamesFX = new GamesFX();
+    private Stage window;
+>>>>>>> master
     private Stage stage;
     private TabPane tabPane;
     @Override
     public void start(Stage stage) throws Exception {
+<<<<<<< HEAD
+=======
+
+
+        window = stage;
+>>>>>>> master
         stage.setTitle("test");
         BorderPane root = new BorderPane();
 
         tabPane = new TabPane();
+<<<<<<< HEAD
         Tab tab2 = new Tab("Game");
         Tab tab3 = new Tab("Players");
         Tab tab4 = new Tab("Matchs");
@@ -28,6 +42,14 @@ public class CombinedFX extends Application {
         tabPane.getTabs().add(fx.teamTab());
         tabPane.getTabs().add(tab2);
         tabPane.getTabs().add(tab4);
+=======
+
+
+        //tabPane.getTabs().add(tab3);
+        tabPane.getTabs().add(teamFX.teamTab());
+        //tabPane.getTabs().add(gamesFX.gameTab());
+        tabPane.getTabs().add(matchTab.createAndReturnTabMatch());
+>>>>>>> master
 
 
         root.setCenter(tabPane);
@@ -41,4 +63,8 @@ public class CombinedFX extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> master
