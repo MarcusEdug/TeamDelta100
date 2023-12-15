@@ -26,10 +26,10 @@ public class Games {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "games" )
     private List<Teams> numberOfTeamsList = new ArrayList<>();
 
-    /*@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "games" )
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "games" )
     private List<Player> numberOfPlayerList = new ArrayList<>();
 
-     */
+
 
 
 
@@ -149,7 +149,7 @@ public class Games {
         this.numberOfTeamsList = numberOfTeamsList;
     }
 
-    /*public List<Player> getNumberOfPlayerList() {
+    public List<Player> getNumberOfPlayerList() {
         return numberOfPlayerList;
     }
 
@@ -157,5 +157,5 @@ public class Games {
         this.numberOfPlayerList = numberOfPlayerList;
     }
 
-     */
+
 }

@@ -17,6 +17,8 @@ public class Teams {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "teams" )
     private List<Player> numberOfPlayerList = new ArrayList<>();
 
+
+
     @ManyToOne
     @JoinColumn (name = "game_id")
     private Games games;
@@ -24,10 +26,10 @@ public class Teams {
     @Column(name = "Number_of_player")
     private int numberOfPlayer;
 
-    /*@Column(name = "Player_id")
+    @Column(name = "Player_id")
     private int playerId;
 
-     */
+
 
 
 
@@ -51,6 +53,8 @@ public class Teams {
         player.setTeams(this);
         numberOfPlayerList.add(player);
     }
+
+
 
     public void countPlayer(){
         setNumberOfPlayer(getNumberOfPlayerList().size());
@@ -106,4 +110,6 @@ public class Teams {
     public void setNumberOfPlayerList(List<Player> numberOfPlayerList) {
         this.numberOfPlayerList = numberOfPlayerList;
     }
+
+
 }

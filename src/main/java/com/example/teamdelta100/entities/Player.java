@@ -38,7 +38,6 @@ public class Player {
     @JoinColumn (name = "team_id")
     private Teams teams;
 
-
     @ManyToOne
     @JoinColumn (name = "game_id")
     private Games games;
@@ -148,6 +147,8 @@ public class Player {
     public void setTeams(Teams teams) {
         this.teams = teams;
     }
+
+
 
     public Games getGames() {
         return games;
