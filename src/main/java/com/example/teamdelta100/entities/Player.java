@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "first_name")
     private String playerName;
@@ -53,7 +53,7 @@ public class Player {
 
     }
 
-    public Player(Long id, String nickname, String address, String postalCode,
+    public Player(int id, String nickname, String address, String postalCode,
                   String city, String country, String email, String playerName, String playerLastname) {
         this.id = id;
 
@@ -72,11 +72,11 @@ public class Player {
         return playerName;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -91,7 +91,7 @@ public class TeamFX extends Application {
 
             }else if (input.equals("Assign Player")) {
                 List<Player> playList = playerMenu.playerDatabaseList();
-                popup.assignPlayerToTeam(teamDatabaseList(),playList);
+                popup.assignPlayerToTeam(teamDatabaseList(),playerMenu.playerDatabaseList());
 
                 if(controller.addPlayerToTeams(popup.getPlayerId(), popup.getTeamId())){
                     System.out.println("hej");
@@ -162,7 +162,7 @@ public class TeamFX extends Application {
     public void update (){
         tableView.getItems().clear();
         for (Teams temp : controller.tableUpdate() ) {
-            temp.countPlayer();
+            //temp.countPlayer();
             tableView.getItems().add(temp);
         }
     }

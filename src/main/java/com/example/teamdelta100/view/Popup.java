@@ -247,6 +247,7 @@ public class Popup {
             if(tempPlayer.getTeams() == null){
                 tempPlayer.setTeams(tempTeam);
                 teamId = tempTeam.getId();
+                playerId = tempPlayer.getId();
                 window.close();
             }
             else {
