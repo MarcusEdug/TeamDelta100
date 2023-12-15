@@ -2,12 +2,10 @@ package com.example.teamdelta100.view;
 
 import com.example.teamdelta100.controller.MatchController;
 import com.example.teamdelta100.entities.Match;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import java.time.LocalDate;
 
@@ -16,9 +14,10 @@ import java.time.LocalDate;
 // Evelina Daun
 
 public class MatchTab {
-    private MatchController matchController; // Kontroller för match
-    private MatchPopUp popup; // Ruta som syns vid knapptryck
-    private TableView<Match> matchTableView; // Tabell som syns med innehåll från databasen
+    private MatchController matchController;
+    private MatchPopUp popup;
+    private TeamFX teamFX;
+    private TableView<Match> matchTableView;
 
     // Knapparna bredvid tabellen
     private Button addPlayerMatch;
@@ -27,14 +26,20 @@ public class MatchTab {
     private Button delete;
     private Button update;
     private Button logOut;
-    private TeamFX fx;
+
+    private Button showAll;
+    private Button showComming;
+    private Button showDone;
+
+    private Label tabelLabel;
+    private String tabelVersion; // "all" - hela listan, "comming" - kommande, "played" - avgjorda
 
 
     // Konstruktor
-    public MatchTab(TeamFX fx) {
+    public MatchTab(TeamFX teamFX) {
+        this.teamFX = teamFX;
         matchController  = new MatchController();
-        popup = new MatchPopUp(matchController);
-        this.fx = fx;
+        popup = new MatchPopUp(matchController, teamFX);
     }
 
 
@@ -45,18 +50,25 @@ public class MatchTab {
 
         AnchorPane matchPane = new AnchorPane(); // Grund pane
 
+        tabelLabel = new Label(); // Label för att visa vilka matcher som visas i tabellen
+
         createTable(); // Skapa tabell
         updateTable(); // Uppdatera tabell
 
-        VBox buttonBox = createButtons(); // Skapa knappar
-        buttonBox.setLayoutX(650);
-        buttonBox.setLayoutY(20);
-        buttonBox.setSpacing(15);
-        setButtonAction();
+        VBox buttonVBox = createButtons(); // Skapa knappar
+        buttonVBox.setLayoutX(650);
+        buttonVBox.setLayoutY(20);
+        buttonVBox.setSpacing(15);
 
-        matchPane.getChildren().addAll(matchTableView, buttonBox); // Innehåll till grund pane
+        HBox buttonHBox = creatButtonRow();
+        buttonHBox.setLayoutX(20);
+        buttonHBox.setLayoutY(420);
+        buttonHBox.setSpacing(15);
+
+        setButtonAction(); // Skapa upp händelser för knapparna
+
+        matchPane.getChildren().addAll(matchTableView, buttonVBox, buttonHBox); // Innehåll till grund pane
         matchTab.setContent(matchPane); // Pane till tab
-
         return matchTab;
     }
 
@@ -117,6 +129,7 @@ public class MatchTab {
     // Metod: Sätta händelselyssnare till knapparna
     public void setButtonAction(){
 
+        // Knapparna på sidan
         addPlayerMatch.setOnAction(event -> {         // Vad som händer vid knapptryck
             popup.createMatch("player");  // Visa och hantera popup fönster
             updateTable();                            // Uppdatera tabellen
@@ -146,6 +159,24 @@ public class MatchTab {
             System.out.println("LOGGA UT WOOOP!!");
             // Tillbaka till startscenen
         });
+
+
+
+        // Knapparna för att hantera vilken tabell som syns
+        showAll.setOnAction(event -> {
+            tabelLabel.setText("all");
+            // Metodanrop visa hela tabellen
+        });
+
+        showComming.setOnAction(event -> {
+            tabelLabel.setText("comming");
+            // Metodanrop visa bara kommande matcher
+        });
+
+        showDone.setOnAction(event -> {
+            tabelLabel.setText("played");
+            // Metodanrop visa enbart avgjorda matcher
+        });
     }
 
 
@@ -155,6 +186,29 @@ public class MatchTab {
         for(Match m : matchController.getAllMatchObjects()){ // Hämta och gå igenom listan
             matchTableView.getItems().add(m);
         }
+
+        if(tabelLabel.getText().equals("all")){
+
+        }else if(tabelLabel.getText().equals("comming")){
+
+        }else if(tabelLabel.getText().equals("played")){
+
+        }
+        // Lägga in
+        // Enbart oavgjorda matcher
+        // Enbart avgjorda matcher
+    }
+
+
+
+    //Metod: Skapa upp knappraden under tabellen
+    public HBox creatButtonRow(){
+        HBox hbox = new HBox();
+        showAll = new Button("Show all");
+        showComming = new Button("Show not played matches");
+        showDone = new Button("Show played matches");
+        hbox.getChildren().addAll(showAll, showComming, showDone);
+        return hbox;
     }
 
 }
