@@ -1,5 +1,6 @@
 package com.example.teamdelta100.controller;
 import com.example.teamdelta100.entities.Games;
+import com.example.teamdelta100.entities.Player;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -7,6 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class GameController {
@@ -184,5 +186,32 @@ public class GameController {
         }
         return null;
     }
+    public boolean addPlayerToGame (int playerId, int gameId) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+        Games games;
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
 
-}
+            Optional<Games> selectGames = Optional.ofNullable(entityManager.find(Games.class,playerId));
+            Optional<Player> selectPlayer = Optional.ofNullable(entityManager.find(Player.class, gameId));
+
+            Player player = selectPlayer.get();
+            games = selectGames.get();
+            games.addPlayer(player);
+
+            transaction.commit();
+        } catch (Exception e) {
+            if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return false;
+        }
+    }
+
+

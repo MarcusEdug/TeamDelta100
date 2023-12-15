@@ -2,6 +2,8 @@ package com.example.teamdelta100.view;
 
 import com.example.teamdelta100.controller.GameController;
 import com.example.teamdelta100.entities.Games;
+import com.example.teamdelta100.entities.Player;
+import com.example.teamdelta100.entities.Teams;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,8 +28,11 @@ public class GamePopup {
     private Scene scene;
     private String titleName;
     private Label featureText;
-    int id;
-    Games tempGame;
+    private long gameId;
+    private int playerId;
+    private Player tempPlayer;
+    private Games tempGame;
+    private Text errorMessage = new Text();
 
     public void popupWindow() {
         window = new Stage();
@@ -196,5 +201,67 @@ public class GamePopup {
 
         popupWindow();
         return tempGame;
+    }
+
+    public void assignPlayerToGame(List<Player> playerList, List<Games> gamesList) {
+        titleName = "Assign player";
+        featureText = new Label("Assign player to a game");
+
+        ComboBox comboBoxPlayer = new ComboBox();
+        for (Player player : playerList) {
+            comboBoxPlayer.getItems().add(player);
+        }
+        ComboBox comboBoxGames = new ComboBox();
+        for (Games games : gamesList) {
+            comboBoxGames.getItems().add(games);
+        }
+
+        Button submit = new Button("Submit");
+        submit.setOnAction(e -> {
+            errorMessage.setText("");
+            tempPlayer = (Player) comboBoxPlayer.getValue();
+            Player tempGames = (Player) comboBoxGames.getValue();
+            if (tempPlayer.getGames() == null) {
+                tempPlayer.setGames(tempGame);
+                gameId = tempGames.getId();
+                window.close();
+            } else {
+                errorMessage.setText("Player is already assigned to a game");
+            }
+        });
+        Button close = new Button("Close");
+        close.setOnAction(e -> window.close());
+
+        HBox overHBox = new HBox(3);
+        overHBox.getChildren().addAll(comboBoxPlayer, comboBoxGames);
+        overHBox.setAlignment(Pos.CENTER);
+
+        HBox underHBox = new HBox(3);
+        underHBox.getChildren().addAll(submit, close);
+        underHBox.setAlignment(Pos.CENTER);
+
+        VBox vBox = new VBox(5);
+        vBox.getChildren().addAll(featureText, overHBox, underHBox, errorMessage);
+        vBox.setAlignment(Pos.CENTER);
+
+        scene = new Scene(vBox);
+
+        popupWindow();
+    }
+
+    public long getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
     }
 }

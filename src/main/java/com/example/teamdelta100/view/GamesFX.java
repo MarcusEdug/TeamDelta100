@@ -1,6 +1,7 @@
 package com.example.teamdelta100.view;
 import com.example.teamdelta100.controller.GameController;
 import com.example.teamdelta100.entities.Games;
+import com.example.teamdelta100.entities.Player;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,6 +21,7 @@ public class GamesFX extends Application {
     GamePopup gamePopup = new GamePopup();
     Games games = new Games();
     Stage window;
+    private PlayerMenu playerMenu;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -55,13 +57,13 @@ public class GamesFX extends Application {
         //Button addGenre = button("Add Game Genre");
         Button delete = button("Delete Game");
         Button update = button("Update Game");
-        Button listAll = button("List all games");
+        Button assignPlayer = button("Assign player to a game");
         Button logOut = button("Log out");
 
         tableView = table();
 
         VBox buttonV = new VBox(10);
-        buttonV.getChildren().addAll(add,delete,update,listAll,logOut);
+        buttonV.getChildren().addAll(add,delete,update,assignPlayer,logOut);
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(tableView,buttonV);
@@ -86,15 +88,14 @@ public class GamesFX extends Application {
                     }
                     update();
 
-                } else if (input.equals("Add Game Genre")) {
-                    gameController.getAll(true);
-                    String gameGenre = gamePopup.addGameGenre(games.getGameId());
-                    String gameName = games.getGameName();
+                } else if (input.equals("Assign player to a game")) {
+                    List<Player> playerList = playerMenu.playerDatabaseList();
+                    gamePopup.assignPlayerToGame(playerList,gameDatabaseList());
 
-                    if (gameController.save(new Games(gameGenre))) {
-                        System.out.println(gameGenre + " added");
+                    if (gameController.addPlayerToGame(gamePopup.getPlayerId(), games.getGameId())){
+                        System.out.println("Player added");
                     } else {
-                        System.out.println("Failed do add genre");
+                        System.out.println("Failed do add player");
                     }
 
                     update();
@@ -178,7 +179,7 @@ public class GamesFX extends Application {
         this.gameController = gameController;
     }
 
-    public GamePopup getGamePopup() {
+   /* public GamePopup getGamePopup() {
         return gamePopup;
     }
 
@@ -200,7 +201,7 @@ public class GamesFX extends Application {
 
     public void setWindow(Stage window) {
         this.window = window;
-    }
+    }*/
 }
 
 
