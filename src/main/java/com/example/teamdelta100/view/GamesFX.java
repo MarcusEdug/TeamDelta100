@@ -54,16 +54,16 @@ public class GamesFX extends Application {
         Tab tabLayout = new Tab("Games");
         tabLayout.setClosable(false);
         Button add = button("Add Game");
+        Button assignPlayer = button("Assign player to a game");
         //Button addGenre = button("Add Game Genre");
         Button delete = button("Delete Game");
         Button update = button("Update Game");
-        Button assignPlayer = button("Assign player to a game");
         Button logOut = button("Log out");
 
         tableView = table();
 
         VBox buttonV = new VBox(10);
-        buttonV.getChildren().addAll(add,delete,update,assignPlayer,logOut);
+        buttonV.getChildren().addAll(add,assignPlayer,delete,update,logOut);
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(tableView,buttonV);
