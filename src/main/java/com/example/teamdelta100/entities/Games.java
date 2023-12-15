@@ -1,5 +1,6 @@
 package com.example.teamdelta100.entities;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,14 +23,23 @@ public class Games {
     @Column (name = "player_id")
     private int playerId;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "games" )
+    private List<Teams> numberOfTeamsList = new ArrayList<>();
+
+    /*@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "games" )
+    private List<Player> numberOfPlayerList = new ArrayList<>();
+
+     */
+
+
+
+
     //OneToMany - Ett spel till många spelare/lag
     //Fetch - fråga alltid efter entiteter och children.
     //Cascade - sparar entitet och children på en gång
     //Mapped - Förhindrar den här sidan att skapa en extra tabell för relational mapping
     //Mapped - säger till hibernate att den motsatta sidan har kontroll, inget behov av att skapa tabeller (behövs den här?)
 
-    //@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "player" + "teams")
-    //private List<Games> gamesToChose = new ArrayList<>();
 
  /*   @JoinColumn (name = "player_id")
     @JoinColumn (name = "team_id")*/
@@ -70,6 +80,13 @@ public class Games {
     public Games(int id, String genre) {
     }
 
+    public void addPlayer (Player player){
+        player.setGames(this);
+    }
+
+    public void addTeams (Teams team){
+        team.setGames(this);
+    }
 
     public String getGameName() {
         return gameName;
@@ -124,12 +141,21 @@ public class Games {
         return gameName;
     }
 
-  /*  public List<Games> getGamesToChose() {
-        return gamesToChose;
+    public List<Teams> getNumberOfTeamsList() {
+        return numberOfTeamsList;
     }
 
-    public void setGamesToChose(List<Games> gamesToChose) {
-        this.gamesToChose = gamesToChose;
-    }*/
+    public void setNumberOfTeamsList(List<Teams> numberOfTeamsList) {
+        this.numberOfTeamsList = numberOfTeamsList;
+    }
 
+    /*public List<Player> getNumberOfPlayerList() {
+        return numberOfPlayerList;
+    }
+
+    public void setNumberOfPlayerList(List<Player> numberOfPlayerList) {
+        this.numberOfPlayerList = numberOfPlayerList;
+    }
+
+     */
 }

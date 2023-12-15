@@ -14,8 +14,12 @@ public class Teams {
 
     @Column(name = "team_name", length = 30)
     private String name;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "teams")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "teams" )
     private List<Player> numberOfPlayerList = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn (name = "game_id")
+    private Games games;
 
     @Column(name = "Number_of_player")
     private int numberOfPlayer;
@@ -57,6 +61,15 @@ public class Teams {
         return "Name: " + name + ", ID: "+ id;
 
     }
+
+    public Games getGames() {
+        return games;
+    }
+
+    public void setGames(Games games) {
+        this.games = games;
+    }
+
 
     public Teams(String name) {
         this.name = name;

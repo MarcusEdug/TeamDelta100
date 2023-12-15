@@ -39,6 +39,12 @@ public class Player {
     private Teams teams;
 
 
+    @ManyToOne
+    @JoinColumn (name = "game_id")
+    private Games games;
+
+
+
     public Player() {
 
     }
@@ -141,6 +147,14 @@ public class Player {
 
     public void setTeams(Teams teams) {
         this.teams = teams;
+    }
+
+    public Games getGames() {
+        return games;
+    }
+
+    public void setGames(Games games) {
+        this.games = games;
     }
 
     public Player(String playerName) {
