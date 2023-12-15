@@ -14,10 +14,12 @@ public class Teams {
 
     @Column(name = "team_name", length = 30)
     private String name;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "teams" )
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "teams" )
     private List<Player> numberOfPlayerList = new ArrayList<>();
 
-
+    @ManyToOne
+    @JoinColumn (name = "match_id")
+    private Match match;
 
     @ManyToOne
     @JoinColumn (name = "game_id")
@@ -85,6 +87,14 @@ public class Teams {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Match getMatch() {
+        return match;
+    }
+
+    public void setMatch(Match match) {
+        this.match = match;
     }
 
     public String getName() {

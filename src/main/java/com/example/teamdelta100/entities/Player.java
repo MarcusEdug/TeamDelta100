@@ -42,6 +42,11 @@ public class Player {
     @JoinColumn (name = "game_id")
     private Games games;
 
+    @ManyToOne
+    @JoinColumn (name = "match_id")
+    private Match match;
+
+
 
 
     public Player() {
@@ -146,6 +151,14 @@ public class Player {
 
     public void setTeams(Teams teams) {
         this.teams = teams;
+    }
+
+    public Match getMatch() {
+        return match;
+    }
+
+    public void setMatch(Match match) {
+        this.match = match;
     }
 
 
