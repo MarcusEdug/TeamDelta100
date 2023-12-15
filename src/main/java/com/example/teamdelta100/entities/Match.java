@@ -14,21 +14,21 @@ import java.util.List;
 public class Match {
     @Id // Primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "matchId")
+    @Column(name = "match_id")
     private int matchId;
 
     @Column(name = "playerOrTeam")
     private String playerOrTeam;  // "team",  "player"
 
 
-    /*
+
     // sätta in plats 0 - id 1 och plats 1 - id 2 ?
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "playerId")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "match")
     private List<Player> playerList = new ArrayList<>();
 
-    @OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "teamId")
+    @OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "match")
     private List<Teams> teamsList = new ArrayList<>();
-     */
+
 
     // TA BORT OCH ANVÄNDA LISTORNA ISTÄLLET  ???
     @Column(name = "playerTeamOneId")  // Player eller Team id
@@ -97,6 +97,14 @@ public class Match {
     }
 
     // Metod: toString - Skriva ut matcherna med namn och id för spelare/lag
+    public void addPlayer (Player player){
+        player.setMatch(this);
+    }
+
+    public void addTeams (Teams team){
+        team.setMatch(this);
+    }
+
     @Override
     public String toString() {
         return "Match: " + playerTeamOneName +
@@ -185,7 +193,7 @@ public class Match {
         this.playerTeamTwoName = playerTeamTwoName;
     }
 
-    /*
+
     public List<Player> getPlayerList() {
         return playerList;
     }
@@ -202,5 +210,4 @@ public class Match {
         this.teamsList = teamsList;
     }
 
-     */
 }
