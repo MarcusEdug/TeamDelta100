@@ -13,6 +13,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 public class PlayerMenu extends Application {
 
     PlayerController playerController = new PlayerController();
@@ -136,6 +138,11 @@ public class PlayerMenu extends Application {
 
 
         return button;
+    }
+    //Alex har skapat den här
+    public List<Player> playerDatabaseList (){
+        List <Player> teamlista = playerController.tableUpdate(true);
+        return teamlista;
     }
     public PlayerController getController() {
         return playerController;
