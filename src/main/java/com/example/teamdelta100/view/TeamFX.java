@@ -1,7 +1,6 @@
 package com.example.teamdelta100.view;
 
-import com.example.teamdelta100.controller.Testcontroll;
-import com.example.teamdelta100.entities.TestPlay;
+import com.example.teamdelta100.entities.Player;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,10 +20,10 @@ import java.util.List;
 
 public class TeamFX extends Application {
     TeamsController controller = new TeamsController();
-    Testcontroll test = new Testcontroll();
-    Popup popup = new Popup();
-    TableView tableView;
-    Stage window;
+    private Popup popup = new Popup();
+    private TableView tableView;
+    private Stage window;
+    private PlayerMenu playerMenu;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -54,7 +53,6 @@ public class TeamFX extends Application {
 
     }
     public Tab teamTab(){
-        createPlayer();
         Tab tabLayout = new Tab("Teams");
         tabLayout.setClosable(false);
         Button add = button("Add team");
@@ -92,9 +90,8 @@ public class TeamFX extends Application {
 
 
             }else if (input.equals("Assign Player")) {
-                List<Teams> teamsList = controller.getAll();
-                List<TestPlay> playList = test.getAll(true);
-                popup.assignPlayerToTeam(teamsList,playList);
+                List<Player> playList = playerMenu.playerDatabaseList();
+                popup.assignPlayerToTeam(teamDatabaseList(),playList);
 
                 if(controller.addPlayerToTeams(popup.getPlayerId(), popup.getTeamId())){
                     System.out.println("hej");
@@ -174,7 +171,7 @@ public class TeamFX extends Application {
         return teamlista;
     }
 
-    public void createPlayer(){
+    /*public void createPlayer(){
 
         test.save(new TestPlay("Hug"));
         test.save(new TestPlay("Hans"));
@@ -183,6 +180,16 @@ public class TeamFX extends Application {
         test.save(new TestPlay("Kim"));
 
 
+    }
+
+     */
+
+    public PlayerMenu getPlayerMenu() {
+        return playerMenu;
+    }
+
+    public void setPlayerMenu(PlayerMenu playerMenu) {
+        this.playerMenu = playerMenu;
     }
 
     public TeamsController getController() {
@@ -197,17 +204,4 @@ public class TeamFX extends Application {
     public static void main(String[] args) throws Exception {
         launch(args);
     }
-    /*else if (input.equals("Change team name")) {
-        controller.getAll(true);
-        System.out.print("Välj id:");
-        Teams teamsToUpdate = controller.getTeamsById(new Scanner(System.in).nextInt());
-        System.out.print("Ändra namn från " + teamsToUpdate.getName() + " till?: ");
-        teamsToUpdate.setName(new Scanner(System.in).nextLine());
-        if(controller.updateTeams(teamsToUpdate)){
-            System.out.println("Teams updated");
-        } else {
-            System.out.println("Teams update failed");
-        };
-
-     */
 }

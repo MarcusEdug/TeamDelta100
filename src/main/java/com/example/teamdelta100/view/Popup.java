@@ -1,14 +1,13 @@
 package com.example.teamdelta100.view;
 
+import com.example.teamdelta100.entities.Player;
 import com.example.teamdelta100.entities.Teams;
-import com.example.teamdelta100.entities.TestPlay;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -227,7 +226,7 @@ public class Popup {
         return tempTeam;
     }
 
-    public void assignPlayerToTeam(List<Teams> teamsList, List<TestPlay> playList){
+    public void assignPlayerToTeam(List<Teams> teamsList, List<Player> playList){
         titleName = "Assign player";
         featureText = new Label("Assign player to a team");
 
@@ -236,7 +235,7 @@ public class Popup {
             comboBoxTeams.getItems().add(team);
         }
         ComboBox comboBoxPlayer = new ComboBox();
-        for (TestPlay player : playList){
+        for (Player player : playList){
             comboBoxPlayer.getItems().add(player);
         }
 
@@ -244,11 +243,10 @@ public class Popup {
         submit.setOnAction(e->{
             error.setText("");
             tempTeam = (Teams) comboBoxTeams.getValue();
-            TestPlay tempPlayer = (TestPlay) comboBoxPlayer.getValue();
+            Player tempPlayer = (Player) comboBoxPlayer.getValue();
             if(tempPlayer.getTeams() == null){
                 tempPlayer.setTeams(tempTeam);
                 teamId = tempTeam.getId();
-                playerId = tempPlayer.getId();
                 window.close();
             }
             else {

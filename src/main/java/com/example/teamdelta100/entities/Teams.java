@@ -14,16 +14,22 @@ public class Teams {
 
     @Column(name = "team_name", length = 30)
     private String name;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "teams")
-    private List<TestPlay> numberOfPlayerList = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "teams" )
+    private List<Player> numberOfPlayerList = new ArrayList<>();
+
+
+
+    @ManyToOne
+    @JoinColumn (name = "game_id")
+    private Games games;
 
     @Column(name = "Number_of_player")
     private int numberOfPlayer;
 
-    /*@Column(name = "Player_id")
+    @Column(name = "Player_id")
     private int playerId;
 
-     */
+
 
 
 
@@ -43,10 +49,12 @@ public class Teams {
         this.numberOfPlayer = numberOfPlayer;
     }
 
-    public void addPlayer (TestPlay testPlay){
-        testPlay.setTeams(this);
-        numberOfPlayerList.add(testPlay);
+    public void addPlayer (Player player){
+        player.setTeams(this);
+        numberOfPlayerList.add(player);
     }
+
+
 
     public void countPlayer(){
         setNumberOfPlayer(getNumberOfPlayerList().size());
@@ -57,6 +65,15 @@ public class Teams {
         return "Name: " + name + ", ID: "+ id;
 
     }
+
+    public Games getGames() {
+        return games;
+    }
+
+    public void setGames(Games games) {
+        this.games = games;
+    }
+
 
     public Teams(String name) {
         this.name = name;
@@ -86,11 +103,13 @@ public class Teams {
         this.numberOfPlayer = numberOfPlayer;
     }
 
-    public List<TestPlay> getNumberOfPlayerList() {
+    public List<Player> getNumberOfPlayerList() {
         return numberOfPlayerList;
     }
 
-    public void setNumberOfPlayerList(List<TestPlay> numberOfPlayerList) {
+    public void setNumberOfPlayerList(List<Player> numberOfPlayerList) {
         this.numberOfPlayerList = numberOfPlayerList;
     }
+
+
 }

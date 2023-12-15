@@ -32,11 +32,13 @@ public class InformationForm extends Application {
     private TableView tableView;
     private PlayerController playerController;
     Button submitButton = new Button("Submit");
+    Player tempPlayer;
 
     private static final String PERSISTENCE_UNIT_NAME = "hibernate"; // Change this to your actual persistence unit name
 
     @Override
     public void start(Stage primaryStage) {
+
         primaryStage.setTitle("Information Form");
         this.window = primaryStage;
         GridPane grid = new GridPane();
@@ -98,7 +100,8 @@ public class InformationForm extends Application {
         GridPane.setColumnSpan(submitButton, 2);
         grid.add(submitButton, 0, 8);
 
-        submitButton.setOnAction(e -> { saveToDatabase(
+        submitButton.setOnAction(e -> {
+           tempPlayer = createPlayer (
                 firstNameField.getText(),
                 lastNameField.getText(),
                 nicknameField.getText(),
@@ -107,7 +110,9 @@ public class InformationForm extends Application {
                 cityField.getText(),
                 countryField.getText(),
                 emailField.getText());
-                update();
+
+            playerController.save(tempPlayer);
+            update();
         });
 
 
@@ -164,6 +169,21 @@ public class InformationForm extends Application {
         launch(args);
     }
 
+    public Player createPlayer(String firstName, String lastName, String nickname,
+                               String address, String postalCode, String city,
+                               String country, String email){
+        Player person = new Player();
+        person.setPlayerName(firstName);
+        person.setPlayerLastname(lastName);
+        person.setNickname(nickname);
+        person.setAddress(address);
+        person.setPostalCode(postalCode);
+        person.setCity(city);
+        person.setCountry(country);
+        person.setEmail(email);
+        return person;
+    }
+   /*
     public void saveToDatabase(String firstName, String lastName, String nickname,
                                String address, String postalCode, String city,
                                String country, String email) {
@@ -195,6 +215,8 @@ public class InformationForm extends Application {
 
         }
     }
+
+    */
 
     public void addComponents(TableView tableView, PlayerController playerController) {
         this.tableView = tableView;

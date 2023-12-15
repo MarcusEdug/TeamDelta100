@@ -10,10 +10,10 @@ public class Player {
     private Long id;
 
     @Column(name = "first_name")
-    private String firstName;
+    private String playerName;
 
     @Column(name = "last_name")
-    private String lastName;
+    private String playerLastname;
 
     @Column(name = "nickname")
     private String nickname;
@@ -33,9 +33,16 @@ public class Player {
     @Column(name = "email")
     private String email;
 
-    private String playerName;
+    //Alex har lagt till den här
+    @ManyToOne
+    @JoinColumn (name = "team_id")
+    private Teams teams;
 
-    private String playerLastname;
+    @ManyToOne
+    @JoinColumn (name = "game_id")
+    private Games games;
+
+
 
     public Player() {
 
@@ -53,6 +60,11 @@ public class Player {
         this.email = email;
         this.playerName = playerName;
         this.playerLastname = playerLastname;
+    }
+
+    @Override
+    public String toString() {
+        return playerName;
     }
 
     public Long getId() {
@@ -125,6 +137,25 @@ public class Player {
 
     public void setPlayerLastname(String playerLastname) {
         this.playerLastname = playerLastname;
+    }
+
+    //Alex har skapat en här
+    public Teams getTeams() {
+        return teams;
+    }
+
+    public void setTeams(Teams teams) {
+        this.teams = teams;
+    }
+
+
+
+    public Games getGames() {
+        return games;
+    }
+
+    public void setGames(Games games) {
+        this.games = games;
     }
 
     public Player(String playerName) {

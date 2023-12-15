@@ -1,7 +1,7 @@
 package com.example.teamdelta100.controller;
 
+import com.example.teamdelta100.entities.Player;
 import com.example.teamdelta100.entities.Teams;
-import com.example.teamdelta100.entities.TestPlay;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -161,10 +161,10 @@ public class TeamsController implements Share {
             transaction = entityManager.getTransaction();
             transaction.begin();
 
-            Optional<TestPlay> selectPlayer = Optional.ofNullable(entityManager.find(TestPlay.class,playerId));
+            Optional<Player> selectPlayer = Optional.ofNullable(entityManager.find(Player.class,playerId));
             Optional<Teams> selectTeam = Optional.ofNullable(entityManager.find(Teams.class, teamsId));
 
-            TestPlay player = selectPlayer.get();
+            Player player = selectPlayer.get();
             team = selectTeam.get();
             team.addPlayer(player);
 
