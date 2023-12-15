@@ -2,6 +2,8 @@ package com.example.teamdelta100.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 // Match objekt som kan placeras i databasen.
 // Evelina Daun
@@ -18,11 +20,23 @@ public class Match {
     @Column(name = "playerOrTeam")
     private String playerOrTeam;  // "team",  "player"
 
+
+    /*
+    // sätta in plats 0 - id 1 och plats 1 - id 2 ?
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "playerId")
+    private List<Player> playerList = new ArrayList<>();
+
+    @OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "teamId")
+    private List<Teams> teamsList = new ArrayList<>();
+     */
+
+    // TA BORT OCH ANVÄNDA LISTORNA ISTÄLLET  ???
     @Column(name = "playerTeamOneId")  // Player eller Team id
     private int playerTeamOneId;
     @Column(name = "playerTeamTwoId")
     private int playerTeamTwoId;
 
+    // TA BORT OCH ANVÄNDA LISTORNA ISTÄLLET ???
     @Column(name = "playerTeamOneName") // Player eller Team namn
     private String playerTeamOneName;
     @Column(name = "playerTeamTwoName")
@@ -44,9 +58,9 @@ public class Match {
     private String winner; // Team eller Player namnet
 
 
-
     // Tom konstruktor
     public Match(){}
+
 
     // Konstruktor med allt utom matchId - Primary key
     public Match(String playerOrTeam, int playerTeamOneId, int playerTeamTwoId,
@@ -63,6 +77,7 @@ public class Match {
         this.resultTwo = resultTwo;
         this.winner = winner;
     }
+
 
     // Konstruktor med allt inkluderat
     public Match(int matchId, String playerOrTeam, int playerTeamOneId, int playerTeamTwoId,
@@ -81,6 +96,7 @@ public class Match {
         this.winner = winner;
     }
 
+    // Metod: toString - Skriva ut matcherna med namn och id för spelare/lag
     @Override
     public String toString() {
         return "Match: " + playerTeamOneName +
@@ -96,10 +112,6 @@ public class Match {
     public String getPlayerOrTeam() {
         return playerOrTeam;
     }
-
-    public void setPlayerOrTeam(String playerOrTeam) {
-        this.playerOrTeam = playerOrTeam;
-    } // TA BORT ???
 
     public LocalDate getMatchDate() {
         return matchDate;
@@ -172,4 +184,23 @@ public class Match {
     public void setPlayerTeamTwoName(String playerTeamTwoName) {
         this.playerTeamTwoName = playerTeamTwoName;
     }
+
+    /*
+    public List<Player> getPlayerList() {
+        return playerList;
+    }
+
+    public void setPlayerList(List<Player> playerList) {
+        this.playerList = playerList;
+    }
+
+    public List<Teams> getTeamsList() {
+        return teamsList;
+    }
+
+    public void setTeamsList(List<Teams> teamsList) {
+        this.teamsList = teamsList;
+    }
+
+     */
 }
