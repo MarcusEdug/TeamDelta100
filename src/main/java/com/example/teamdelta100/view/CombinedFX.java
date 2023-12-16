@@ -30,7 +30,7 @@ public class CombinedFX extends Application {
         tabPane = new TabPane();
 
         tabPane.getTabs().add(pm.playerTab());
-        tabPane.getTabs().add(teamFX.teamTab());
+        tabPane.getTabs().add(teamFX.teamTab(stage));
         tabPane.getTabs().add(gamesFX.gameTab());
         tabPane.getTabs().add(matchTab.createAndReturnTabMatch());
 

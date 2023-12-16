@@ -18,64 +18,42 @@ import com.example.teamdelta100.entities.Teams;
 import java.util.List;
 
 
-public class TeamFX extends Application {
+public class TeamFX {
     TeamsController controller = new TeamsController();
-    private Popup popup = new Popup();
+    private TeamPopup popup = new TeamPopup();
     private TableView tableView;
     private Stage window;
     private PlayerMenu playerMenu;
+    private List<Teams> teamList;
 
-    @Override
-    public void start(Stage stage) throws Exception {
+    public Tab teamTab(Stage stage){
+        Tab teamTab = new Tab("Teams");
+        teamTab.setClosable(false);
+
         window = stage;
 
+        Button add = createButton("Add team");
+        Button assign = createButton("Assign Player");
+        Button delete = createButton("Delete team");
+        Button update = createButton("Update team");
+        Button logOut = createButton("Log out");
 
+        createTable();
+        updateTable();
 
-        Button add = button("Add team");
-        Button assign = button("Assign Player");
-        Button delete = button("Delete team");
-        Button logOut = button("Log out");
-
-        tableView = table();
-
-        VBox buttonV = new VBox(10);
-        buttonV.getChildren().addAll(add,assign,delete,logOut);
-
-        AnchorPane anchorPane = new AnchorPane();
-        anchorPane.getChildren().addAll(tableView, buttonV);
-        AnchorPane.setTopAnchor(buttonV,100.0);
-        AnchorPane.setLeftAnchor(buttonV,270.0);
-       // AnchorPane.setRightAnchor(buttonV,50.0);
-
-        Scene scene = new Scene(anchorPane);
-        window.setScene(scene);
-        window.show();
-
-    }
-    public Tab teamTab(){
-        Tab tabLayout = new Tab("Teams");
-        tabLayout.setClosable(false);
-        Button add = button("Add team");
-        Button assign = button("Assign Player");
-        Button delete = button("Delete team");
-        Button update = button("Update team");
-        Button logOut = button("Log out");
-
-        tableView = table();
-
-        VBox buttonV = new VBox(10);
-        buttonV.getChildren().addAll(add,assign,delete,update,logOut);
+        VBox vBoxForButton = new VBox(10);
+        vBoxForButton.getChildren().addAll(add,assign,delete,update,logOut);
 
         AnchorPane anchorPane = new AnchorPane();
-        anchorPane.getChildren().addAll(tableView, buttonV);
-        AnchorPane.setTopAnchor(buttonV,100.0);
-        AnchorPane.setLeftAnchor(buttonV,270.0);
+        anchorPane.getChildren().addAll(tableView, vBoxForButton);
+        AnchorPane.setTopAnchor(vBoxForButton,100.0);
+        AnchorPane.setLeftAnchor(vBoxForButton,420.0);
 
-        tabLayout.setContent(anchorPane);
+        teamTab.setContent(anchorPane);
 
-        return tabLayout;
+        return teamTab;
     }
-    public Button button(String input) {
+    public Button createButton(String input) {
         Button button = new Button(input);
         button.setOnAction(e-> {
             if (input.equals("Add team")) {
@@ -84,49 +62,59 @@ public class TeamFX extends Application {
                 if(controller.save(new Teams(teamName))){
                     System.out.println(teamName + " added");
                 } else {
-                    System.out.println("Failed to add.");
+                    System.out.println("Failed to add a player");
                 }
-                update();
+                updateTable();
 
 
             }else if (input.equals("Assign Player")) {
-                List<Player> playList = playerMenu.playerDatabaseList();
-                popup.assignPlayerToTeam(teamDatabaseList(),playerMenu.playerDatabaseList());
+                teamDatabaseList();
+                if (!teamList.isEmpty() && !playerMenu.playerDatabaseList().isEmpty()) {
+                    popup.assignPlayerToTeam(teamList, playerMenu.playerDatabaseList());
 
-                if(controller.addPlayerToTeams(popup.getPlayerId(), popup.getTeamId())){
-                    System.out.println("hej");
-                } else {
-                    System.out.println("Failed to add.");
+
+                    if (popup.getPlayerId() != 0 && popup.getTeamId() != 0) {
+                        if (controller.addPlayerToTeams(popup.getPlayerId(), popup.getTeamId())) {
+                            System.out.println("Successfully assigned a player");
+                        } else {
+                            System.out.println("Failed to assign a player");
+                        }
+                    } else {
+                        System.out.println("close");
+                    }
                 }
-                update();
+                else {
+                    System.out.println("There are no teams or no player added");
+                }
+                updateTable();
             }
 
             else if (input.equals("Delete team")) {
-                List<Teams> teamsList = controller.getAll();
-                if (controller.deleteTeamsById(popup.deleteTeam(teamsList))){
-                    System.out.println("Laget är borta");
+                teamDatabaseList();
+                if (controller.deleteTeamsById(popup.deleteTeam(teamList))){
+                    System.out.println("The team is deleted");
                 }
                 else {
-                    System.out.println("misslyckades att ta bort laget");
+                    System.out.println("Failed to delete the team");
                 }
 
 
-                update();
+                updateTable();
 
 
             }
             else if (input.equals("Update team")) {
-                List<Teams> teamsList = controller.getAll();
+                teamDatabaseList();
 
                 //Teams temp = popup.choosTeam(teamsList);
 
 
-                if(controller.updateTeams(popup.updateTextArea(teamsList))){
-                    System.out.println("hej");
+                if(controller.updateTeams(popup.updateTextArea(teamList))){
+                    System.out.println("The team is updatade");
                 } else {
-                    System.out.println("Failed to add.");
+                    System.out.println("Failed to update.");
                 }
-                update();
+                updateTable();
 
 
             }
@@ -140,7 +128,7 @@ public class TeamFX extends Application {
         return button;
     }
 
-    public TableView table (){
+    public TableView createTable (){
         tableView = new TableView<Teams>();
         tableView.setEditable(true);
 
@@ -155,34 +143,27 @@ public class TeamFX extends Application {
         TableColumn playersIdColumn = new TableColumn<Teams, Integer>("Players");
         playersIdColumn.setCellValueFactory(new PropertyValueFactory<Teams, Integer>("numberOfPlayer"));
 
-        tableView.getColumns().addAll(teamIdColumn,teamNameColumn,playersIdColumn);
+        TableColumn gameNameColumn = new TableColumn<Teams, Integer>("Game");
+        gameNameColumn.setCellValueFactory(new PropertyValueFactory<Teams, Integer>("gameName"));
+
+        TableColumn matchNameColumn = new TableColumn<Teams, Integer>("Match");
+        matchNameColumn.setCellValueFactory(new PropertyValueFactory<Teams, Integer>("matchName"));
+
+        tableView.getColumns().addAll(teamIdColumn,teamNameColumn,playersIdColumn,gameNameColumn,matchNameColumn);
 
         return tableView;
     }
-    public void update (){
+    public void updateTable(){
         tableView.getItems().clear();
         for (Teams temp : controller.tableUpdate() ) {
-            //temp.countPlayer();
+           temp.countPlayer();
             tableView.getItems().add(temp);
         }
     }
     public List<Teams> teamDatabaseList (){
-        List <Teams> teamlista = controller.tableUpdate();
-        return teamlista;
+       teamList = controller.tableUpdate();
+        return teamList;
     }
-
-    /*public void createPlayer(){
-
-        test.save(new TestPlay("Hug"));
-        test.save(new TestPlay("Hans"));
-        test.save(new TestPlay("Sara"));
-        test.save(new TestPlay("Klara"));
-        test.save(new TestPlay("Kim"));
-
-
-    }
-
-     */
 
     public PlayerMenu getPlayerMenu() {
         return playerMenu;
@@ -198,10 +179,5 @@ public class TeamFX extends Application {
 
     public void setController(TeamsController controller) {
         this.controller = controller;
-    }
-
-
-    public static void main(String[] args) throws Exception {
-        launch(args);
     }
 }
