@@ -22,6 +22,7 @@ public class CombinedFX extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         teamFX.setPlayerMenu(pm);
+        gamesFX.setPlayerMenu(pm);
         window = stage;
 
         stage.setTitle("test");

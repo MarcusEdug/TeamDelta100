@@ -90,9 +90,9 @@ public class GamesFX extends Application {
 
                 } else if (input.equals("Assign player to a game")) {
                     List<Player> playerList = playerMenu.playerDatabaseList();
-                    gamePopup.assignPlayerToGame(playerList,gameDatabaseList());
+                    gamePopup.assignPlayerToGame(gameDatabaseList(),playerList);
 
-                    if (gameController.addPlayerToGame(gamePopup.getPlayerId(), games.getGameId())){
+                    if (gameController.addPlayerToGame(gamePopup.getPlayerId(),(int) gamePopup.getGameId())){
                         System.out.println("Player added");
                     } else {
                         System.out.println("Failed do add player");
@@ -145,10 +145,10 @@ public class GamesFX extends Application {
         gameNameColumn.setCellValueFactory(new PropertyValueFactory("gameName"));
         //gameNameColumn.setCellValueFactory(TextFieldTableCell.forTableColumn());
 
-        TableColumn<Games, String> gameGenreColumn = new TableColumn("Game genre");
-        gameGenreColumn.setCellValueFactory(new PropertyValueFactory("gameGenre"));
+        TableColumn<Games, String> gamePlayerColumn = new TableColumn("Player");
+        gamePlayerColumn.setCellValueFactory(new PropertyValueFactory("playerName"));
 
-        tableView.getColumns().addAll(gameIdColumn, gameNameColumn, gameGenreColumn);
+        tableView.getColumns().addAll(gameIdColumn, gameNameColumn, gamePlayerColumn);
 
         return tableView;
     }
@@ -161,13 +161,24 @@ public class GamesFX extends Application {
             tableView.getItems().add(temp);
         }
     }
-    public List<Games> gameDatabaseList() {
+   /* public List<Games> gameDatabaseList() {
         for (Games temp : gameController.tableUpdate()){
             System.out.println("Game: " + temp.getGameName() + "and ID: " + temp.getGameId());
         }
         return gameController.tableUpdate();
+    }*/
+    public List<Games> gameDatabaseList() {
+        List<Games> listOfGames = gameController.tableUpdate();
+        return listOfGames;
     }
 
+    public PlayerMenu getPlayerMenu() {
+        return playerMenu;
+    }
+
+    public void setPlayerMenu(PlayerMenu playerMenu) {
+        this.playerMenu = playerMenu;
+    }
 
     public static void main(String[] args) throws Exception {
         launch(args);

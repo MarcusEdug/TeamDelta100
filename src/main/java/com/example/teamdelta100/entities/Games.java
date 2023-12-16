@@ -17,11 +17,10 @@ public class Games {
     @Column (length = 50)
     private String gameName;
 
-    @Column (length = 50)
-    private String gameGenre;
-
     @Column (name = "player_id")
     private int playerId;
+    private String playerName;
+
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "games" )
     private List<Teams> numberOfTeamsList = new ArrayList<>();
@@ -53,21 +52,21 @@ public class Games {
 
 
     //Konstruktor med allt
-    public Games(int gameId, String gameName, String gameGenre, int playerId, List<Games> gamesToChose, Player player /*Teams teams*/) {
+    public Games(int gameId, String gameName, int playerId, String playerName, List<Games> gamesToChose, Player player /*Teams teams*/) {
         this.gameId = gameId;
         this.gameName = gameName;
-        this.gameGenre = gameGenre;
         this.playerId = playerId;
+        this.playerName = playerName;
         /*  this.gamesToChose = gamesToChose;*/
         /*this.player = player;*/
         /*this.teams = teams;*/
     }
 
     //Konstruktor med allt utom gameId. Behövs playerId
-    public Games(String gameName, String gameGenre, int playerId, List<Games> gamesToChose, Player player /*Teams teams*/) {
+    public Games(String gameName, int playerId, String playerName, List<Games> gamesToChose, Player player /*Teams teams*/) {
         this.gameName = gameName;
-        this.gameGenre = gameGenre;
         this.playerId = playerId;
+        this.playerName = playerName;
         /*this.gamesToChose = gamesToChose;*/
         /*this.player = player;*/
         /*this.teams = teams;*/
@@ -96,7 +95,15 @@ public class Games {
         this.gameName = gameName;
     }
 
-  /*  public Player getPlayer() {
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    /*  public Player getPlayer() {
         return player;
     }
 
@@ -114,14 +121,6 @@ public class Games {
 
     public void setGameId(int id) {
         this.gameId = id;
-    }
-
-    public String getGameGenre() {
-        return gameGenre;
-    }
-
-    public void setGameGenre(String gameGenre) {
-        this.gameGenre = gameGenre;
     }
 
     public int getGameId() {

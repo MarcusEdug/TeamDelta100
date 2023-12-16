@@ -72,7 +72,7 @@ public class Player {
         return playerName;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
