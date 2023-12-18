@@ -19,7 +19,6 @@ public class MatchTab {
     private TeamFX teamFX;
     private TableView<Match> matchTableView;
 
-    // Knapparna bredvid tabellen
     private Button addPlayerMatch;
     private Button addTeamMatch;
     private Button addResult;
@@ -32,7 +31,6 @@ public class MatchTab {
     private Button showDone;
 
     private Label tabelLabel;
-    private String tabelVersion; // "all" - hela listan, "comming" - kommande, "played" - avgjorda
 
 
     // Konstruktor
@@ -44,23 +42,23 @@ public class MatchTab {
 
 
     // Metod: Skapa & skicka tillbaka scenen för matcher
-    public Tab createAndReturnTabMatch(){
+    public Tab createAndReturnTabMatch(){ // createMatchTab
         Tab matchTab = new Tab("Matches"); // Skapa tab att skicka tillbaka
         matchTab.setClosable(false);
 
         AnchorPane matchPane = new AnchorPane(); // Grund pane
 
-        tabelLabel = new Label(); // Label för att visa vilka matcher som visas i tabellen
+        tabelLabel = new Label("all"); // Label för att visa vilka matcher som visas i tabellen
 
         createTable(); // Skapa tabell
         updateTable(); // Uppdatera tabell
 
-        VBox buttonVBox = createButtons(); // Skapa knappar
+        VBox buttonVBox = createButtonsSide(); // Skapa knappar
         buttonVBox.setLayoutX(650);
         buttonVBox.setLayoutY(20);
         buttonVBox.setSpacing(15);
 
-        HBox buttonHBox = creatButtonRow();
+        HBox buttonHBox = creatButtonTable();
         buttonHBox.setLayoutX(20);
         buttonHBox.setLayoutY(420);
         buttonHBox.setSpacing(15);
@@ -83,11 +81,11 @@ public class MatchTab {
 
         // Kolumn: Player1/Team1 Namn
         TableColumn<Match, String> matchPTColumnOne = new TableColumn<>("Player/Team 1");
-        matchPTColumnOne.setCellValueFactory(new PropertyValueFactory<>("playerTeamOneName"));
+        matchPTColumnOne.setCellValueFactory(new PropertyValueFactory<>("playerTeamNameOne"));
 
         // Kolumn: Player2/Team2 Namn
         TableColumn<Match, String> matchPTColumnTwo = new TableColumn<>("Player/Team 2");
-        matchPTColumnTwo.setCellValueFactory(new PropertyValueFactory<>("playerTeamTwoName"));
+        matchPTColumnTwo.setCellValueFactory(new PropertyValueFactory<>("playerTeamNameTwo"));
 
         // Kolumn: Date
         TableColumn<Match, LocalDate> matchDateColumn = new TableColumn<>("Date");
@@ -112,18 +110,26 @@ public class MatchTab {
 
 
     // Metod: Skapa knapparna
-    public VBox createButtons(){
+    public VBox createButtonsSide(){
         VBox tempButtonBox = new VBox();
-
         addPlayerMatch = new Button("Add Match (Player vs Player)");
         addTeamMatch = new Button("Add Match (Team vs Team)");
         addResult = new Button("Add Match Result");
         delete = new Button("Delete Match");
         update = new Button("Update Match");
         logOut = new Button("Log out");
-
-        tempButtonBox.getChildren().addAll(addPlayerMatch, addTeamMatch, addResult, delete, update, logOut); // Lägga till knapparna i vboxen
+        tempButtonBox.getChildren().addAll(addPlayerMatch, addTeamMatch, addResult, delete, update, logOut);
         return tempButtonBox;
+    }
+
+    //Metod: Skapa upp knappraden under tabellen
+    public HBox creatButtonTable(){
+        HBox hbox = new HBox();
+        showAll = new Button("Show all");
+        showComming = new Button("Show not played matches");
+        showDone = new Button("Show played matches");
+        hbox.getChildren().addAll(showAll, showComming, showDone);
+        return hbox;
     }
 
     // Metod: Sätta händelselyssnare till knapparna
@@ -161,54 +167,47 @@ public class MatchTab {
         });
 
 
-
         // Knapparna för att hantera vilken tabell som syns
         showAll.setOnAction(event -> {
-            tabelLabel.setText("all");
-            // Metodanrop visa hela tabellen
+            tabelLabel.setText("all");    // Label text ändras
+            updateTable();                // Tabellen uppdateras med det nya label namnet
         });
 
         showComming.setOnAction(event -> {
-            tabelLabel.setText("comming");
-            // Metodanrop visa bara kommande matcher
+            tabelLabel.setText("not played");
+            updateTable();
         });
 
         showDone.setOnAction(event -> {
             tabelLabel.setText("played");
-            // Metodanrop visa enbart avgjorda matcher
+            updateTable();
         });
     }
 
 
     // Metod: Uppdatera tabellen efter popupfönstret
     public void updateTable(){
-        matchTableView.getItems().clear(); // Tömma tabellen
-        for(Match m : matchController.getAllMatchObjects()){ // Hämta och gå igenom listan
-            matchTableView.getItems().add(m);
+
+        if(tabelLabel.getText().equals("all")){   // Hela listan syns
+            matchTableView.getItems().clear(); // Tömma tabellen
+            for(Match m : matchController.getAllMatchObjects()){ // Hämta alla och gå igenom listan
+                matchTableView.getItems().add(m);
+            }
+        }else if(tabelLabel.getText().equals("not played")){  // Endast inte spelade matcher syns
+            matchTableView.getItems().clear();
+            for(Match m : matchController.getAllMatchObjects()){
+                if(m.getPlayed().equals("Not Played")){
+                    matchTableView.getItems().add(m);
+                }
+            }
+        }else if(tabelLabel.getText().equals("played")){  // Endast spelade matcher syns
+            matchTableView.getItems().clear();
+            for(Match m : matchController.getAllMatchObjects()){
+                if(m.getPlayed().equals("Played")){
+                    matchTableView.getItems().add(m);
+                }
+            }
         }
-
-        if(tabelLabel.getText().equals("all")){
-
-        }else if(tabelLabel.getText().equals("comming")){
-
-        }else if(tabelLabel.getText().equals("played")){
-
-        }
-        // Lägga in
-        // Enbart oavgjorda matcher
-        // Enbart avgjorda matcher
-    }
-
-
-
-    //Metod: Skapa upp knappraden under tabellen
-    public HBox creatButtonRow(){
-        HBox hbox = new HBox();
-        showAll = new Button("Show all");
-        showComming = new Button("Show not played matches");
-        showDone = new Button("Show played matches");
-        hbox.getChildren().addAll(showAll, showComming, showDone);
-        return hbox;
     }
 
 }

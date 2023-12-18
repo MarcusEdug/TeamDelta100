@@ -27,6 +27,7 @@ import java.util.List;
 public class MatchPopUp {
     private MatchController matchController;
     private TeamFX teamFX; // TeamFX objekt för att nå listan med Teams
+    private PlayerMenu playerMenu;
     private Match selected; // ÄNDRA
 
     private Label title = new Label(); //  Label för rubrik
@@ -35,7 +36,7 @@ public class MatchPopUp {
     private Label playerTeamOne = new Label("Player/Team 1: ");
     private Label playerTeamTwo = new Label("Player/Team 2: ");
     private Label dateLabel = new Label("Match Date: ");
-    private Label playedNotPlayed = new Label("Match played or not played: ");
+    private Label playedLabel = new Label("Match played or not played: ");
     private Label resultLabelOne = new Label("Reslult Player/Team 1 :");
     private Label resultLabelTwo = new Label("Reslult Player/Team 2: ");
     private Label winnerLabel = new Label("Winner: ");
@@ -50,6 +51,7 @@ public class MatchPopUp {
     public MatchPopUp(MatchController matchController, TeamFX teamFX) {
         this.matchController = matchController;
         this.teamFX = teamFX;
+        this.playerMenu = new PlayerMenu();
     }
 
 
@@ -60,8 +62,8 @@ public class MatchPopUp {
         popup.setMinHeight(450);
         changeLabels(teamOrPlayer);
 
-        HBox hboxOne = new HBox(); // NYTT NAMN
-        HBox hboxtwo = new HBox(); // NYTT NAMN
+        HBox hboxOne = new HBox();
+        HBox hboxtwo = new HBox();
 
         // Om det är Player eller Teams
         if(teamOrPlayer.equals("player")){
@@ -70,11 +72,12 @@ public class MatchPopUp {
             hboxOne.getChildren().add(comboBoxPlayerOne);
             hboxtwo.getChildren().add(comboBoxPlayerTwo);
 
-            List<Player> listPlayerOne = new ArrayList<>();
-            for(Player p : listPlayerOne){
-                // KOLLA OM DET FINNS EN TO STRING I PLAYER KLASSEN!
-                //comboBoxPlayerOne.getItems().add(p);
-                //comboBoxPlayerTwo.getItems().add(p);
+           comboBoxPlayerOne.getItems().clear(); // Tömma listan innan den fylls på nytt
+           comboBoxPlayerTwo.getItems().clear();
+
+            for(Player p : playerMenu.playerDatabaseList()){ // Fylla på listorna
+                comboBoxPlayerOne.getItems().add(p);
+                comboBoxPlayerTwo.getItems().add(p);
             }
 
         }else{
@@ -83,7 +86,10 @@ public class MatchPopUp {
             hboxOne.getChildren().add(comboBoxTeamOne);
             hboxtwo.getChildren().add(comboBoxTeamTwo);
 
-            for(Teams t : teamFX.teamDatabaseList()){
+            comboBoxTeamOne.getItems().clear(); // Tömma listan innan den fylls på nytt
+            comboBoxTeamTwo.getItems().clear();
+
+            for(Teams t : teamFX.teamDatabaseList()){ // Fylla på listorna
                 comboBoxTeamOne.getItems().add(t);
                 comboBoxTeamTwo.getItems().add(t);
             }
@@ -119,7 +125,7 @@ public class MatchPopUp {
         rowOne.getChildren().addAll(playerTeamOne, hboxOne);
         rowTwo.getChildren().addAll(playerTeamTwo, hboxtwo);
         rowThree.getChildren().addAll(dateLabel, date);
-        rowFour.getChildren().addAll(playedNotPlayed, played, notPlayed);
+        rowFour.getChildren().addAll(playedLabel, played, notPlayed);
         rowFive.getChildren().addAll(resultLabelOne, resultOne);
         rowSix.getChildren().addAll(resultLabelTwo, resultTwo);
         rowSeven.getChildren().addAll(winnerLabel, winnerField);
@@ -138,35 +144,38 @@ public class MatchPopUp {
         createButton.setOnAction(event -> {
             // KOLLA ATT SPELARE/LAG ÄR VALT!
 
+            String nameOne = "";
+            String nameTwo = "";
+
              if(date.getValue() == null){
                 warningText.setText("Pick a date and try again! ");
              }else{
-                int idOne = 0;
-                int idTwo = 0;
-                String nameOne = "";
-                String nameTwo = "";
-
-                 // LÄGGA IN LISTAN ISTÄLLET FÖR TEAMID OCH NAME
+                 Player playerOne = new Player();
+                 Player playerTwo = new Player();
+                 Teams teamOne = new Teams();
+                 Teams teamTwo = new Teams();
 
                 if(teamOrPlayer.equals("player")){
-                    Player playerOne = comboBoxPlayerOne.getSelectionModel().getSelectedItem();
-                    Player playerTwo = comboBoxPlayerTwo.getSelectionModel().getSelectedItem();
-                    // idOne = 0; // playerOne.getId();
-                    // idTwo; // playerTwo.getId();
-                    //nameOne = playerOne.getName();
-                    //nameTwo = playerTwo.getName();
+                    playerOne = comboBoxPlayerOne.getSelectionModel().getSelectedItem();
+                    playerTwo = comboBoxPlayerTwo.getSelectionModel().getSelectedItem();
+                    nameOne = playerOne.getPlayerName();
+                    nameTwo = playerTwo.getPlayerName();
+
                 }else if (teamOrPlayer.equals("team")){
-                    Teams teamOne = comboBoxTeamOne.getSelectionModel().getSelectedItem();
-                    Teams teamTwo = comboBoxTeamTwo.getSelectionModel().getSelectedItem();
-                    idOne = teamOne.getId();
-                    idTwo = teamTwo.getId();
+                    teamOne = comboBoxTeamOne.getSelectionModel().getSelectedItem();
+                    teamTwo = comboBoxTeamTwo.getSelectionModel().getSelectedItem();
+
                     nameOne = teamOne.getName();
                     nameTwo = teamTwo.getName();
+
+                    // Lägga in att matchnamnet syns för båda teams
+                    String matchName = nameOne + " vs. " + nameTwo;
+                    // teamOne.setMatchName(matchName);
+                    // teamTwo.setMatchName(matchName);
                 }
 
                 LocalDate tempDate = date.getValue();
-                RadioButton tempPlayedSelected = (RadioButton) group.getSelectedToggle();
-                String tempPlayed = tempPlayedSelected.getText();
+                String tempPlayed = ((RadioButton) group.getSelectedToggle()).getText();
 
                  // Om resultatfälten är antingen tomma eller innehåller siffror
                 if(testTextField(resultOne.getText()) && testTextField(resultTwo.getText())){
@@ -184,8 +193,18 @@ public class MatchPopUp {
                     }
 
                     String tempWinner = winnerField.getText();
+                    Match tempMatch = new Match (teamOrPlayer, nameOne, nameTwo, tempDate, tempPlayed, tempResultOne, tempResultTwo, tempWinner);
+                    matchController.addMatch(tempMatch);
 
-                    matchController.addMatch(new Match(teamOrPlayer, idOne, idTwo, nameOne, nameTwo, tempDate, tempPlayed, tempResultOne, tempResultTwo, tempWinner));
+                    if(teamOrPlayer.equals("player")){
+                        matchController.addPlayerToMatch(tempMatch.getMatchId(), playerOne.getId());
+                        matchController.addPlayerToMatch(tempMatch.getMatchId(), playerTwo.getId());
+                    }else{
+                        matchController.addTeamToMatch(tempMatch.getMatchId(), teamOne.getId());
+                        matchController.addTeamToMatch(tempMatch.getMatchId(), teamTwo.getId());
+                    }
+
+                
                     popup.close();
                 }else{
                     warningText.setText("Put numbers in the result field and try again!");
@@ -208,6 +227,13 @@ public class MatchPopUp {
         popup.setMinHeight(450);
         popup.setTitle("Add Result");
 
+        RadioButton played = new RadioButton("Played");
+        RadioButton notPlayed = new RadioButton("Not Played");
+        ToggleGroup group = new ToggleGroup();
+        played.setToggleGroup(group);
+        notPlayed.setToggleGroup(group);
+        group.selectToggle(notPlayed);
+
         resultLabelOne.setText("Result 1: ");
         resultLabelTwo.setText("Result 2: ");
 
@@ -220,28 +246,40 @@ public class MatchPopUp {
         Text chooseWarning = new Text();
         chooseWarning.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
+        TextField resultOne = new TextField();    // Resultat player/team 1
+        TextField resultTwo = new TextField();    // Resultat player/team 2
+        TextField winnerField = new TextField();  // Vinnare - BYTA TILL LISTA MED 2
+
         // Vad som ska hända när man trycker på knappen
         chooseButton.setOnAction(event ->  {
             if(!listView.getSelectionModel().isEmpty()){
                 chooseWarning.setText("");
                 selected = listView.getSelectionModel().getSelectedItem();
                 changeLabels(selected.getPlayerOrTeam());
+
+                if(selected.getPlayed().equals("Played")){
+                    played.setSelected(true);
+                }else{
+                    notPlayed.setSelected(true);
+                }
+
+                resultOne.setText(String.valueOf(selected.getResultOne()));
+                resultTwo.setText(String.valueOf(selected.getResultTwo()));
+                winnerField.setText(selected.getWinner());
             }else{
                 chooseWarning.setText(" Choose a match to use. ");
             }
         });
 
-        // Nya resultatet
-        TextField resultOne = new TextField();    // Resultat player/team 1
-        TextField resultTwo = new TextField();    // Resultat player/team 2
-        TextField winnerField = new TextField();  // Vinnare - BYTA TILL LISTA MED 2
-
+        HBox boxZero = new HBox();
         HBox boxOne = new HBox();
         HBox boxTwo = new HBox();
         HBox boxThree = new HBox();
+        boxZero.setSpacing(10);
         boxOne.setSpacing(10);
         boxTwo.setSpacing(10);
         boxThree.setSpacing(10);
+        boxZero.getChildren().addAll(playedLabel, played, notPlayed);
         boxOne.getChildren().addAll(resultLabelOne, resultOne);
         boxTwo.getChildren().addAll(resultLabelTwo, resultTwo);
         boxThree.getChildren().addAll(winnerLabel, winnerField);
@@ -261,6 +299,7 @@ public class MatchPopUp {
             if(resultOne.getText().isEmpty() ||  resultTwo.getText().isEmpty() || winnerField.getText().isEmpty()){
                 warningText.setText(" Fill in result form and try again! ");
             }else{
+                selected.setPlayed(((RadioButton) group.getSelectedToggle()).getText());
                 selected.setResultOne(Integer.parseInt(resultOne.getText()));
                 selected.setResultTwo(Integer.parseInt(resultOne.getText()));
                 selected.setWinner(winnerField.getText());
@@ -270,7 +309,7 @@ public class MatchPopUp {
         });
 
         VBox box = vboxFormat();
-        box.getChildren().addAll(listView, chooseWarning, chooseButton, boxOne, boxTwo, boxThree, warningText, buttonBox);
+        box.getChildren().addAll(listView, chooseWarning, chooseButton, boxZero, boxOne, boxTwo, boxThree, warningText, buttonBox);
         Scene popupscene = new Scene(box);
         popup.setScene(popupscene);
         popup.showAndWait();
@@ -376,13 +415,17 @@ public class MatchPopUp {
 
         Text warningText = new Text();
 
-        // Välja match att update
+        // Välja match att uppdatera
         chooseButton.setOnAction( event -> {
+
             selected = listView.getSelectionModel().getSelectedItem();
             changeLabels(selected.getPlayerOrTeam());
 
             if(selected.getPlayerOrTeam().equals("team")){
                 title.setText("Team vs. Team");
+                comboBoxTeamOne.getItems().clear();
+                comboBoxTeamTwo.getItems().clear();
+
                 for(Teams t : teamFX.teamDatabaseList()){
                     comboBoxTeamOne.getItems().add(t);
                     comboBoxTeamTwo.getItems().add(t);
@@ -391,15 +434,31 @@ public class MatchPopUp {
                 tempTwo.getChildren().clear();
                 tempOne.getChildren().add(comboBoxTeamOne);
                 tempTwo.getChildren().add(comboBoxTeamTwo);
-                comboBoxTeamOne.getSelectionModel().select(selected.getPlayerTeamOneId());
-                comboBoxTeamTwo.getSelectionModel().select(selected.getPlayerTeamTwoId());
+                /*
+                comboBoxTeamOne.getSelectionModel().select(selected.getTeamsList().get(0).getId());
+                comboBoxTeamTwo.getSelectionModel().select(selected.getTeamsList().get(1).getId());
+
+                 */
             }else{
                 title.setText("Player vs. Player");
-                // LÄGGA TILL LISTA MED PLAYERS
+                comboBoxPlayerOne.getItems().clear();
+                comboBoxPlayerTwo.getItems().clear();
+
+                for(Player p : playerMenu.playerDatabaseList()){
+                    comboBoxPlayerOne.getItems().add(p);
+                    comboBoxPlayerTwo.getItems().add(p);
+                }
+
                 tempOne.getChildren().clear();
                 tempTwo.getChildren().clear();
                 tempOne.getChildren().add(comboBoxPlayerOne);
                 tempTwo.getChildren().add(comboBoxPlayerTwo);
+
+                /*
+                comboBoxPlayerOne.getSelectionModel().select(selected.getPlayerList().get(0).getId());
+                comboBoxPlayerTwo.getSelectionModel().select(selected.getPlayerList().get(1).getId());
+
+                 */
             }
 
             date.setValue(selected.getMatchDate());
@@ -411,7 +470,7 @@ public class MatchPopUp {
             }
 
             resultOne.setText(String.valueOf(selected.getResultOne()));
-            resultTwo.setText(String.valueOf(selected.getResultOne()));
+            resultTwo.setText(String.valueOf(selected.getResultTwo()));
             winnerField.setText(selected.getWinner());
         });
 
@@ -419,29 +478,46 @@ public class MatchPopUp {
         Button updateButton = new Button("Update Match");
         updateButton.setOnAction(event -> {
 
-            // LÄGGA IN LISTAN ISTÄLLET FÖR TEAMID OCH NAME
-
             // Om det är en player eller teams match som är vald
             if(selected.getPlayerOrTeam().equals("player")){
-                Player playerOne = comboBoxPlayerOne.getSelectionModel().getSelectedItem();
+                Player playerOne = comboBoxPlayerOne.getSelectionModel().getSelectedItem(); // Hämta valt Player objekt
                 Player playerTwo = comboBoxPlayerTwo.getSelectionModel().getSelectedItem();
-                //selected.setPlayerTeamOneId(playerOne.getId);
-                //selected.setPlayerTeamOneId(playerOne.getId);
-                //selected.setPlayerTeamOneName(playerOne.getName());
-                //selected.setPlayerTeamOneName(playerTwo.getName());
+
+                // Ta bort match objekt ifrån teams
+                /*
+                selected.getTeamsList().get(0).setMatch(null);
+                selected.getTeamsList().get(1).setMatch(null);
+                 */
+                selected.setPlayerTeamNameOne(playerOne.getPlayerName());
+                selected.setPlayerTeamNameTwo(playerTwo.getPlayerName());
+
+                List<Player> empty = new ArrayList<>();
+                selected.setPlayerList(empty);
+                selected.addPlayer(playerOne);
+                selected.addPlayer(playerTwo);
             }else{
                 Teams teamOne = comboBoxTeamOne.getSelectionModel().getSelectedItem(); // Hämta valt Teams objekt
                 Teams teamTwo = comboBoxTeamTwo.getSelectionModel().getSelectedItem();
-                selected.setPlayerTeamTwoId(teamOne.getId());
-                selected.setPlayerTeamTwoId(teamTwo.getId());
-                selected.setPlayerTeamOneName(teamOne.getName());
-                selected.setPlayerTeamOneName(teamTwo.getName());
+
+                // Ta bort match objekt från players
+                /*
+                selected.getPlayerList().get(0).setMatch(null);
+                selected.getPlayerList().get(1).setMatch(null);
+
+                 */
+
+                selected.setPlayerTeamNameOne(teamOne.getName());
+                selected.setPlayerTeamNameTwo(teamTwo.getName());
+
+                List<Teams> empty = new ArrayList<>();
+                selected.setTeamsList(empty);
+                selected.addTeams(teamOne);
+                selected.addTeams(teamTwo);
             }
 
             RadioButton tempPlayedSelected = (RadioButton) group.getSelectedToggle();
             selected.setPlayed(tempPlayedSelected.getText());
 
-            // LÄGGA IN KONTROLL PÅ ATT ETT DATUM ÄR VALT ??
             selected.setMatchDate(date.getValue());
 
             // Kontrollera att resultaten är i sifferformat
@@ -462,7 +538,7 @@ public class MatchPopUp {
         rowOne.getChildren().addAll(playerTeamOne, tempOne);
         rowTwo.getChildren().addAll(playerTeamTwo, tempTwo);
         rowThree.getChildren().addAll(dateLabel, date);
-        rowFour.getChildren().addAll(playedNotPlayed, played, notPlayed);
+        rowFour.getChildren().addAll(playedLabel, played, notPlayed);
         rowFive.getChildren().addAll(resultLabelOne, resultOne);
         rowSix.getChildren().addAll(resultLabelTwo, resultTwo);
         rowSeven.getChildren().addAll(winnerLabel, winnerField);
@@ -487,7 +563,6 @@ public class MatchPopUp {
         cancelButton.setOnAction(event -> {
             popup.close();
         });
-
         return cancelButton;
     }
 
@@ -533,6 +608,7 @@ public class MatchPopUp {
         listView.setItems(obList);
         listView.setPrefHeight(230);
         listView.setPrefWidth(230);
+
 
         listView.setCellFactory(param -> new ListCell<Match>(){
             protected void updateItem(Match m, boolean empty){

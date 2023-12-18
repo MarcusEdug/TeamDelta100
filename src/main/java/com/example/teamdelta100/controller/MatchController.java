@@ -1,10 +1,13 @@
 package com.example.teamdelta100.controller;
 
 import com.example.teamdelta100.entities.Match;
+import com.example.teamdelta100.entities.Player;
+import com.example.teamdelta100.entities.Teams;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 // Hantera kommunikationen med databasen för Match tabellen.
 // Evelina Daun
@@ -98,6 +101,60 @@ public class MatchController {
             entityManager.close();
         }
         return null;
+    }
+
+
+    // Metod: Lägga till Player till Match
+    public void addPlayerToMatch(int matchId, int playerId){
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+        try{
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            Optional<Player> player = Optional.ofNullable(entityManager.find(Player.class, playerId));
+            Optional<Match> match = Optional.ofNullable(entityManager.find(Match.class, matchId));
+
+            Player tempPlayer = player.get();
+            Match tempMatch = match.get();
+            tempMatch.addPlayer(tempPlayer);
+
+            transaction.commit();
+        }catch(Exception e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }finally {
+            entityManager.close();
+        }
+    }
+
+
+    // Metod: Lägga till Team till Match
+    public void addTeamToMatch(int matchId, int teamsId){
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+        try{
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            Optional<Teams> team = Optional.ofNullable(entityManager.find(Teams.class, teamsId));
+            Optional<Match> match = Optional.ofNullable(entityManager.find(Match.class, matchId));
+
+            Teams tempTeam = team.get();
+            Match tempMatch = match.get();
+            tempMatch.addTeams(tempTeam);
+
+            transaction.commit();
+        }catch(Exception e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }finally {
+            entityManager.close();
+        }
     }
 
 }

@@ -21,7 +21,6 @@ public class Match {
     private String playerOrTeam;  // "team",  "player"
 
 
-
     // sätta in plats 0 - id 1 och plats 1 - id 2 ?
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "match")
     private List<Player> playerList = new ArrayList<>();
@@ -30,23 +29,19 @@ public class Match {
     private List<Teams> teamsList = new ArrayList<>();
 
 
-    // TA BORT OCH ANVÄNDA LISTORNA ISTÄLLET  ???
-    @Column(name = "playerTeamOneId")  // Player eller Team id
-    private int playerTeamOneId;
-    @Column(name = "playerTeamTwoId")
-    private int playerTeamTwoId;
+    @Column(name = "playerTeamNameOne") // Player eller Team namn
+    private String playerTeamNameOne;
 
-    // TA BORT OCH ANVÄNDA LISTORNA ISTÄLLET ???
-    @Column(name = "playerTeamOneName") // Player eller Team namn
-    private String playerTeamOneName;
-    @Column(name = "playerTeamTwoName")
-    private String playerTeamTwoName;
+
+    @Column(name = "playerTeamNameTwo")
+    private String playerTeamNameTwo;
+
 
     @Column(name = "matchDate")
     private LocalDate matchDate;
 
     @Column(name = "playedNotPlayed")
-    private String played; // "Played", "Not played"
+    private String played; // "Played", "Not Played"
 
     @Column(name = "resultOne")
     private int resultOne; // Lag eller spelare 1
@@ -63,14 +58,9 @@ public class Match {
 
 
     // Konstruktor med allt utom matchId - Primary key
-    public Match(String playerOrTeam, int playerTeamOneId, int playerTeamTwoId,
-                 String playerTeamOneName, String playerTeamTwoName, LocalDate matchDate,
+    public Match(String playerOrTeam, LocalDate matchDate,
                  String played, int resultOne, int resultTwo, String winner) {
         this.playerOrTeam = playerOrTeam;
-        this.playerTeamOneId = playerTeamOneId;
-        this.playerTeamTwoId = playerTeamTwoId;
-        this.playerTeamOneName = playerTeamOneName;
-        this.playerTeamTwoName = playerTeamTwoName;
         this.matchDate = matchDate;
         this.played = played;
         this.resultOne = resultOne;
@@ -80,15 +70,13 @@ public class Match {
 
 
     // Konstruktor med allt inkluderat
-    public Match(int matchId, String playerOrTeam, int playerTeamOneId, int playerTeamTwoId,
-                 String playerTeamOneName, String playerTeamTwoName, LocalDate matchDate,
-                 String played, int resultOne, int resultTwo, String winner) {
-        this.matchId = matchId;
+
+
+    public Match(String playerOrTeam, String playerTeamOneName, String playerTeamTwoName,
+                 LocalDate matchDate, String played, int resultOne, int resultTwo, String winner) {
         this.playerOrTeam = playerOrTeam;
-        this.playerTeamOneId = playerTeamOneId;
-        this.playerTeamTwoId = playerTeamTwoId;
-        this.playerTeamOneName = playerTeamOneName;
-        this.playerTeamTwoName = playerTeamTwoName;
+        this.playerTeamNameOne = playerTeamOneName;
+        this.playerTeamNameTwo = playerTeamTwoName;
         this.matchDate = matchDate;
         this.played = played;
         this.resultOne = resultOne;
@@ -96,20 +84,22 @@ public class Match {
         this.winner = winner;
     }
 
-    // Metod: toString - Skriva ut matcherna med namn och id för spelare/lag
+    // Metod: Lägga till player
     public void addPlayer (Player player){
         player.setMatch(this);
+        playerList.add(player);
     }
 
+    // Metod: lägga till team
     public void addTeams (Teams team){
         team.setMatch(this);
+        teamsList.add(team);
     }
 
+    // Metod: toString - Skriva ut matcherna med namn och id för spelare/lag
     @Override
     public String toString() {
-        return "Match: " + playerTeamOneName +
-                " vs. " + playerTeamTwoName +
-                ", Date: " + matchDate ;
+        return "Match: " + playerTeamNameOne + " vs. " + playerTeamNameTwo + ". Date: " + matchDate;
     }
 
     // Getters & Setters
@@ -161,39 +151,6 @@ public class Match {
         this.winner = name;
     }
 
-    public int getPlayerTeamOneId() {
-        return playerTeamOneId;
-    }
-
-    public void setPlayerTeamOneId(int playerTeamOneId) {
-        this.playerTeamOneId = playerTeamOneId;
-    }
-
-    public int getPlayerTeamTwoId() {
-        return playerTeamTwoId;
-    }
-
-    public void setPlayerTeamTwoId(int playerTeamTwoId) {
-        this.playerTeamTwoId = playerTeamTwoId;
-    }
-
-    public String getPlayerTeamOneName() {
-        return playerTeamOneName;
-    }
-
-    public void setPlayerTeamOneName(String playerTeamOneName) {
-        this.playerTeamOneName = playerTeamOneName;
-    }
-
-    public String getPlayerTeamTwoName() {
-        return playerTeamTwoName;
-    }
-
-    public void setPlayerTeamTwoName(String playerTeamTwoName) {
-        this.playerTeamTwoName = playerTeamTwoName;
-    }
-
-
     public List<Player> getPlayerList() {
         return playerList;
     }
@@ -210,4 +167,20 @@ public class Match {
         this.teamsList = teamsList;
     }
 
+
+    public String getPlayerTeamNameOne() {
+        return playerTeamNameOne;
+    }
+
+    public void setPlayerTeamNameOne(String playerTeamOneName) {
+        this.playerTeamNameOne = playerTeamOneName;
+    }
+
+    public String getPlayerTeamNameTwo() {
+        return playerTeamNameTwo;
+    }
+
+    public void setPlayerTeamNameTwo(String playerTeamTwoName) {
+        this.playerTeamNameTwo = playerTeamTwoName;
+    }
 }
