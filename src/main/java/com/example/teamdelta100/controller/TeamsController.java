@@ -153,33 +153,37 @@ public class TeamsController implements Share {
         }
         return null;
     }
-    public boolean addPlayerToTeams(int playerId, int teamsId){
+    public boolean addPlayerToTeams(int playerId, int teamsId) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         Teams team;
+
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
 
-            Optional<Player> selectPlayer = Optional.ofNullable(entityManager.find(Player.class,playerId));
+            Optional<Player> selectPlayer = Optional.ofNullable(entityManager.find(Player.class, playerId));
             Optional<Teams> selectTeam = Optional.ofNullable(entityManager.find(Teams.class, teamsId));
 
-            Player player = selectPlayer.get();
-            team = selectTeam.get();
-            team.addPlayer(player);
+                    Player player = selectPlayer.get();
+                    team = selectTeam.get();
+                    player.setTeamName(team.getName());
+                    team.addPlayer(player);
+                    team.countPlayer();
+                    entityManager.merge(team);
+                    transaction.commit();
 
-            transaction.commit();
-            return true;
-        } catch (Exception e){
-            if(transaction != null){
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
+                    return true;
+
+                } catch(Exception e){
+                    if (transaction != null) {
+                        transaction.rollback();
+                    }
+                    e.printStackTrace();
+                } finally{
+                    entityManager.close();
+                }
+
+                return false;
         }
-        return false;
     }
-
-
-}

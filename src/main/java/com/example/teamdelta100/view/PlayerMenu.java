@@ -18,7 +18,7 @@ import java.util.List;
 public class PlayerMenu extends Application {
 
     PlayerController playerController = new PlayerController();
-    Popup popup = new Popup();
+    TeamPopup popup = new TeamPopup();
     InformationForm info = new InformationForm();
     TableView tableView;
     public static void main(String[] args) {
@@ -81,8 +81,8 @@ public class PlayerMenu extends Application {
         TableColumn playerNameColumn = new TableColumn("Player Name");
         playerNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("playerName"));
 
-        TableColumn playerLastNameColumn = new TableColumn("Player Lastname");
-        playerLastNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("playerLastname"));
+        TableColumn playerLastNameColumn = new TableColumn("Team name");
+        playerLastNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("teamName"));
 
         tableView.getColumns().addAll(playerIdColumn,playerNameColumn, playerLastNameColumn);
 
@@ -150,5 +150,13 @@ public class PlayerMenu extends Application {
 
     public void setController(PlayerController playerController) {
         this.playerController = playerController;
+    }
+    public void createPlayer(){
+        playerController.save(new Player("Huggo"));
+        playerController.save(new Player("Sofia"));
+        playerController.save(new Player("Albin"));
+        playerController.save(new Player("Felix"));
+        playerController.save(new Player("Sara"));
+
     }
 }
