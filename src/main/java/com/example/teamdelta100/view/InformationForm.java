@@ -126,7 +126,6 @@ public class InformationForm extends Application {
         primaryStage.show();
     }
 
-
     public TextField getFirstNameField() {
         return firstNameField;
     }

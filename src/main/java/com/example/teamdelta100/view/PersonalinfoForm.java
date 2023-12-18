@@ -169,7 +169,6 @@ public class PersonalinfoForm extends Application {
         personal.setPerEmail(email);
         return personal;
     }
-
     public void addPerComponents(TableView tableView, PersonalController personalController) {
         this.tableView = tableView;
         this.personalController = personalController;

@@ -113,7 +113,6 @@ public class PersonalFX extends Application {
                     System.out.println("Tog ej bort Person");
                 }
 
-
                 update();
             }
 

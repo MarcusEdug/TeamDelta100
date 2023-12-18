@@ -10,7 +10,6 @@ public class Personal {
     private int Id;
 
     // Variabelnamn: "Per" = personal, "Lname" = lastName
-
     @Column(name = "personalName")
     private String perName;
 

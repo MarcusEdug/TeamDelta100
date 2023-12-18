@@ -36,7 +36,6 @@ public class  PlayerPopup {
         this.playerController = playerController;
     }
     public PlayerPopup() {
-
     }
     public void popupWindows(){
         window = new Stage();

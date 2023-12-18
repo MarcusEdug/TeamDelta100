@@ -182,7 +182,6 @@ public class Player {
     public void setGames(Games games) {
         this.games = games;
     }
-
 }
 
 

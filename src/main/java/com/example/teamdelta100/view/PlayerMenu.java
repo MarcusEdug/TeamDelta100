@@ -50,7 +50,6 @@ public class PlayerMenu extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
     public Tab playerTab(){
         Tab tabLayout = new Tab("Players");
         tabLayout.setClosable(false);

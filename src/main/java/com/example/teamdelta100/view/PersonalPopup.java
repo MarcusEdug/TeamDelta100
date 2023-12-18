@@ -64,7 +64,6 @@ public class  PersonalPopup{
             int id = personal.getId();
             comboBox.getItems().add(id);
         }
-
         Button submit = new Button("Submit");
         submit.setOnAction(e->{
             userIntSubmit = (int) comboBox.getValue();

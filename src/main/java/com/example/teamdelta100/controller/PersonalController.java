@@ -1,8 +1,6 @@
 package com.example.teamdelta100.controller;
 
 import com.example.teamdelta100.entities.Personal;
-import com.example.teamdelta100.entities.Player;
-import com.example.teamdelta100.entities.Teams;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,7 +10,7 @@ public class PersonalController {
 
     public static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("hibernate");
 
-    // CREATE
+
     public boolean save (Personal personal){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -63,8 +61,6 @@ public class PersonalController {
         }
         return null;
     }
-
-    // Overloaded method with a default value for printOut
     public List<Personal> getAll() {
         return getAll(true); // Set default value to true (print results)
     }

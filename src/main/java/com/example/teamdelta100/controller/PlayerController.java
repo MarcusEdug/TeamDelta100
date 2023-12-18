@@ -87,7 +87,6 @@ public class PlayerController {
         return false;
     }
 
-
     public List<Player> getAll() {
         return getAll(true);
     }
