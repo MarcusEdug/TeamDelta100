@@ -46,8 +46,16 @@ public class Player {
     @JoinColumn (name = "match_id")
     private Match match;
 
+    private String teamName;
 
 
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
 
     public Player() {
 

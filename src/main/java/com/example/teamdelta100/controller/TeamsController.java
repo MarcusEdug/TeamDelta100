@@ -169,8 +169,10 @@ public class TeamsController implements Share {
                     team = selectTeam.get();
                     player.setTeamName(team.getName());
                     team.addPlayer(player);
-
+                    team.countPlayer();
+                    entityManager.merge(team);
                     transaction.commit();
+
                     return true;
 
                 } catch(Exception e){

@@ -1,8 +1,5 @@
 package com.example.teamdelta100.view;
 
-import com.example.teamdelta100.entities.Player;
-import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
@@ -72,7 +69,6 @@ public class TeamFX {
                 if (!teamList.isEmpty() && !playerMenu.playerDatabaseList().isEmpty()) {
                     popup.assignPlayerToTeam(teamList, playerMenu.playerDatabaseList());
 
-
                     if (popup.getPlayerId() != 0 && popup.getTeamId() != 0) {
                         if (controller.addPlayerToTeams(popup.getPlayerId(), popup.getTeamId())) {
                             System.out.println("Successfully assigned a player");
@@ -86,6 +82,7 @@ public class TeamFX {
                 else {
                     System.out.println("There are no teams or no player added");
                 }
+
                 updateTable();
             }
 
@@ -106,10 +103,7 @@ public class TeamFX {
             else if (input.equals("Update team")) {
                 teamDatabaseList();
 
-                //Teams temp = popup.choosTeam(teamsList);
-
-
-                if(controller.updateTeams(popup.updateTextArea(teamList))){
+                if(controller.updateTeams(popup.updateTeamName(teamList))){
                     System.out.println("The team is updatade");
                 } else {
                     System.out.println("Failed to update.");

@@ -141,7 +141,7 @@ public class TeamPopup {
         return tempTeam;
     }
 
-    public Teams updateTextArea(List<Teams> teamsList){
+    public Teams updateTeamName(List<Teams> teamsList){
         titleName = "Change name";
         featureText = new Label("Select which team to change namn on");
 
@@ -273,5 +273,11 @@ public class TeamPopup {
         this.playerId = playerId;
     }
 
+    public Teams getTempTeam() {
+        return tempTeam;
+    }
 
+    public void setTempTeam(Teams tempTeam) {
+        this.tempTeam = tempTeam;
+    }
 }
