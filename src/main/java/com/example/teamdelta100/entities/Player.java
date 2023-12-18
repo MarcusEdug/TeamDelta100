@@ -61,6 +61,10 @@ public class Player {
 
     }
 
+    public Player(String playerName) {
+        this.playerName = playerName;
+    }
+
     public Player(int id, String nickname, String address, String postalCode,
                   String city, String country, String email, String playerName, String playerLastname) {
         this.id = id;
@@ -177,9 +181,6 @@ public class Player {
 
     public void setGames(Games games) {
         this.games = games;
-    }
-
-    public Player(String playerName) {
     }
 
 }

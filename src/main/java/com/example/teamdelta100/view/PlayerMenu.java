@@ -151,4 +151,12 @@ public class PlayerMenu extends Application {
     public void setController(PlayerController playerController) {
         this.playerController = playerController;
     }
+    public void createPlayer(){
+        playerController.save(new Player("Huggo"));
+        playerController.save(new Player("Sofia"));
+        playerController.save(new Player("Albin"));
+        playerController.save(new Player("Felix"));
+        playerController.save(new Player("Sara"));
+
+    }
 }
