@@ -16,6 +16,7 @@ public class CombinedFX extends Application {
     private Scene loginScene;
     private Scene tabScene;
     private TabPane tabPane;
+    Stage window;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -25,6 +26,7 @@ public class CombinedFX extends Application {
         stage.setTitle("test");
         BorderPane tabLayout = new BorderPane();
 
+        window = stage;
         tabPane = new TabPane();
 
         tabPane.getTabs().add(pm.playerTab());
