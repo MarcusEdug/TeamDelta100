@@ -23,6 +23,7 @@ public class GamesFX extends Application {
     Games games = new Games();
     Stage window;
     private PlayerMenu playerMenu;
+    private List<Games> gamesList;
     private TeamFX teamFX;
 
     @Override
@@ -105,22 +106,27 @@ public class GamesFX extends Application {
                     update();
 
                 }else if (input.equals("Assign team to a game")) {
-                    List<Teams> teamsList = teamFX.teamDatabaseList();
-                    gamePopup.assignTeamToGame(gameDatabaseList(), teamsList);
+                    gameDatabaseList();
+                    if (!gamesList.isEmpty() && !teamFX.teamDatabaseList().isEmpty()) {
+                        gamePopup.assignTeamToGame(gamesList, teamFX.teamDatabaseList());
 
-                    try {
-                        if (gameController.addTeamToGame(gamePopup.getTeamId(), gamePopup.getGameId())) {
-                            System.out.println("Team added");
+                        if (gamePopup.getTeamId() != 0 && gamePopup.getTeamId() != 0) {
+                            if (gameController.addTeamToGame(gamePopup.getTeamId(), gamePopup.getGameId())) {
+                                System.out.println("Team assigned to game");
+                            } else {
+                                System.out.println("Failed to assign team");
+                            }
                         } else {
-                            System.out.println("Failed to add team");
+                            System.out.println("Close");
                         }
-
+                    }
+                         else{
+                            System.out.println("No teams added");
+                        }
                         update();
-                    }catch (Exception ex) {
-                        System.out.println("Error: " + ex.getMessage());
                     }
 
-                } else if (input.equals("Delete Game")) {
+                 else if (input.equals("Delete Game")) {
                     gameController.getAll(true);
                     List<Games> gamesList = gameController.getAll(true);
                     if (gameController.deleteGameById(gamePopup.deleteGame(gamesList))) {
