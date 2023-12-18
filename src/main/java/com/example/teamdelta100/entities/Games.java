@@ -17,22 +17,20 @@ public class Games {
     @Column (length = 50)
     private String gameName;
 
-    @Column (length = 50)
-    private String gameGenre;
-
     @Column (name = "player_id")
     private int playerId;
+    private String playerName;
+
+    @Column (name = "team_id")
+    private int teamId;
+    private String teamName;
+
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "games" )
-    private List<Teams> numberOfTeamsList = new ArrayList<>();
+    private List<Teams> teamsList = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "games" )
-    private List<Player> numberOfPlayerList = new ArrayList<>();
-
-
-
-
-
+    private List<Player> playerList = new ArrayList<>();
 
     //OneToMany - Ett spel till många spelare/lag
     //Fetch - fråga alltid efter entiteter och children.
@@ -53,25 +51,30 @@ public class Games {
 
 
     //Konstruktor med allt
-    public Games(int gameId, String gameName, String gameGenre, int playerId, List<Games> gamesToChose, Player player /*Teams teams*/) {
+    public Games(int gameId, String gameName, int playerId, String playerName, List<Games> gamesToChose, Player player, int teamId, String teamName, Teams teams) {
         this.gameId = gameId;
         this.gameName = gameName;
-        this.gameGenre = gameGenre;
         this.playerId = playerId;
+        this.playerName = playerName;
+        this.teamId = teamId;
+        this.teamName = teamName;
         /*  this.gamesToChose = gamesToChose;*/
         /*this.player = player;*/
         /*this.teams = teams;*/
     }
 
     //Konstruktor med allt utom gameId. Behövs playerId
-    public Games(String gameName, String gameGenre, int playerId, List<Games> gamesToChose, Player player /*Teams teams*/) {
+    public Games(String gameName, int playerId, String playerName, List<Games> gamesToChose, Player player,Teams teams, int teamId, String teamName) {
         this.gameName = gameName;
-        this.gameGenre = gameGenre;
         this.playerId = playerId;
+        this.playerName = playerName;
+        this.teamId = teamId;
+        this.teamName = teamName;
         /*this.gamesToChose = gamesToChose;*/
         /*this.player = player;*/
         /*this.teams = teams;*/
     }
+
 
     public Games(String gameName) {
         this.gameName = gameName;
@@ -82,10 +85,12 @@ public class Games {
 
     public void addPlayer (Player player){
         player.setGames(this);
+        playerList.add(player);
     }
 
     public void addTeams (Teams team){
         team.setGames(this);
+        teamsList.add(team);
     }
 
     public String getGameName() {
@@ -96,7 +101,76 @@ public class Games {
         this.gameName = gameName;
     }
 
-  /*  public Player getPlayer() {
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+    /*    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public Teams getTeams() {
+        return teams;
+    }
+
+    public void setTeams(Teams teams) {
+        this.teams = teams;*/
+
+    /*public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;*/
+
+    /*  public Player getPlayer() {
         return player;
     }
 
@@ -116,45 +190,37 @@ public class Games {
         this.gameId = id;
     }
 
-    public String getGameGenre() {
-        return gameGenre;
-    }
-
-    public void setGameGenre(String gameGenre) {
-        this.gameGenre = gameGenre;
-    }
-
     public int getGameId() {
         return gameId;
     }
 
-    public int getPlayerId() {
+/*    public int getPlayerId() {
         return playerId;
     }
 
     public void setPlayerId(int playerId) {
         this.playerId = playerId;
-    }
+    }*/
     //För att få ut text i comboboxen vid uppdatering av namn
     @Override
     public String toString() {
         return gameName;
     }
 
-    public List<Teams> getNumberOfTeamsList() {
-        return numberOfTeamsList;
+    public List<Teams> getTeamsList() {
+        return teamsList;
     }
 
-    public void setNumberOfTeamsList(List<Teams> numberOfTeamsList) {
-        this.numberOfTeamsList = numberOfTeamsList;
+    public void setTeamsList(List<Teams> numberOfTeamsList) {
+        this.teamsList = numberOfTeamsList;
     }
 
-    public List<Player> getNumberOfPlayerList() {
-        return numberOfPlayerList;
+    public List<Player> getPlayerList() {
+        return playerList;
     }
 
-    public void setNumberOfPlayerList(List<Player> numberOfPlayerList) {
-        this.numberOfPlayerList = numberOfPlayerList;
+    public void setPlayerList(List<Player> numberOfPlayerList) {
+        this.playerList = numberOfPlayerList;
     }
 
 
