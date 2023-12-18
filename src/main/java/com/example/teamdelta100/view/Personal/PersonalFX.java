@@ -4,6 +4,7 @@ import com.example.teamdelta100.controller.PersonalController;
 import com.example.teamdelta100.controller.PlayerController;
 import com.example.teamdelta100.entities.Personal;
 import com.example.teamdelta100.entities.Player;
+import com.example.teamdelta100.entities.Teams;
 import com.example.teamdelta100.view.Player.InformationForm;
 import com.example.teamdelta100.view.Player.PlayerPopup;
 import com.example.teamdelta100.view.Team.Popup;
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class PersonalFX extends Application {
     PersonalController personalController = new PersonalController();
-    Popup popup = new Popup();
+    PersonalPopup personalPopup = new PersonalPopup();
     InformationForm info = new InformationForm();
     TableView tableView;
     public static void main(String[] args) {
@@ -82,7 +83,7 @@ public class PersonalFX extends Application {
         TableColumn personalId = new TableColumn("Personal ID");
         personalId.setCellValueFactory(new PropertyValueFactory<Personal, Integer>("id"));
 
-        TableColumn personalName = new TableColumn("personalName");
+        TableColumn personalName = new TableColumn("personal Name");
         personalName.setCellValueFactory(new PropertyValueFactory<Personal, String>("perName"));
 
         TableColumn personalLastname = new TableColumn("Personal Lastname");
@@ -111,7 +112,16 @@ public class PersonalFX extends Application {
                 }
 
             } else if (input.equals("Delete Personal")) {
+                List<Personal> personalList = personalController.getAll();
+                if (personalController.deletePersonalById(personalPopup.deletePersonal(personalList))){
+                    System.out.println("Bortagen Person");
+                }
+                else {
+                    System.out.println("Tog ej bort Person");
+                }
 
+
+                update();
             }
 
             else if (input.equals("Show Info")) {

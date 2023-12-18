@@ -1,5 +1,6 @@
 package com.example.teamdelta100.controller;
 
+import com.example.teamdelta100.entities.Personal;
 import com.example.teamdelta100.entities.Player;
 import com.example.teamdelta100.entities.Teams;
 
@@ -62,7 +63,28 @@ public class PlayerController {
         return null;
     }
 
-    // Overloaded method with a default value for printOut
+    public boolean deletePlayerById(int Id){
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+            Player player = entityManager.find(Player.class, Id);
+            if(player != null){
+                entityManager.remove(player);
+            }
+            transaction.commit();
+            return true;
+        } catch (Exception e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return false;
+    }
     public List<Player> getAll() {
         return getAll(true); // Set default value to true (print results)
     }

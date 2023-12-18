@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Personal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int Id;
 
     // Variabelnamn: "Per" = personal, "Lname" = lastName
 
@@ -37,7 +37,7 @@ public class Personal {
 
     public Personal(int id, String perName, String perLname, String perNickname, String perAddress,
                     String perPostalCode, String perCity, String perCountry, String perEmail) {
-        this.id = id;
+        this.Id = id;
         this.perName = perName;
         this.perLname = perLname;
         this.perNickname = perNickname;
@@ -52,11 +52,11 @@ public class Personal {
     }
 
     public int getId() {
-        return id;
+        return Id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.Id = id;
     }
 
     public String getPerName() {
@@ -126,7 +126,7 @@ public class Personal {
     @Override
     public String toString() {
         return "Personal: " +
-                "id = " + id +
+                "id = " + Id +
                 ", personalName = " + perName +
                 ", personalLastname = " + perLname +
                 ", personalNickname = " + perNickname;

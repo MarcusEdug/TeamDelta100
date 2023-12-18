@@ -1,6 +1,7 @@
 package com.example.teamdelta100.view.Player;
 
 import com.example.teamdelta100.controller.PlayerController;
+import com.example.teamdelta100.entities.Personal;
 import com.example.teamdelta100.entities.Player;
 import com.example.teamdelta100.view.Team.Popup;
 import javafx.application.Application;
@@ -19,7 +20,7 @@ import java.util.List;
 public class PlayerMenu extends Application {
 
     PlayerController playerController = new PlayerController();
-    Popup popup = new Popup();
+    PlayerPopup playerPopup = new PlayerPopup();
     InformationForm info = new InformationForm();
     TableView tableView;
     public static void main(String[] args) {
@@ -108,7 +109,16 @@ public class PlayerMenu extends Application {
                 }
 
             } else if (input.equals("Delete Player")) {
+                List<Player> playerList = playerController.getAll();
+                if (playerController.deletePlayerById(playerPopup.deletePlayer(playerList))){
+                    System.out.println("Bortagen Person");
+                }
+                else {
+                    System.out.println("Tog ej bort Person");
+                }
 
+
+                update();
             }
 
             else if (input.equals("Show Info")) {
