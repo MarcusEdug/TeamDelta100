@@ -20,10 +20,12 @@ public class TeamFX {
     TeamsController controller = new TeamsController();
     private TeamPopup popup = new TeamPopup();
     private TableView tableView;
-    private Stage window;
+
     private PlayerMenu playerMenu;
     private List<Teams> teamList;
-    private Scene loginScrene;
+    private Scene tabScene;
+    private Stage window;
+    private LogInWindows logInWindows;
 
     public Tab teamTab(){
         Tab teamTab = new Tab("Teams");
@@ -113,7 +115,7 @@ public class TeamFX {
 
             }
             else if (input.equals("Log out")) {
-                window.setScene(loginScrene);
+                window.setScene(logInWindows.LogIn(window,tabScene));
                 //teamDatabaseList();
             }
         });
@@ -175,12 +177,12 @@ public class TeamFX {
         this.controller = controller;
     }
 
-    public Scene getLoginScrene() {
-        return loginScrene;
+    public Scene getTabScene() {
+        return tabScene;
     }
 
-    public void setLoginScrene(Scene loginScrene) {
-        this.loginScrene = loginScrene;
+    public void setTabScene(Scene tabScene) {
+        this.tabScene = tabScene;
     }
 
     public Stage getWindow() {
@@ -189,5 +191,13 @@ public class TeamFX {
 
     public void setWindow(Stage window) {
         this.window = window;
+    }
+
+    public LogInWindows getLogInWindows() {
+        return logInWindows;
+    }
+
+    public void setLogInWindows(LogInWindows logInWindows) {
+        this.logInWindows = logInWindows;
     }
 }

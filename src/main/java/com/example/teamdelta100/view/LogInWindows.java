@@ -1,5 +1,6 @@
 package com.example.teamdelta100.view;
 
+import com.example.teamdelta100.entities.Personal;
 import com.example.teamdelta100.entities.Player;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,10 +13,12 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class LogInWindows {
-    private PlayerMenu playerMenu;
-    public LogInWindows(PlayerMenu playerMenu){
-        this.playerMenu = playerMenu;
+    private PersonalFX personalFX;
+
+    public LogInWindows(PersonalFX personalFX) {
+        this.personalFX = personalFX;
     }
+
     public Scene LogIn (Stage stage, Scene tabScene){
         BorderPane gridPane = new BorderPane();
         gridPane.setPadding(new Insets(10,10,10,10));
@@ -50,8 +53,8 @@ public class LogInWindows {
     }
 
     public ListView personalUser(){
-        ObservableList<Player> personal = FXCollections.observableList(playerMenu.playerController.tableUpdate(true));
-        ListView<Player> listView = new ListView<>(personal);
+        ObservableList<Personal> personal = FXCollections.observableList(personalFX.personalDatabaseList());
+        ListView<Personal> listView = new ListView<>(personal);
         listView.setPrefHeight(personal.size() * 24);
 
 
