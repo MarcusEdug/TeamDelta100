@@ -51,7 +51,7 @@ public class PlayerMenu extends Application {
     }
 
     public Tab playerTab(){
-        Tab tabLayout = new Tab("Players");
+        Tab tabLayout = new Tab("Player");
         tabLayout.setClosable(false);
         Button addPlayer = button("Add Player");
         Button deletePlayer = button("Delete Player");
