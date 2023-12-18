@@ -1,6 +1,7 @@
 package com.example.teamdelta100.view;
 
 import com.example.teamdelta100.controller.PlayerController;
+import com.example.teamdelta100.entities.Personal;
 import com.example.teamdelta100.entities.Player;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -18,7 +20,7 @@ import java.util.List;
 public class PlayerMenu extends Application {
 
     PlayerController playerController = new PlayerController();
-    TeamPopup popup = new TeamPopup();
+    PlayerPopup playerPopup = new PlayerPopup();
     InformationForm info = new InformationForm();
     TableView tableView;
     public static void main(String[] args) {
@@ -81,8 +83,8 @@ public class PlayerMenu extends Application {
         TableColumn playerNameColumn = new TableColumn("Player Name");
         playerNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("playerName"));
 
-        TableColumn playerLastNameColumn = new TableColumn("Team name");
-        playerLastNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("teamName"));
+        TableColumn playerLastNameColumn = new TableColumn("Player Lastname");
+        playerLastNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("playerLastname"));
 
         tableView.getColumns().addAll(playerIdColumn,playerNameColumn, playerLastNameColumn);
 
@@ -103,43 +105,31 @@ public class PlayerMenu extends Application {
                     PlayerPopup playerPopup = new PlayerPopup(tableView, playerController);
                     playerPopup.addPlayer();
                 } catch (Exception ex) {
-                    ex.printStackTrace(); // Handle the exception appropriately (e.g., log or display an error message)
+                    ex.printStackTrace();
                 }
 
-            } else if (input.equals("Assign Player")) {
-                //SKAPA SÅ ATT MAN SKA ASSIGN A SPELAR TIL LETT LAG
+            } else if (input.equals("Delete Player")) {
+                List<Player> playerList = playerController.getAll();
+                if (playerController.deletePlayerById(playerPopup.deletePlayer(playerList))){
+                    System.out.println("Bortagen Player");
+                }
+                else {
+                    System.out.println("Tog ej bort Player");
+                }
 
 
-            } /*else if (input.equals("Delete team")) {
+                update();
+            } else if (input.equals("Show Info")) {
 
-            */else if (input.equals("Update team")) {
+            } else if (input.equals("Log out")) {
 
-
-
-
-                /*controller.getAll(true);
-                System.out.print("Välj id:");
-                Teams teamsToUpdate = controller.getTeamsById(new Scanner(System.in).nextInt());
-                System.out.print("Ändra namn från " + teamsToUpdate.getName() + " till?: ");
-                teamsToUpdate.setName(new Scanner(System.in).nextLine());
-                if(controller.updateTeams(teamsToUpdate)){
-                    System.out.println("Teams updated");
-                } else {
-                    System.out.println("Teams update failed");
-                };
-
-                 */
-            }
-
-            else if (input.equals("Log out")) {
-                //Skapa så att man kan stänga av programet
             }
         });
 
 
         return button;
     }
-    //Alex har skapat den här
+
     public List<Player> playerDatabaseList (){
         List <Player> teamlista = playerController.tableUpdate(true);
         return teamlista;
@@ -150,13 +140,5 @@ public class PlayerMenu extends Application {
 
     public void setController(PlayerController playerController) {
         this.playerController = playerController;
-    }
-    public void createPlayer(){
-        playerController.save(new Player("Huggo"));
-        playerController.save(new Player("Sofia"));
-        playerController.save(new Player("Albin"));
-        playerController.save(new Player("Felix"));
-        playerController.save(new Player("Sara"));
-
     }
 }
