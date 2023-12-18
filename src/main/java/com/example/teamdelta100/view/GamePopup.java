@@ -226,7 +226,7 @@ public class GamePopup {
                 gameId = tempGame.getGameId();
                 window.close();
             } else {
-                errorMessage.setText("Player is already assigned to a game");
+                errorMessage.setText("Player is already assigned to a game.");
             }
         });
         Button close = new Button("Close");

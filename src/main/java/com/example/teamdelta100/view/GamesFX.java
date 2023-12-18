@@ -122,7 +122,7 @@ public class GamesFX extends Application {
                     update();
 
                 /*} else if (input.equals("List all games")) {
-                    gameController.getAll(true);
+                    gameController.getAll(true)
                 }
                 update();*/
 

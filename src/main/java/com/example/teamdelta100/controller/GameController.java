@@ -32,7 +32,7 @@ public class GameController {
             }
             e.printStackTrace();
         } finally {
-            System.out.println("Har nått finally");
+            System.out.println("Har nått finally.");
             entityManager.close();
         }
         return false;

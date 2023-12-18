@@ -29,11 +29,7 @@ public class Games {
     private List<Player> numberOfPlayerList = new ArrayList<>();
 
 
-
-
-
-
-    //OneToMany - Ett spel till många spelare/lag
+    //OneToMany - Ett spel till många spelare/lag.
     //Fetch - fråga alltid efter entiteter och children.
     //Cascade - sparar entitet och children på en gång
     //Mapped - Förhindrar den här sidan att skapa en extra tabell för relational mapping
