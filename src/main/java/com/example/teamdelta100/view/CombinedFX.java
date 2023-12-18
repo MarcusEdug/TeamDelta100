@@ -11,7 +11,6 @@ public class CombinedFX extends Application {
 
     PlayerMenu pm = new PlayerMenu();
     TeamFX teamFX = new TeamFX();
-    //Hejehj
     MatchTab matchTab = new MatchTab(teamFX);
     GamesFX gamesFX = new GamesFX();
     private Stage window;
@@ -22,6 +21,7 @@ public class CombinedFX extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         teamFX.setPlayerMenu(pm);
+        gamesFX.setPlayerMenu(pm);
         window = stage;
 
         stage.setTitle("test");

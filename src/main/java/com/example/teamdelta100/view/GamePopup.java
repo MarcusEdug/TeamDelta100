@@ -2,6 +2,8 @@ package com.example.teamdelta100.view;
 
 import com.example.teamdelta100.controller.GameController;
 import com.example.teamdelta100.entities.Games;
+import com.example.teamdelta100.entities.Player;
+import com.example.teamdelta100.entities.Teams;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,9 +27,14 @@ public class GamePopup {
     private ComboBox comboBox;
     private Scene scene;
     private String titleName;
+    private String gameName;
     private Label featureText;
-    int id;
-    Games tempGame;
+    private int gameId;
+    private int playerId;
+    private int teamId;
+    private Player tempPlayer;
+    private Games tempGame;
+    private Text errorMessage = new Text();
 
     public void popupWindow() {
         window = new Stage();
@@ -196,5 +203,131 @@ public class GamePopup {
 
         popupWindow();
         return tempGame;
+    }
+
+    public void assignPlayerToGame(List<Games> gamesList, List<Player> playerList) {
+        titleName = "Assign player";
+        featureText = new Label("Assign player to a game");
+
+        ComboBox comboBoxGames = new ComboBox();
+        for (Games games : gamesList) {
+            comboBoxGames.getItems().add(games);
+        }
+
+        ComboBox comboBoxPlayer = new ComboBox();
+        for (Player player : playerList) {
+            comboBoxPlayer.getItems().add(player);
+        }
+
+        Button submit = new Button("Submit");
+        submit.setOnAction(e -> {
+            errorMessage.setText("");
+            tempGame = (Games) comboBoxGames.getValue();
+            Player tempPlayer  = (Player) comboBoxPlayer.getValue();
+            if (tempPlayer.getGames() == null) {
+               gameId = tempGame.getGameId();
+               playerId = tempPlayer.getId();
+                window.close();
+            } else {
+                errorMessage.setText("Player is already assigned to a game");
+            }
+        });
+        Button close = new Button("Close");
+        close.setOnAction(e -> window.close());
+
+        HBox upperHbox = new HBox(3);
+        upperHbox.getChildren().addAll(comboBoxPlayer, comboBoxGames);
+        upperHbox.setAlignment(Pos.CENTER);
+
+        HBox lowerHbox = new HBox(3);
+        lowerHbox.getChildren().addAll(submit, close);
+        lowerHbox.setAlignment(Pos.CENTER);
+
+        VBox vBox = new VBox(5);
+        vBox.getChildren().addAll(featureText, upperHbox, lowerHbox, errorMessage);
+        vBox.setAlignment(Pos.CENTER);
+
+        scene = new Scene(vBox);
+
+        popupWindow();
+    }
+    public void assignTeamToGame(List<Games> gamesList, List<Teams> teamList) {
+        titleName = "Assign team";
+        featureText = new Label("Assign team to a game");
+
+        ComboBox comboBoxGames = new ComboBox();
+        for (Games games : gamesList) {
+            comboBoxGames.getItems().add(games);
+        }
+        ComboBox comboBoxTeam = new ComboBox<>();
+        for (Teams teams : teamList) {
+            comboBoxTeam.getItems().add(teams);
+        }
+
+        Button submit = new Button("Submit");
+        submit.setOnAction(e-> {
+            errorMessage.setText("");
+            tempGame = (Games) comboBoxGames.getValue();
+            Teams tempTeams = (Teams) comboBoxTeam.getValue();
+            if (tempTeams == null || tempTeams.getGames() == null) {
+                tempTeams.setGames(tempGame);
+                gameId = tempGame.getGameId();
+                teamId = tempTeams.getId();
+                window.close();
+            }
+            else {
+                errorMessage.setText("Team already assigned to a game");
+            }
+        });
+        Button close = new Button("Close");
+        close.setOnAction(e-> window.close());
+
+        HBox upperHbox = new HBox(3);
+        upperHbox.getChildren().addAll(comboBoxGames,comboBoxTeam);
+        upperHbox.setAlignment(Pos.CENTER);
+
+        HBox lowerHbox = new HBox(3);
+        lowerHbox.getChildren().addAll(submit,close);
+        lowerHbox.setAlignment(Pos.CENTER);
+
+        VBox vBox = new VBox(5);
+        vBox.getChildren().addAll(featureText,upperHbox,lowerHbox,errorMessage);
+        vBox.setAlignment(Pos.CENTER);
+
+        scene = new Scene(vBox);
+
+        popupWindow();
+    }
+
+    public int getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
     }
 }
