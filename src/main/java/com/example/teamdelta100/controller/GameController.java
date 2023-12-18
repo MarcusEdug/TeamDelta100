@@ -230,7 +230,7 @@ public class GameController {
 
             Teams teams = selectTeam.get();
             games = selectGame.get();
-            teams.setGameName(games.getGameName());
+            //teams.setGameName(games.getGameName());
             games.addTeams(teams);
 
 
