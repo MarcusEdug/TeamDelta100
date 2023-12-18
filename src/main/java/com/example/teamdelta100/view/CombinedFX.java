@@ -11,7 +11,6 @@ public class CombinedFX extends Application {
 
     PlayerMenu pm = new PlayerMenu();
     TeamFX teamFX = new TeamFX();
-    //Hejehjj
     MatchTab matchTab = new MatchTab(teamFX);
     GamesFX gamesFX = new GamesFX();
     private Stage window;
