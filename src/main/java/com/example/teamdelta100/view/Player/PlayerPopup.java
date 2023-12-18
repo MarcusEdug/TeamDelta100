@@ -47,6 +47,14 @@ public class  PlayerPopup {
         window.setScene(scene);
         window.showAndWait();
     }
+    public void InfoPopup(){
+        window = new Stage();
+        window.setTitle("Info");
+        window.setHeight(150);
+        window.setWidth(750);
+        window.setScene(scene);
+        window.showAndWait();
+    }
     public int deletePlayer (List<Player> playerList){
         titleName = "Delete Player";
         featureText = new Label("Which Player do you want to delete?");

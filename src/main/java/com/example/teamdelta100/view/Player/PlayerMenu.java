@@ -21,7 +21,6 @@ public class PlayerMenu extends Application {
 
     PlayerController playerController = new PlayerController();
     PlayerPopup playerPopup = new PlayerPopup();
-    InformationForm info = new InformationForm();
     TableView tableView;
     public static void main(String[] args) {
 
@@ -56,6 +55,7 @@ public class PlayerMenu extends Application {
         tabLayout.setClosable(false);
         Button addPlayer = button("Add Player");
         Button deletePlayer = button("Delete Player");
+        Button showInfo = button("Show Info");
         Button logOut = button("Log out");
 
         tableView = table();
@@ -105,7 +105,7 @@ public class PlayerMenu extends Application {
                     PlayerPopup playerPopup = new PlayerPopup(tableView, playerController);
                     playerPopup.addPlayer();
                 } catch (Exception ex) {
-                    ex.printStackTrace(); // Handle the exception appropriately (e.g., log or display an error message)
+                    ex.printStackTrace();
                 }
 
             } else if (input.equals("Delete Player")) {
@@ -122,6 +122,7 @@ public class PlayerMenu extends Application {
             }
 
             else if (input.equals("Show Info")) {
+                List<Player> playerList = playerController.getAll();
 
             }
             else if (input.equals("Log Out")) {
@@ -132,7 +133,6 @@ public class PlayerMenu extends Application {
 
         return button;
     }
-    //Alex har skapat den här
     public List<Player> playerDatabaseList (){
         List <Player> teamlista = playerController.tableUpdate(true);
         return teamlista;
