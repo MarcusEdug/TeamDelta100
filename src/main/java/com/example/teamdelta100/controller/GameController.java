@@ -33,7 +33,6 @@ public class GameController {
             }
             e.printStackTrace();
         } finally {
-            System.out.println("Har nått finally");
             entityManager.close();
         }
         return false;
@@ -230,7 +229,7 @@ public class GameController {
 
             Teams teams = selectTeam.get();
             games = selectGame.get();
-            //teams.setGameName(games.getGameName());
+            teams.setGameName(games.getGameName());
             games.addTeams(teams);
 
 

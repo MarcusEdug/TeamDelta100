@@ -108,13 +108,17 @@ public class GamesFX extends Application {
                     List<Teams> teamsList = teamFX.teamDatabaseList();
                     gamePopup.assignTeamToGame(gameDatabaseList(), teamsList);
 
-                    if (gameController.addTeamToGame(gamePopup.getTeamId(), gamePopup.getGameId())) {
-                        System.out.println("Team added");
-                    } else {
-                        System.out.println("Failed to add team");
-                    }
+                    try {
+                        if (gameController.addTeamToGame(gamePopup.getTeamId(), gamePopup.getGameId())) {
+                            System.out.println("Team added");
+                        } else {
+                            System.out.println("Failed to add team");
+                        }
 
-                    update();
+                        update();
+                    }catch (Exception ex) {
+                        System.out.println("Error: " + ex.getMessage());
+                    }
 
                 } else if (input.equals("Delete Game")) {
                     gameController.getAll(true);
@@ -164,7 +168,7 @@ public class GamesFX extends Application {
         gamePlayerColumn.setCellValueFactory(new PropertyValueFactory("playerList"));
 
         TableColumn<Games, String> gameTeamColumn = new TableColumn<>("Team name");
-        gameTeamColumn.setCellValueFactory(new PropertyValueFactory("teamName"));
+        gameTeamColumn.setCellValueFactory(new PropertyValueFactory("teamsList"));
 
         tableView.getColumns().addAll(gameIdColumn, gameNameColumn, gamePlayerColumn,gameTeamColumn);
 
@@ -198,24 +202,6 @@ public class GamesFX extends Application {
         this.playerMenu = playerMenu;
     }
 
-    public static void main(String[] args) throws Exception {
-        launch(args);
-    }
-    public GameController getGameController(){
-        return gameController;
-    }
-    public void setGameController(GameController gameController) {
-        this.gameController = gameController;
-    }
-
-   /* public GamePopup getGamePopup() {
-        return gamePopup;
-    }
-
-    public void setGamePopup(GamePopup gamePopup) {
-        this.gamePopup = gamePopup;
-    }
-
     public TableView getTableView() {
         return tableView;
     }
@@ -224,13 +210,18 @@ public class GamesFX extends Application {
         this.tableView = tableView;
     }
 
-    public Stage getWindow() {
-        return window;
+    public TeamFX getTeamFX() {
+        return teamFX;
     }
 
-    public void setWindow(Stage window) {
-        this.window = window;
-    }*/
+    public void setTeamFX(TeamFX teamFX) {
+        this.teamFX = teamFX;
+    }
+
+    public static void main(String[] args) throws Exception {
+        launch(args);
+    }
+
 }
 
 

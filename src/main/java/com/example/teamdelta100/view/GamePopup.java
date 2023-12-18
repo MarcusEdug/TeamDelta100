@@ -227,7 +227,7 @@ public class GamePopup {
             if (tempPlayer.getGames() == null) {
                gameId = tempGame.getGameId();
                playerId = tempPlayer.getId();
-                window.close();
+               window.close();
             } else {
                 errorMessage.setText("Player is already assigned to a game");
             }
@@ -269,7 +269,7 @@ public class GamePopup {
             errorMessage.setText("");
             tempGame = (Games) comboBoxGames.getValue();
             Teams tempTeams = (Teams) comboBoxTeam.getValue();
-            if (tempTeams == null || tempTeams.getGames() == null) {
+            if (tempTeams.getGames() == null) {
                 tempTeams.setGames(tempGame);
                 gameId = tempGame.getGameId();
                 teamId = tempTeams.getId();
