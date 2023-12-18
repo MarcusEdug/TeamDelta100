@@ -1,7 +1,8 @@
-package com.example.teamdelta100.view;
+package com.example.teamdelta100.view.Player;
 
 import com.example.teamdelta100.controller.PlayerController;
 import com.example.teamdelta100.entities.Player;
+import com.example.teamdelta100.view.Team.Popup;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -106,33 +107,15 @@ public class PlayerMenu extends Application {
                     ex.printStackTrace(); // Handle the exception appropriately (e.g., log or display an error message)
                 }
 
-            } else if (input.equals("Assign Player")) {
-                //SKAPA SÅ ATT MAN SKA ASSIGN A SPELAR TIL LETT LAG
+            } else if (input.equals("Delete Player")) {
 
-
-            } /*else if (input.equals("Delete team")) {
-
-            */else if (input.equals("Update team")) {
-
-
-
-
-                /*controller.getAll(true);
-                System.out.print("Välj id:");
-                Teams teamsToUpdate = controller.getTeamsById(new Scanner(System.in).nextInt());
-                System.out.print("Ändra namn från " + teamsToUpdate.getName() + " till?: ");
-                teamsToUpdate.setName(new Scanner(System.in).nextLine());
-                if(controller.updateTeams(teamsToUpdate)){
-                    System.out.println("Teams updated");
-                } else {
-                    System.out.println("Teams update failed");
-                };
-
-                 */
             }
 
-            else if (input.equals("Log out")) {
-                //Skapa så att man kan stänga av programet
+            else if (input.equals("Show Info")) {
+
+            }
+            else if (input.equals("Log Out")) {
+
             }
         });
 

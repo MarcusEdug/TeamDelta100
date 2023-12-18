@@ -1,5 +1,6 @@
-package com.example.teamdelta100.view;
+package com.example.teamdelta100.view.Player;
 
+import com.example.teamdelta100.controller.PersonalController;
 import com.example.teamdelta100.controller.PlayerController;
 import com.example.teamdelta100.entities.Player;
 import javafx.application.Application;
@@ -34,7 +35,7 @@ public class InformationForm extends Application {
     Button submitButton = new Button("Submit");
     Player tempPlayer;
 
-    private static final String PERSISTENCE_UNIT_NAME = "hibernate"; // Change this to your actual persistence unit name
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -183,40 +184,6 @@ public class InformationForm extends Application {
         person.setEmail(email);
         return person;
     }
-   /*
-    public void saveToDatabase(String firstName, String lastName, String nickname,
-                               String address, String postalCode, String city,
-                               String country, String email) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-        EntityManager em = emf.createEntityManager();
-
-        try {
-            em.getTransaction().begin();
-
-            Player person = new Player();
-            person.setPlayerName(firstName);
-            person.setPlayerLastname(lastName);
-            person.setNickname(nickname);
-            person.setAddress(address);
-            person.setPostalCode(postalCode);
-            person.setCity(city);
-            person.setCountry(country);
-            person.setEmail(email);
-
-            em.persist(person);
-
-            em.getTransaction().commit();
-            System.out.println("Data saved to the database successfully!");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            System.out.println("Failed to save data to the database.");
-        } finally {
-            em.close();
-
-        }
-    }
-
-    */
 
     public void addComponents(TableView tableView, PlayerController playerController) {
         this.tableView = tableView;

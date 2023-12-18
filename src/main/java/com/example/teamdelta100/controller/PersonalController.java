@@ -1,24 +1,25 @@
 package com.example.teamdelta100.controller;
 
+import com.example.teamdelta100.entities.Personal;
 import com.example.teamdelta100.entities.Player;
-import com.example.teamdelta100.entities.Teams;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerController {
+public class PersonalController {
+
     public static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("hibernate");
 
     // CREATE
-    public boolean save (Player player){
+    public boolean save (Personal personal){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
 
         try{
             transaction = entityManager.getTransaction();
             transaction.begin();
-            entityManager.persist(player);
+            entityManager.persist(personal);
             transaction.commit();
             return true;
         } catch (Exception e){
@@ -34,23 +35,23 @@ public class PlayerController {
         return false;
     }
 
-    public List<Player> getAll(boolean printOut){
+    public List<Personal> getAll(boolean printOut){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
-        List<Player> playerListToReturn = new ArrayList<>();
+        List<Personal> personalList = new ArrayList<>();
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-            TypedQuery<Player> resultList = entityManager.createQuery("FROM Player", Player.class);
-            playerListToReturn.addAll(resultList.getResultList());
+            TypedQuery<Personal> resultList = entityManager.createQuery("FROM Personal ", Personal.class);
+            personalList.addAll(resultList.getResultList());
             transaction.commit();
             if(printOut){
-                for (Player player :
-                        playerListToReturn) {
-                    System.out.println(player.getId() + ". " + player.getPlayerName() + ". " + player.getPlayerLastname());
+                for (Personal personal :
+                        personalList) {
+                    System.out.println(personal.getId() + ". " + personal.getPerName() + ". " + personal.getPerLname());
                 }
             }
-            return playerListToReturn;
+            return personalList;
         } catch (Exception e){
             if(transaction != null){
                 transaction.rollback();
@@ -63,30 +64,30 @@ public class PlayerController {
     }
 
     // Overloaded method with a default value for printOut
-    public List<Player> getAll() {
+    public List<Personal> getAll() {
         return getAll(true); // Set default value to true (print results)
     }
 
     public void printAll() {
-        List<Player> players = getAll();
-        if (players != null) {
-            for (Player player : players) {
-                System.out.println(player.getId() + ". " + player.getPlayerName() + " " + player.getPlayerLastname());
+        List<Personal> personals = getAll();
+        if (personals != null) {
+            for (Personal personal : personals) {
+                System.out.println(personal.getId() + ". " + personal.getPerName() + ". " + personal.getPerLname());
             }
         }
     }
-    public List<Player> tableUpdate(boolean printOut){
+    public List<Personal> tableUpdate(boolean printOut){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
-        List<Player> playerListToReturn = new ArrayList<>();
+        List<Personal> personalList = new ArrayList<>();
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-            TypedQuery<Player> resultList = entityManager.createQuery("FROM Player", Player.class);
-            playerListToReturn.addAll(resultList.getResultList());
-            System.out.println(playerListToReturn.size());
+            TypedQuery<Personal> resultList = entityManager.createQuery("FROM Personal ", Personal.class);
+            personalList.addAll(resultList.getResultList());
+            System.out.println(personalList.size());
             transaction.commit();
-            return playerListToReturn;
+            return personalList;
         } catch (Exception e){
             if(transaction != null){
                 transaction.rollback();

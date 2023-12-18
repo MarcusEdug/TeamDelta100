@@ -1,8 +1,12 @@
 package com.example.teamdelta100.view;
 
+import com.example.teamdelta100.view.Games.GamesFX;
+import com.example.teamdelta100.view.Match.MatchTab;
+import com.example.teamdelta100.view.Personal.PersonalFX;
+import com.example.teamdelta100.view.Player.PlayerMenu;
+import com.example.teamdelta100.view.Team.TeamFX;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -11,7 +15,7 @@ public class CombinedFX extends Application {
 
     PlayerMenu pm = new PlayerMenu();
     TeamFX teamFX = new TeamFX();
-    //Hejehj
+    PersonalFX personalFX = new PersonalFX();
     MatchTab matchTab = new MatchTab(teamFX);
     GamesFX gamesFX = new GamesFX();
     private Stage window;
@@ -29,6 +33,7 @@ public class CombinedFX extends Application {
 
         tabPane = new TabPane();
 
+        tabPane.getTabs().add(personalFX.PersonalTab());
         tabPane.getTabs().add(pm.playerTab());
         tabPane.getTabs().add(teamFX.teamTab());
         tabPane.getTabs().add(gamesFX.gameTab());

@@ -1,4 +1,4 @@
-package com.example.teamdelta100.view;
+package com.example.teamdelta100.view.Team;
 
 import com.example.teamdelta100.entities.Player;
 import com.example.teamdelta100.entities.Teams;

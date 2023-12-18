@@ -1,7 +1,6 @@
 package com.example.teamdelta100;
 
 import com.example.teamdelta100.view.CombinedFX;
-import com.example.teamdelta100.view.TeamFX;
 import javafx.application.Application;
 
 import javafx.stage.Stage;

@@ -1,6 +1,7 @@
-package com.example.teamdelta100.view;
+package com.example.teamdelta100.view.Games;
 import com.example.teamdelta100.controller.GameController;
 import com.example.teamdelta100.entities.Games;
+import com.example.teamdelta100.view.Games.GamePopup;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

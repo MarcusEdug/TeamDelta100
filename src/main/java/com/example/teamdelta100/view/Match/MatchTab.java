@@ -1,7 +1,8 @@
-package com.example.teamdelta100.view;
+package com.example.teamdelta100.view.Match;
 
 import com.example.teamdelta100.controller.MatchController;
 import com.example.teamdelta100.entities.Match;
+import com.example.teamdelta100.view.Team.TeamFX;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;

@@ -1,6 +1,7 @@
-package com.example.teamdelta100.view;
+package com.example.teamdelta100.view.Team;
 
 import com.example.teamdelta100.entities.Player;
+import com.example.teamdelta100.view.Player.PlayerMenu;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

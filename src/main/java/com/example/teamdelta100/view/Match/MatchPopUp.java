@@ -1,9 +1,10 @@
-package com.example.teamdelta100.view;
+package com.example.teamdelta100.view.Match;
 
 import com.example.teamdelta100.controller.MatchController;
 import com.example.teamdelta100.entities.Match;
 import com.example.teamdelta100.entities.Player;
 import com.example.teamdelta100.entities.Teams;
+import com.example.teamdelta100.view.Team.TeamFX;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;

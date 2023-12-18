@@ -1,10 +1,8 @@
-package com.example.teamdelta100.view;
+package com.example.teamdelta100.view.Player;
 
 import com.example.teamdelta100.controller.PlayerController;
-import javafx.application.Platform;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 public class  PlayerPopup {
     InformationForm info = new InformationForm();
