@@ -1,5 +1,6 @@
 package com.example.teamdelta100.view;
 
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
@@ -22,12 +23,11 @@ public class TeamFX {
     private Stage window;
     private PlayerMenu playerMenu;
     private List<Teams> teamList;
+    private Scene loginScrene;
 
-    public Tab teamTab(Stage stage){
+    public Tab teamTab(){
         Tab teamTab = new Tab("Teams");
         teamTab.setClosable(false);
-
-        window = stage;
 
         Button add = createButton("Add team");
         Button assign = createButton("Assign Player");
@@ -113,7 +113,7 @@ public class TeamFX {
 
             }
             else if (input.equals("Log out")) {
-                window.close();
+                window.setScene(loginScrene);
                 //teamDatabaseList();
             }
         });
@@ -173,5 +173,21 @@ public class TeamFX {
 
     public void setController(TeamsController controller) {
         this.controller = controller;
+    }
+
+    public Scene getLoginScrene() {
+        return loginScrene;
+    }
+
+    public void setLoginScrene(Scene loginScrene) {
+        this.loginScrene = loginScrene;
+    }
+
+    public Stage getWindow() {
+        return window;
+    }
+
+    public void setWindow(Stage window) {
+        this.window = window;
     }
 }

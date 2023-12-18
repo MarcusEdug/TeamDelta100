@@ -38,7 +38,6 @@ public class InformationForm extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
         primaryStage.setTitle("Information Form");
         this.window = primaryStage;
         GridPane grid = new GridPane();
@@ -121,6 +120,7 @@ public class InformationForm extends Application {
 
         primaryStage.show();
     }
+
 
 
     public TextField getFirstNameField() {
