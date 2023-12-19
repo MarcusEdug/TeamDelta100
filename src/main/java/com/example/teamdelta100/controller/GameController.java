@@ -168,6 +168,32 @@ public class GameController {
         }
         return false;
     }
+    public boolean removePlayerFromGame(int gameId, int playerId) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            Games games = entityManager.find(Games.class, gameId);
+            Player player = entityManager.find(Player.class, playerId);
+
+            if (games != null || player != null) {
+                entityManager.remove(player);
+            }
+
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return false;
+    }
 
     public List<Games> tableUpdate() {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
@@ -206,6 +232,7 @@ public class GameController {
 
 
             transaction.commit();
+            return true;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -232,6 +259,7 @@ public class GameController {
             games = selectGame.get();
             teams.setGameName(games.getGameName());
             games.addTeams(teams);
+
 
 
             transaction.commit();

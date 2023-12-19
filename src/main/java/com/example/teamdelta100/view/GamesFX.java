@@ -65,13 +65,14 @@ public class GamesFX extends Application {
         Button update = button("Update Game");
         Button assignPlayer = button("Assign player to a game");
         Button assignTeam = button("Assign team to a game");
+        Button remove = button("Remove from game");
         Button logOut = button("Log out");
 
 
         tableView = table();
 
         VBox buttonV = new VBox(20);
-        buttonV.getChildren().addAll(add,assignPlayer,assignTeam,delete,update,logOut);
+        buttonV.getChildren().addAll(add,assignPlayer,assignTeam,delete,update,remove,logOut);
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(tableView,buttonV);
@@ -96,14 +97,31 @@ public class GamesFX extends Application {
                     update();
 
                 } else if (input.equals("Assign player to a game")) {
-                    List<Player> playerList = playerMenu.playerDatabaseList();
-                    gamePopup.assignPlayerToGame(gameDatabaseList(), playerList);
-                    if (gameController.addPlayerToGame(gamePopup.getPlayerId(), gamePopup.getGameId())) {
-                        System.out.println("Player added");
-                    } else {
-                        System.out.println("Failed do add player");
+                    try {
+                        gameDatabaseList();
+                        List<Player> players = playerMenu.playerDatabaseList();
+                        if (listOfGames == null || players == null) {
+                            throw new Exception("Games or player are null");
+                        }
+                    } catch (Exception n1) {
+                        System.out.println("Error 1: " + n1.getMessage());
                     }
-
+                    if (!listOfGames.isEmpty() && !playerMenu.playerDatabaseList().isEmpty()) {
+                        gamePopup.assignPlayerToGame(listOfGames, playerMenu.playerDatabaseList());
+                        try {
+                            if (gamePopup.getPlayerId() != 0 && gamePopup.getGameId() != 0) {
+                                if (gameController.addPlayerToGame(gamePopup.getPlayerId(), gamePopup.getGameId())) {
+                                    System.out.println("Player assigned to game");
+                                } else {
+                                    System.out.println("Failed to assign player to game");
+                                }
+                            }
+                        } catch (Exception n2) {
+                            System.out.println("Error 2: " + n2.getMessage());
+                        }
+                    } else {
+                        System.out.println("No player assigned");
+                    }
                     update();
 
                 } else if (input.equals("Assign team to a game")) {
@@ -135,39 +153,7 @@ public class GamesFX extends Application {
                     }
                     update();
 
-               /* }else if (input.equals("Assign team to a game")) {
-                    gameDatabaseList();
-                    System.out.println("error");
-                    try {
-                        if (listOfGames == null) {
-                            System.out.println("Games är null");
-                        }
-                        if (teamFX.teamDatabaseList() == null) {
-                            System.out.println("team är null");
-                        }
-                    } catch (Exception e1) {
-                        if (!listOfGames.isEmpty() && !teamFX.teamDatabaseList().isEmpty()) {
-                            gamePopup.assignTeamToGame(listOfGames, teamFX.teamDatabaseList());
-
-                            if (gamePopup.getTeamId() != 0 && gamePopup.getGameId() != 0) {
-                                if (gameController.addTeamToGame(gamePopup.getTeamId(), gamePopup.getGameId())) {
-                                    System.out.println("Team assigned to game");
-                                } else {
-                                    System.out.println("Failed to assign team");
-                                }
-                            } else {
-                                System.out.println("Close");
-                            }
-                        } else {
-                            System.out.println("No teams added");
-                        }
-                        e1.getMessage();
-                    }
-
-                        update();
-                    }*/
-
-                }else if (input.equals("Delete Game")) {
+                } else if (input.equals("Delete Game")) {
                     gameController.getAll(true);
                     List<Games> gamesList = gameController.getAll(true);
                     if (gameController.deleteGameById(gamePopup.deleteGame(gamesList))) {
@@ -188,15 +174,15 @@ public class GamesFX extends Application {
                     }
                     update();
 
-                /*} else if (input.equals("List all games")) {
-                    gameController.getAll(true)
+                } else if (input.equals("Remove from game")) {
+
                 }
-                update();*/
+                update();
 
 
-                }else if (input.equals("Log out")) {
-                window.close();
-            }
+            }else if (input.equals("Log out")) {
+            window.close();
+
         });
         return button;
     }

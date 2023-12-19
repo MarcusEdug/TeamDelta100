@@ -58,12 +58,10 @@ public class Games {
         this.playerName = playerName;
         this.teamId = teamId;
         this.teamName = teamName;
-        /*  this.gamesToChose = gamesToChose;*/
-        /*this.player = player;*/
-        /*this.teams = teams;*/
+
     }
 
-    //Konstruktor med allt utom gameId. Behövs playerId
+    //Konstruktor med allt utom gameId.
 
     public Games(String gameName, int playerId, String playerName, int teamId, String teamName, List<Teams> teamsList, List<Player> playerList) {
         this.gameName = gameName;
