@@ -204,6 +204,7 @@ public class GameController {
             games = selectGames.get();
             games.addPlayer(player);
 
+
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -231,7 +232,6 @@ public class GameController {
             games = selectGame.get();
             teams.setGameName(games.getGameName());
             games.addTeams(teams);
-
 
 
             transaction.commit();

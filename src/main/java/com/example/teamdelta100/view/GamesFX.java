@@ -23,8 +23,11 @@ public class GamesFX extends Application {
     Games games = new Games();
     Stage window;
     private PlayerMenu playerMenu;
-    private List<Games> gamesList;
+    private List<Games> listOfGames;
     private TeamFX teamFX;
+
+    public GamesFX() {
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -85,7 +88,6 @@ public class GamesFX extends Application {
             button.setOnAction(e-> {
                 if (input.equals("Add Game")) {
                     String name = gamePopup.addGame();
-
                     if (gameController.save(new Games(name))) {
                         System.out.println(name + " added");
                     } else {
@@ -96,7 +98,6 @@ public class GamesFX extends Application {
                 } else if (input.equals("Assign player to a game")) {
                     List<Player> playerList = playerMenu.playerDatabaseList();
                     gamePopup.assignPlayerToGame(gameDatabaseList(), playerList);
-
                     if (gameController.addPlayerToGame(gamePopup.getPlayerId(), gamePopup.getGameId())) {
                         System.out.println("Player added");
                     } else {
@@ -105,28 +106,68 @@ public class GamesFX extends Application {
 
                     update();
 
-                }else if (input.equals("Assign team to a game")) {
-                    gameDatabaseList();
-                    if (!gamesList.isEmpty() && !teamFX.teamDatabaseList().isEmpty()) {
-                        gamePopup.assignTeamToGame(gamesList, teamFX.teamDatabaseList());
-
-                        if (gamePopup.getTeamId() != 0 && gamePopup.getTeamId() != 0) {
-                            if (gameController.addTeamToGame(gamePopup.getTeamId(), gamePopup.getGameId())) {
-                                System.out.println("Team assigned to game");
-                            } else {
-                                System.out.println("Failed to assign team");
+                } else if (input.equals("Assign team to a game")) {
+                    try {
+                        gameDatabaseList();
+                        List<Teams> teams = teamFX.teamDatabaseList();
+                        if (listOfGames == null || teams == null) {
+                            throw new Exception("Games or teams are null");
+                        }
+                    } catch (Exception e1) {
+                        System.out.println("Error 1: " + e1.getMessage());
+                        return;
+                    }
+                    if (!listOfGames.isEmpty() && !teamFX.teamDatabaseList().isEmpty()) {
+                        gamePopup.assignTeamToGame(listOfGames, teamFX.teamDatabaseList());
+                        if (gamePopup.getTeamId() != 0 && gamePopup.getGameId() != 0) {
+                            try {
+                                if (gameController.addTeamToGame(gamePopup.getTeamId(), gamePopup.getGameId())) {
+                                    System.out.println("Team assigned to game");
+                                } else {
+                                    System.out.println("Failed to assign team");
+                                }
+                            } catch (Exception e2) {
+                                System.out.println("Error 2: " + e2.getMessage());
                             }
                         } else {
-                            System.out.println("Close");
-                        }
-                    }
-                         else{
                             System.out.println("No teams added");
                         }
-                        update();
+                    }
+                    update();
+
+               /* }else if (input.equals("Assign team to a game")) {
+                    gameDatabaseList();
+                    System.out.println("error");
+                    try {
+                        if (listOfGames == null) {
+                            System.out.println("Games är null");
+                        }
+                        if (teamFX.teamDatabaseList() == null) {
+                            System.out.println("team är null");
+                        }
+                    } catch (Exception e1) {
+                        if (!listOfGames.isEmpty() && !teamFX.teamDatabaseList().isEmpty()) {
+                            gamePopup.assignTeamToGame(listOfGames, teamFX.teamDatabaseList());
+
+                            if (gamePopup.getTeamId() != 0 && gamePopup.getGameId() != 0) {
+                                if (gameController.addTeamToGame(gamePopup.getTeamId(), gamePopup.getGameId())) {
+                                    System.out.println("Team assigned to game");
+                                } else {
+                                    System.out.println("Failed to assign team");
+                                }
+                            } else {
+                                System.out.println("Close");
+                            }
+                        } else {
+                            System.out.println("No teams added");
+                        }
+                        e1.getMessage();
                     }
 
-                 else if (input.equals("Delete Game")) {
+                        update();
+                    }*/
+
+                }else if (input.equals("Delete Game")) {
                     gameController.getAll(true);
                     List<Games> gamesList = gameController.getAll(true);
                     if (gameController.deleteGameById(gamePopup.deleteGame(gamesList))) {
@@ -196,7 +237,7 @@ public class GamesFX extends Application {
         return gameController.tableUpdate()
     }*/
     public List<Games> gameDatabaseList() {
-        List<Games> listOfGames = gameController.tableUpdate();
+        listOfGames = gameController.tableUpdate();
         return listOfGames;
     }
 
@@ -206,6 +247,14 @@ public class GamesFX extends Application {
 
     public void setPlayerMenu(PlayerMenu playerMenu) {
         this.playerMenu = playerMenu;
+    }
+
+    public GameController getGameController() {
+        return gameController;
+    }
+
+    public void setGameController(GameController gameController) {
+        this.gameController = gameController;
     }
 
     public TableView getTableView() {
