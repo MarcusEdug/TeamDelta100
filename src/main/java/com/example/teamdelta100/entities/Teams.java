@@ -51,6 +51,10 @@ public class Teams {
         player.setTeams(this);
         numberOfPlayerList.add(player);
     }
+    public void removePlayer (Player player){
+        player.setTeams(this);
+        numberOfPlayerList.remove(player);
+    }
 
 
     public void countPlayer(){

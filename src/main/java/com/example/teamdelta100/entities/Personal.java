@@ -135,10 +135,6 @@ public class Personal {
 
     @Override
     public String toString() {
-        return "Personal: " +
-                "id = " + Id +
-                ", personalName = " + perName +
-                ", personalLastname = " + perLname +
-                ", personalNickname = " + perNickname;
+        return perName;
     }
 }

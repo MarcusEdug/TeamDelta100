@@ -7,7 +7,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class CombinedFX extends Application {
-
     PlayerMenu pm = new PlayerMenu();
     TeamFX teamFX = new TeamFX();
     PersonalFX personalFX = new PersonalFX();

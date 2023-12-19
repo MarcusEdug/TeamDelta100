@@ -7,15 +7,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.util.List;
 
 public class TeamPopup {
     private String userStringSubmit;
     private int userIntSubmit;
-    private Stage window;
+    //private Stage window;
     private ComboBox comboBox;
     private Scene scene;
     private String titleName;
@@ -24,20 +27,23 @@ public class TeamPopup {
     private int playerId;
     private Teams tempTeam;
     private Text error = new Text();
-
     private Label explainText1;
     private Label explainText2;
 
-    public void popupWindows(){
-        window = new Stage();
+    public Stage popupWindows(){
+        Stage window = new Stage();
         window.setTitle(titleName);
         window.setHeight(165);
         window.setWidth(320);
-        window.setScene(scene);
-        window.showAndWait();
+        window.setOnCloseRequest(e-> {
+            e.consume();
+        });
+
+        return window;
     }
 
     public String addTeam (){
+        Stage window = popupWindows();
         TextField userText = new TextField();
         userText.setMaxWidth(100);
         titleName = "Add team";
@@ -54,13 +60,16 @@ public class TeamPopup {
         vBox.getChildren().addAll(featureText,userText, submit);
         vBox.setAlignment(Pos.CENTER);
         scene = new Scene(vBox);
+        window.setScene(scene);
+        window.showAndWait();
 
-        popupWindows();
+
 
         return userStringSubmit;
     }
 
     public int deleteTeam (List<Teams> teamsList){
+        Stage window = popupWindows();
         titleName = "Delete team";
         featureText = new Label("Which team do you wanna delete?");
 
@@ -81,13 +90,15 @@ public class TeamPopup {
         vBox.setAlignment(Pos.CENTER);
 
         scene = new Scene(vBox);
+        window.setScene(scene);
+        window.showAndWait();
 
-        popupWindows();
 
         return userIntSubmit;
     }
 
     public Teams updateTeam(Teams team){
+        Stage window = popupWindows();
         titleName = "Change name ";
         featureText = new Label("Select a new namn for the team");
 
@@ -111,11 +122,14 @@ public class TeamPopup {
         vBox.setAlignment(Pos.CENTER);
 
         scene = new Scene(vBox);
-        popupWindows();
+        window.setScene(scene);
+        window.showAndWait();
+
         return tempTeam;
     }
 
     public Teams choosTeam (List<Teams> teamsList){
+        Stage window = popupWindows();
         titleName = "Change name";
         featureText = new Label("Select which team to change namn on");
 
@@ -137,11 +151,14 @@ public class TeamPopup {
         vBox.setAlignment(Pos.CENTER);
 
         scene = new Scene(vBox);
-        popupWindows();
+        window.setScene(scene);
+        window.showAndWait();
+
         return tempTeam;
     }
 
     public Teams updateTeamName(List<Teams> teamsList){
+        Stage window = popupWindows();
         titleName = "Change name";
         featureText = new Label("Select which team to change namn on");
 
@@ -176,12 +193,15 @@ public class TeamPopup {
         vBox.setAlignment(Pos.CENTER);
 
         scene = new Scene(vBox);
+        window.setScene(scene);
+        window.showAndWait();
 
-        popupWindows();
         return tempTeam;
     }
 
+
     public void assignPlayerToTeam(List<Teams> teamsList, List<Player> playList){
+        Stage window = popupWindows();
         titleName = "Assign player";
         featureText = new Label("Assign player to a team");
 
@@ -252,8 +272,71 @@ public class TeamPopup {
 
         scene = new Scene(vBox);
 
-        popupWindows();
+        window.setScene(scene);
+        window.showAndWait();
 
+
+    }
+
+    private Player player = new Player();
+
+    public void removePlayerFromTeam(List<Player> playList){
+        Stage window = popupWindows();
+        titleName = "Remove player";
+        featureText = new Label("Remove a player from a team");
+
+        explainText1 = new Label("Select player: ");
+        explainText2 = new Label("Team name: ");
+
+        /*ComboBox comboBoxTeams = new ComboBox();
+        for (Teams team : teamsList){
+            comboBoxTeams.getItems().add(team);
+        }
+
+         */
+        ComboBox comboBoxPlayer = new ComboBox();
+        for (Player player : playList){
+            if(player.getTeams() != null ) {
+                comboBoxPlayer.getItems().add(player);
+            }
+        }
+        Text teamName = new Text();
+        teamName.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+        comboBoxPlayer.setOnAction(e->{
+            player = (Player) comboBoxPlayer.getValue();
+            teamName.setText("Is assign to team numnber: " + player.getId());
+            tempTeam =  player.getTeams();
+        });
+
+        HBox overHBox = new HBox(8);
+        overHBox.getChildren().addAll(explainText1, comboBoxPlayer);
+        overHBox.setAlignment(Pos.CENTER);
+
+        HBox underHBox = new HBox(2);
+        underHBox.getChildren().addAll(explainText2, teamName);
+        underHBox.setAlignment(Pos.CENTER);
+
+        Button submit = new Button("Submit");
+        submit.setOnAction(e->{
+            error.setText("");
+            if(comboBoxPlayer.getValue()!=null) {
+                error.setText("");
+                teamId = tempTeam.getId();
+                playerId = player.getId();
+                window.close();
+            }
+            else {
+                error.setText("Choose a player");
+            }
+        });
+        VBox vBox = new VBox(5);
+        vBox.getChildren().addAll(featureText,overHBox,underHBox,submit,error);
+        vBox.setAlignment(Pos.CENTER);
+
+        scene = new Scene(vBox);
+
+        window.setScene(scene);
+        window.showAndWait();
 
     }
 

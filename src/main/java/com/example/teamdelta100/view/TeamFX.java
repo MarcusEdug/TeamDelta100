@@ -33,6 +33,7 @@ public class TeamFX {
 
         Button add = createButton("Add team");
         Button assign = createButton("Assign Player");
+        Button remove = createButton("Remove Player");
         Button delete = createButton("Delete team");
         Button update = createButton("Update team");
         Button logOut = createButton("Log out");
@@ -41,7 +42,7 @@ public class TeamFX {
         updateTable();
 
         VBox vBoxForButton = new VBox(10);
-        vBoxForButton.getChildren().addAll(add,assign,delete,update,logOut);
+        vBoxForButton.getChildren().addAll(add,assign,remove,delete,update,logOut);
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(tableView, vBoxForButton);
@@ -84,6 +85,18 @@ public class TeamFX {
                 else {
                     System.out.println("There are no teams or no player added");
                 }
+
+                updateTable();
+            }
+            else if (input.equals("Remove Player")){
+                teamDatabaseList();
+                    popup.removePlayerFromTeam(playerMenu.playerDatabaseList());
+
+                        if (controller.removePlayerToTeams(popup.getPlayerId(), popup.getTeamId())) {
+                            System.out.println("Successfully assigned a player");
+                        } else {
+                            System.out.println("Failed to assign a player");
+                        }
 
                 updateTable();
             }
@@ -137,7 +150,7 @@ public class TeamFX {
         teamNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         TableColumn playersIdColumn = new TableColumn<Teams, Integer>("Players");
-        playersIdColumn.setCellValueFactory(new PropertyValueFactory<Teams, Integer>("numberOfPlayer"));
+        playersIdColumn.setCellValueFactory(new PropertyValueFactory<Teams, Integer>("numberOfPlayerList"));
 
         TableColumn gameNameColumn = new TableColumn<Teams, Integer>("Game");
         gameNameColumn.setCellValueFactory(new PropertyValueFactory<Teams, Integer>("gameName"));
