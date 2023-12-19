@@ -66,7 +66,24 @@ public class MatchController {
         try{
             transaction = em.getTransaction();
             transaction.begin();
-            em.remove(em.contains(m) ? m:em.merge(m)); // Ta bort objekt
+            // em.remove(em.contains(m) ? m:em.merge(m)); // Ta bort objekt
+
+            Match tempMatch = em.find(Match.class, m.getMatchId());
+            if(tempMatch.getPlayerOrTeam().equals("player")){
+                List<Player> players = tempMatch.getPlayerList();
+                for(Player p : players){
+                    p.setMatch(null);
+                }
+                tempMatch.getPlayerList().clear();
+            }else{
+                List<Teams> teams = tempMatch.getTeamsList();
+                for(Teams t : teams){
+                    t.setMatch(null);
+                }
+                tempMatch.getTeamsList().clear();
+            }
+
+            em.remove(tempMatch);
             transaction.commit();
         }catch(Exception e){
             if(transaction != null){
@@ -103,8 +120,55 @@ public class MatchController {
         return null;
     }
 
+    // Metod: Hämta Player lista för ett specifikt Match objekt - Används på grund av LAZY
+    public List<Player> getAllPlayers(Match match){
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
 
-    // Metod: Lägga till Player till Match
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+            Match tempMatch = entityManager.find(Match.class, match.getMatchId()); // Söka efter Match med id
+            List<Player> returnList = new ArrayList<>(tempMatch.getPlayerList()); // Hämta listan med Players
+            transaction.commit();
+            return returnList;
+        } catch (Exception e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return null;
+    }
+
+
+    // Metod: Hämta Team lista för ett specifikt Match objekt - Används på grund av LAZY
+    public List<Teams> getAllTeams(Match match){
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+            Match tempMatch = entityManager.find(Match.class, match.getMatchId()); // Söka efter Match med id
+            List<Teams> returnList = new ArrayList<>(tempMatch.getTeamsList()); // Hämta listan med Players
+            transaction.commit();
+            return returnList;
+        } catch (Exception e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return null;
+    }
+
+
+    // Metod: Lägga till Player till Match objekt
     public void addPlayerToMatch(int matchId, int playerId){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -115,6 +179,7 @@ public class MatchController {
             Optional<Player> player = Optional.ofNullable(entityManager.find(Player.class, playerId));
             Optional<Match> match = Optional.ofNullable(entityManager.find(Match.class, matchId));
 
+            // If isPresent
             Player tempPlayer = player.get();
             Match tempMatch = match.get();
             tempMatch.addPlayer(tempPlayer);
@@ -131,7 +196,7 @@ public class MatchController {
     }
 
 
-    // Metod: Lägga till Team till Match
+    // Metod: Lägga till Team till Match objekt
     public void addTeamToMatch(int matchId, int teamsId){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -146,6 +211,64 @@ public class MatchController {
             Match tempMatch = match.get();
             tempMatch.addTeams(tempTeam);
 
+            transaction.commit();
+        }catch(Exception e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }finally {
+            entityManager.close();
+        }
+    }
+
+
+    // Metod: Ta bort Player från Match objekt
+    public void removeAllPlayers(Match match){
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+        try{
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            Match tempMatch = entityManager.find(Match.class, match.getMatchId());
+            List<Player> players = tempMatch.getPlayerList();
+
+            for(Player p : players){
+                p.setMatch(null);
+                entityManager.merge(p);
+            }
+
+           // entityManager.merge(tempMatch);
+            transaction.commit();
+        }catch(Exception e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }finally {
+            entityManager.close();
+        }
+    }
+
+
+    // Metod: Ta bort Team från Match objekt
+    public void removeAllTeams(Match match){
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+        try{
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            Match tempMatch = entityManager.find(Match.class, match.getMatchId());
+            List<Teams> teams = tempMatch.getTeamsList();
+
+            for(Teams t : teams){
+                t.setMatch(null);
+                entityManager.merge(t);
+            }
+
+            // entityManager.merge(tempMatch);
             transaction.commit();
         }catch(Exception e){
             if(transaction != null){

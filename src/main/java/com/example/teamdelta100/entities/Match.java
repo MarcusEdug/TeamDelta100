@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-// Match objekt som kan placeras i databasen.
+// Match objekt som kan placeras i databasen. Kopplat med Teams och Players.
 // Evelina Daun
 
 
@@ -20,8 +20,13 @@ public class Match {
     @Column(name = "playerOrTeam")
     private String playerOrTeam;  // "team",  "player"
 
+    @Column(name = "idOne")
+    private int idOne;
 
-    // sätta in plats 0 - id 1 och plats 1 - id 2 ?
+    @Column(name = "idTwo")
+    private int idTwo;
+
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "match")
     private List<Player> playerList = new ArrayList<>();
 
@@ -95,6 +100,7 @@ public class Match {
         team.setMatch(this);
         teamsList.add(team);
     }
+
 
     // Metod: toString - Skriva ut matcherna med namn och id för spelare/lag
     @Override
@@ -182,5 +188,9 @@ public class Match {
 
     public void setPlayerTeamNameTwo(String playerTeamTwoName) {
         this.playerTeamNameTwo = playerTeamTwoName;
+    }
+
+    public int getIdOne(){
+        return playerList.get(0).getId();
     }
 }
