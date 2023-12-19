@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 public class GamesFX extends Application {
@@ -65,14 +66,15 @@ public class GamesFX extends Application {
         Button update = button("Update Game");
         Button assignPlayer = button("Assign player to a game");
         Button assignTeam = button("Assign team to a game");
-        Button remove = button("Remove from game");
+        Button removePlayer = button("Remove player from game");
+        Button removeTeam = button("Remove team from game");
         Button logOut = button("Log out");
 
 
         tableView = table();
 
         VBox buttonV = new VBox(20);
-        buttonV.getChildren().addAll(add,assignPlayer,assignTeam,delete,update,remove,logOut);
+        buttonV.getChildren().addAll(add,assignPlayer,assignTeam,delete,update,removePlayer,removeTeam,logOut);
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(tableView,buttonV);
@@ -174,16 +176,32 @@ public class GamesFX extends Application {
                     }
                     update();
 
-                } else if (input.equals("Remove from game")) {
+                }else if (input.equals("Remove player from game")) {
+                    gameDatabaseList();
+                    gamePopup.removePlayerFromGame(playerMenu.playerDatabaseList());
 
-                }
-                update();
+                    if (gameController.removePlayerFromGame(gamePopup.getPlayerId(), gamePopup.getGameId())) {
+                        System.out.println("Player removed");
+                    } else {
+                        System.out.println("Failed to remove player");
+                    }
+                    update();
+                }else if (input.equals("Remove team from game")) {
+                    gameDatabaseList();
+                    gamePopup.removeTeamFromGame(teamFX.teamDatabaseList());
 
+                    if (gameController.removeTeamFromGame(gamePopup.getTeamId(), gamePopup.getGameId())) {
+                        System.out.println("Team removed");
+                    } else {
+                        System.out.println("Failed to remove team");
+                    }
+                    update();
 
-            }else if (input.equals("Log out")) {
+            } else if (input.equals("Log out")) {
             window.close();
-
+            }
         });
+
         return button;
     }
 

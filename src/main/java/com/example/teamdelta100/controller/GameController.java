@@ -178,10 +178,35 @@ public class GameController {
             Games games = entityManager.find(Games.class, gameId);
             Player player = entityManager.find(Player.class, playerId);
 
-            if (games != null || player != null) {
+            if (games != null && player != null) {
                 entityManager.remove(player);
             }
 
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return false;
+    }
+    public boolean removeTeamFromGame (int teamId, int gameId) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            Games games = entityManager.find(Games.class, gameId);
+            Teams teams = entityManager.find(Teams.class, teamId);
+
+            if (games != null && teams != null) {
+                entityManager.remove(teams);
+            }
             transaction.commit();
             return true;
         } catch (Exception e) {
