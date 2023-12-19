@@ -15,41 +15,39 @@ import java.time.LocalDate;
 
 public class MatchTab {
     private MatchController matchController;
-    private MatchPopUp popup;
-    private TeamFX teamFX;
-    private TableView<Match> matchTableView;
+    private MatchPopUp popup; // Popupfönster som tillhör knapparna
+    private TableView<Match> matchTableView; // Tabellen för alla matcher
 
+    // Knappar
     private Button addPlayerMatch;
     private Button addTeamMatch;
     private Button addResult;
     private Button delete;
     private Button update;
     private Button logOut;
-
     private Button showAll;
     private Button showComming;
     private Button showDone;
 
-    private Label tabelLabel;
+    private Label tabelLabel; // Label som ändras efter vilka delar av tabellen som ska synas
 
 
+
+    // TA BORT FX OBJEKTET
     // Konstruktor
     public MatchTab(TeamFX teamFX) {
-        this.teamFX = teamFX;
         matchController  = new MatchController();
-        popup = new MatchPopUp(matchController, teamFX);
+        popup = new MatchPopUp(matchController);
     }
 
 
     // Metod: Skapa & skicka tillbaka scenen för matcher
     public Tab createAndReturnTabMatch(){ // createMatchTab
-        Tab matchTab = new Tab("Matches"); // Skapa tab att skicka tillbaka
+        Tab matchTab = new Tab("Matches"); // Skapa en tab
         matchTab.setClosable(false);
-
         AnchorPane matchPane = new AnchorPane(); // Grund pane
 
         tabelLabel = new Label("all"); // Label för att visa vilka matcher som visas i tabellen
-
         createTable(); // Skapa tabell
         updateTable(); // Uppdatera tabell
 
@@ -75,37 +73,35 @@ public class MatchTab {
     public void createTable() {
         matchTableView = new TableView<Match>(); // Skapa tabellen
 
-        // Kolumn: Player eller Team
-        TableColumn<Match, String> playerOrTeamColumn = new TableColumn<>("Player/Team");
-        playerOrTeamColumn.setCellValueFactory(new PropertyValueFactory<>("playerOrTeam"));
+        // Kolumn: Player/Team
+        TableColumn<Match, String> playerOrTeam = new TableColumn<>("Player/Team");
+        playerOrTeam.setCellValueFactory(new PropertyValueFactory<>("playerOrTeam"));
 
-        // Kolumn: Player1/Team1 Namn
-        TableColumn<Match, String> matchPTColumnOne = new TableColumn<>("Player/Team 1");
-        matchPTColumnOne.setCellValueFactory(new PropertyValueFactory<>("playerTeamNameOne"));
-
-        // Kolumn: Player2/Team2 Namn
-        TableColumn<Match, String> matchPTColumnTwo = new TableColumn<>("Player/Team 2");
-        matchPTColumnTwo.setCellValueFactory(new PropertyValueFactory<>("playerTeamNameTwo"));
+        // Kolumner: Player/Team 1 & 2 Namn
+        TableColumn<Match, String> nameOne = new TableColumn<>("Player/Team 1");
+        TableColumn<Match, String> nameTwo = new TableColumn<>("Player/Team 2");
+        nameOne.setCellValueFactory(new PropertyValueFactory<>("nameOne"));
+        nameTwo.setCellValueFactory(new PropertyValueFactory<>("nameTwo"));
 
         // Kolumn: Date
-        TableColumn<Match, LocalDate> matchDateColumn = new TableColumn<>("Date");
-        matchDateColumn.setCellValueFactory(new PropertyValueFactory<>("matchDate"));
+        TableColumn<Match, LocalDate> date = new TableColumn<>("Date");
+        date.setCellValueFactory(new PropertyValueFactory<>("matchDate"));
 
         // Kolumn: Played/Not Played
-        TableColumn<Match, String> matchPlayedColumn = new TableColumn<>("Played/Not Played");
-        matchPlayedColumn.setCellValueFactory(new PropertyValueFactory<>("played"));
+        TableColumn<Match, String> played = new TableColumn<>("Played/Not Played");
+        played.setCellValueFactory(new PropertyValueFactory<>("played"));
 
-        // Kolumn: Result 1 & 2
-        TableColumn<Match, String> matchResultOneColumn = new TableColumn<>("Result 1");
-        TableColumn<Match, String> matchResultTwoColumn = new TableColumn<>("Result 2");
-        matchResultOneColumn.setCellValueFactory(new PropertyValueFactory<>("resultOne"));
-        matchResultTwoColumn.setCellValueFactory(new PropertyValueFactory<>("resultTwo"));
+        // Kolumner: Result 1 & 2
+        TableColumn<Match, String> resultOne = new TableColumn<>("Result 1");
+        TableColumn<Match, String> resultTwo = new TableColumn<>("Result 2");
+        resultOne.setCellValueFactory(new PropertyValueFactory<>("resultOne"));
+        resultTwo.setCellValueFactory(new PropertyValueFactory<>("resultTwo"));
 
         // Kolumn: Winner
-        TableColumn<Match, String> matchWinner = new TableColumn<>("Winner");
-        matchWinner.setCellValueFactory(new PropertyValueFactory<>("winner"));
+        TableColumn<Match, String> winner = new TableColumn<>("Winner");
+        winner.setCellValueFactory(new PropertyValueFactory<>("winner"));
 
-        matchTableView.getColumns().addAll(playerOrTeamColumn, matchPTColumnOne, matchPTColumnTwo, matchDateColumn, matchPlayedColumn, matchResultOneColumn, matchResultTwoColumn, matchWinner);
+        matchTableView.getColumns().addAll(playerOrTeam, nameOne, nameTwo, date, played, resultOne, resultTwo, winner);
     }
 
 

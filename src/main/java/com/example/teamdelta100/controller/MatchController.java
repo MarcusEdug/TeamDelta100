@@ -66,7 +66,6 @@ public class MatchController {
         try{
             transaction = em.getTransaction();
             transaction.begin();
-            // em.remove(em.contains(m) ? m:em.merge(m)); // Ta bort objekt
 
             Match tempMatch = em.find(Match.class, m.getMatchId());
             if(tempMatch.getPlayerOrTeam().equals("player")){
@@ -239,7 +238,9 @@ public class MatchController {
                 entityManager.merge(p);
             }
 
-           // entityManager.merge(tempMatch);
+            tempMatch.getPlayerList().clear();
+            entityManager.merge(tempMatch);
+
             transaction.commit();
         }catch(Exception e){
             if(transaction != null){
@@ -268,7 +269,9 @@ public class MatchController {
                 entityManager.merge(t);
             }
 
-            // entityManager.merge(tempMatch);
+            tempMatch.getPlayerList().clear();
+            entityManager.merge(tempMatch);
+
             transaction.commit();
         }catch(Exception e){
             if(transaction != null){
