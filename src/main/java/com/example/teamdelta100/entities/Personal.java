@@ -50,6 +50,17 @@ public class Personal {
 
     }
 
+    public Personal(String perName, String perLname, String perNickname, String perAddress, String perPostalCode, String perCity, String perCountry, String perEmail) {
+        this.perName = perName;
+        this.perLname = perLname;
+        this.perNickname = perNickname;
+        this.perAddress = perAddress;
+        this.perPostalCode = perPostalCode;
+        this.perCity = perCity;
+        this.perCountry = perCountry;
+        this.perEmail = perEmail;
+    }
+
     public int getId() {
         return Id;
     }
@@ -124,10 +135,6 @@ public class Personal {
 
     @Override
     public String toString() {
-        return "Personal: " +
-                "id = " + Id +
-                ", personalName = " + perName +
-                ", personalLastname = " + perLname +
-                ", personalNickname = " + perNickname;
+        return perName;
     }
 }
