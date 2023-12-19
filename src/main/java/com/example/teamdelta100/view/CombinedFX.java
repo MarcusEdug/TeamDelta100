@@ -21,7 +21,7 @@ public class CombinedFX extends Application {
     public void start(Stage stage) throws Exception {
         teamFX.setPlayerMenu(pm);
 
-        stage.setTitle("test");
+
         BorderPane tabLayout = new BorderPane();
 
         tabPane = new TabPane();
@@ -35,12 +35,14 @@ public class CombinedFX extends Application {
         tabLayout.setCenter(tabPane);
 
         tabScene = new Scene(tabLayout, 900, 500);
-        loginScene = logInWindows.LogIn(stage,tabScene);
+        logInWindows.LogIn(stage,tabScene);
 
 
         swapSceneSetup(stage);
-        stage.setScene(loginScene);
+        /*stage.setScene(loginScene);
         stage.show();
+
+         */
 
     }
     public void swapSceneSetup(Stage stage){

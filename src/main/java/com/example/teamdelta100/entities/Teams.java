@@ -3,7 +3,9 @@ package com.example.teamdelta100.entities;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/*
+    Den här klassen skapar Teams objekt
+ */
 @Entity
 @Table(name = "Teams")
 public class Teams {
@@ -14,70 +16,63 @@ public class Teams {
 
     @Column(name = "team_name", length = 30)
     private String name;
+
+    //Här koppling mellan teams och player. Detta gör så att ett teams objekt kan ha flera player objekt i sig
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "teams" )
     private List<Player> numberOfPlayerList = new ArrayList<>();
 
+    //Här är koppling mellan teams och match. Detta gör så att en match objekt kan ha flera teams objekt i sig
     @ManyToOne
     @JoinColumn (name = "match_id")
     private Match match;
 
+    //Här är koppling mellan teams och match. Detta gör så att en games objekt kan ha flera teams objekt i sig
     @ManyToOne
     @JoinColumn (name = "game_id")
     private Games games;
 
-    @Column(name = "Number_of_player")
-    private int numberOfPlayer;
-
-
+    //värden som är till TableView
     private String gameName;
+
+    //värden som är till TableView
     private String matchName;
 
+    //Konstruktorer
+
+
+    //en tom konstruktor
     public Teams() {
     }
 
-    public Teams(int id, String name, int numberOfPlayer) {
+    //en konstruktor med allt i sig
+    public Teams(int id, String name) {
         this.id = id;
         this.name = name;
-        this.numberOfPlayer = numberOfPlayer;
-
     }
 
-    public Teams(String name, int numberOfPlayer) {
+    //en konstruktor med allt förutom Id som Primary key
+    public Teams(String name) {
         this.name = name;
-        this.numberOfPlayer = numberOfPlayer;
     }
 
+    //Metod för att lägga till spelar i listan av spelare
     public void addPlayer (Player player){
         player.setTeams(this);
         numberOfPlayerList.add(player);
-    }
-    public void removePlayer (Player player){
-        player.setTeams(this);
-        numberOfPlayerList.remove(player);
-    }
-
-
-    public void countPlayer(){
-        setNumberOfPlayer(numberOfPlayerList.size());
     }
 
     @Override
     public String toString() {
         return name;
-
     }
 
+    //Getter and setter
     public Games getGames() {
         return games;
     }
 
     public void setGames(Games games) {
         this.games = games;
-    }
-
-
-    public Teams(String name) {
-        this.name = name;
     }
 
     public int getId() {
@@ -87,11 +82,9 @@ public class Teams {
     public void setId(int id) {
         this.id = id;
     }
-
     public Match getMatch() {
         return match;
     }
-
     public void setMatch(Match match) {
         this.match = match;
     }
@@ -102,14 +95,6 @@ public class Teams {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getNumberOfPlayer() {
-        return numberOfPlayer;
-    }
-
-    public void setNumberOfPlayer(int numberOfPlayer) {
-        this.numberOfPlayer = numberOfPlayer;
     }
 
     public String getGameName() {
@@ -135,6 +120,4 @@ public class Teams {
     public void setNumberOfPlayerList(List<Player> numberOfPlayerList) {
         this.numberOfPlayerList = numberOfPlayerList;
     }
-
-
 }

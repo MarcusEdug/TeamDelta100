@@ -8,151 +8,105 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+/*
+    Den klass har hand om överförsningen av information mellan databasen och java
+ */
 public class TeamsController implements Share {
     public static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("hibernate");
 
+    //Spara teams objekt i database
     public boolean save (Teams player){
-        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        EntityTransaction transaction = null;
+            EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+            EntityTransaction transaction = null;
 
-        try{
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            entityManager.persist(player);
-            transaction.commit();
-            return true;
-        } catch (Exception e){
-            if(transaction != null) {
-                transaction.rollback();
+            try{
+                transaction = entityManager.getTransaction();
+                transaction.begin();
+                entityManager.persist(player);
+                transaction.commit();
+                return true;
+            } catch (Exception e){
+                if(transaction != null) {
+                    transaction.rollback();
+                }
+                e.printStackTrace();
             }
-            e.printStackTrace();
-        }
-        finally {
-            entityManager.close();
-        }
-        return false;
-    }
-    public List<Teams> getAll(){
-        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        EntityTransaction transaction = null;
-        List<Teams> teamsListToReturn = new ArrayList<>();
-        try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            TypedQuery<Teams> resultList = entityManager.createQuery("FROM Teams", Teams.class);
-            teamsListToReturn.addAll(resultList.getResultList());
-            transaction.commit();
-            return teamsListToReturn;
-        } catch (Exception e){
-            if(transaction != null){
-                transaction.rollback();
+            finally {
+                entityManager.close();
             }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
+            return false;
         }
-        return null;
-    }
-    public Teams getTeamsById(int id){
-        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        EntityTransaction transaction = null;
-        try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            Teams teamToReturn = entityManager.find(Teams.class, id);
-            transaction.commit();
-            return teamToReturn;
-        } catch (Exception e){
-            if(transaction != null){
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
-        }
-        return null;
-    }
-    public boolean deleteTeams(Teams teams){
-        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        EntityTransaction transaction = null;
-        try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            entityManager.remove(entityManager.contains(teams) ? teams:entityManager.merge(teams));
-            transaction.commit();
-            return true;
-        } catch (Exception e){
-            if(transaction != null){
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
-        }
-        return false;
-    }
+
+    //Ta bort teams objekt från database med hjälp av Id
     public boolean deleteTeamsById(int Id){
-        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        EntityTransaction transaction = null;
-        try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            Teams teams = entityManager.find(Teams.class, Id);
-            if(teams != null){
-                entityManager.remove(teams);
+            EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+            EntityTransaction transaction = null;
+            try {
+                transaction = entityManager.getTransaction();
+                transaction.begin();
+                Teams teams = entityManager.find(Teams.class, Id);
+                if(teams != null){
+                    entityManager.remove(teams);
+                }
+                transaction.commit();
+                return true;
+            } catch (Exception e){
+                if(transaction != null){
+                    transaction.rollback();
+                }
+                e.printStackTrace();
+            } finally {
+                entityManager.close();
             }
-            transaction.commit();
-            return true;
-        } catch (Exception e){
-            if(transaction != null){
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
+            return false;
         }
-        return false;
-    }
+
+    //Uppdatare Teams objekt som redan finns i databasen
     public boolean updateTeams(Teams teams){
-        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        EntityTransaction transaction = null;
-        try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            entityManager.merge(teams);
-            transaction.commit();
-            return true;
-        } catch (Exception e){
-            if(transaction != null){
-                transaction.rollback();
+            EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+            EntityTransaction transaction = null;
+            try {
+                transaction = entityManager.getTransaction();
+                transaction.begin();
+                entityManager.merge(teams);
+                transaction.commit();
+                return true;
+            } catch (Exception e){
+                if(transaction != null){
+                    transaction.rollback();
+                }
+                e.printStackTrace();
+            } finally {
+                entityManager.close();
             }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
+            return false;
         }
-        return false;
-    }
-    public List<Teams> tableUpdate(){
-        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        EntityTransaction transaction = null;
-        List<Teams> teamsListToReturn = new ArrayList<>();
-        try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            TypedQuery<Teams> resultList = entityManager.createQuery("FROM Teams", Teams.class);
-            teamsListToReturn.addAll(resultList.getResultList());
-            transaction.commit();
-            return teamsListToReturn;
-        } catch (Exception e){
-            if(transaction != null){
-                transaction.rollback();
+
+    //Tar ut en lista från databasen
+    public List<Teams> getAListOfDatabase(){
+            EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+            EntityTransaction transaction = null;
+            List<Teams> teamsListToReturn = new ArrayList<>();
+            try {
+                transaction = entityManager.getTransaction();
+                transaction.begin();
+                TypedQuery<Teams> resultList = entityManager.createQuery("FROM Teams", Teams.class);
+                teamsListToReturn.addAll(resultList.getResultList());
+                transaction.commit();
+                return teamsListToReturn;
+            } catch (Exception e){
+                if(transaction != null){
+                    transaction.rollback();
+                }
+                e.printStackTrace();
+            } finally {
+                entityManager.close();
             }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
+            return null;
         }
-        return null;
-    }
+
+    //Kopplar ihop ett teams objekt med ett player objekt
     public boolean addPlayerToTeams(int playerId, int teamsId) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -184,50 +138,38 @@ public class TeamsController implements Share {
 
                 return false;
         }
-    public boolean removePlayerToTeams(int playerId, int teamsId) {
-        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        EntityTransaction transaction = null;
 
-        /*entityManager.getTransaction().begin();
+        //kopplar ifrån ett Player objekt ifrån teams objekt
+        public boolean removePlayerToTeams(int playerId, int teamsId) {
+            EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+            EntityTransaction transaction = null;
+            Teams team;
 
-        Teams teams = entityManager.find(Teams.class, 1L);
-        teams.getNumberOfPlayerList().remove(0);
+            try {
+                transaction = entityManager.getTransaction();
+                transaction.begin();
 
-        entityManager.getTransaction().commit();
-        entityManager.close();
+                Optional<Player> selectPlayer = Optional.ofNullable(entityManager.find(Player.class, playerId));
+                Optional<Teams> selectTeam = Optional.ofNullable(entityManager.find(Teams.class, teamsId));
 
-         */
+                Player player = selectPlayer.get();
+                team = selectTeam.get();
+                team.getNumberOfPlayerList().remove(0);
+                player.setTeams(null);
+                player.setTeamName(null);
+                transaction.commit();
 
-        Teams team;
+                return true;
 
-        try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-
-            Optional<Player> selectPlayer = Optional.ofNullable(entityManager.find(Player.class, playerId));
-            Optional<Teams> selectTeam = Optional.ofNullable(entityManager.find(Teams.class, teamsId));
-
-            Player player = selectPlayer.get();
-            team = selectTeam.get();
-            team.getNumberOfPlayerList().remove(0);
-            player.setTeams(null);
-            transaction.commit();
-
-            return true;
-
-        } catch(Exception e){
-            if (transaction != null) {
-                transaction.rollback();
+            } catch(Exception e){
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+                e.printStackTrace();
+            } finally{
+                entityManager.close();
             }
-            e.printStackTrace();
-        } finally{
-            entityManager.close();
+
+            return false;
         }
-
-        return false;
-
-
-    }
-
-
     }
