@@ -2,7 +2,6 @@ package com.example.teamdelta100.controller;
 import com.example.teamdelta100.entities.Games;
 import com.example.teamdelta100.entities.Player;
 import com.example.teamdelta100.entities.Teams;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 public class GameController {
     public static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("hibernate");
-
 
     // Create
     public boolean save(Games games) {
@@ -53,33 +50,9 @@ public class GameController {
                 for (Games games :
                         gamesListToReturn) {
                     System.out.println(games.getGameId() + ". " + games.getGameName());
-                    /*for (Player player :
-                            player.getPlayerName()) {
-                        System.out.println(games.getGameName());
-                    }*/
                 }
             }
             return gamesListToReturn;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
-        }
-        return null;
-    }
-
-    public Games getGameById(int id) {
-        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        EntityTransaction transaction = null;
-        try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            Games gamesToReturn = entityManager.find(Games.class, id);
-            transaction.commit();
-            return gamesToReturn;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -110,29 +83,6 @@ public class GameController {
             entityManager.close();
         }
         return false;
-    }
-
-    //Delete
-    public boolean deleteGames(Games games) {
-        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        EntityTransaction transaction = null;
-        try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            //Om entitet finns med så ta bort spel, annars slå ihop och sen ta bort
-            entityManager.remove(entityManager.contains(games) ? games : entityManager.merge(games));
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.getMessage();
-        } finally {
-            entityManager.close();
-        }
-        return false;
-
     }
 
     //Delete med ID
@@ -175,11 +125,17 @@ public class GameController {
             transaction = entityManager.getTransaction();
             transaction.begin();
 
-            Games games = entityManager.find(Games.class, gameId);
-            Player player = entityManager.find(Player.class, playerId);
+            Optional<Player> selectPlayer= Optional.ofNullable(entityManager.find(Player.class, playerId));
+            Optional<Games> selectGames = Optional.ofNullable(entityManager.find(Games.class, gameId));
 
-            if (games != null && player != null) {
-                entityManager.remove(player);
+            if (selectGames != null && selectPlayer != null) {
+                Player player = selectPlayer.get();
+                Games games = selectGames.get();
+
+                games.getPlayerList().remove(0);
+                games.setPlayerName(null);
+                games.setPlayerId(0);
+                player.setGames(null);
             }
 
             transaction.commit();
@@ -201,11 +157,28 @@ public class GameController {
             transaction = entityManager.getTransaction();
             transaction.begin();
 
-            Games games = entityManager.find(Games.class, gameId);
-            Teams teams = entityManager.find(Teams.class, teamId);
+            Optional<Teams> selectTeam = Optional.ofNullable(entityManager.find(Teams.class, teamId));
+            Optional<Games> selectGames = Optional.ofNullable(entityManager.find(Games.class, gameId));
 
-            if (games != null && teams != null) {
-                entityManager.remove(teams);
+            if (selectGames != null && selectTeam != null) {
+                Teams teams = selectTeam.get();
+                Games games = selectGames.get();
+
+                games.getTeamsList().remove(0);
+                games.setTeamName(null);
+                games.setTeamId(0);
+                teams.setGameName(null);
+                teams.setGames(null);
+
+
+                /*
+                Player player = selectPlayer.get();
+                team = selectTeam.get();
+                team.getNumberOfPlayerList().remove(0);
+                player.setTeams(null);
+                player.setTeamName(null);
+                transaction.commit();
+                 */
             }
             transaction.commit();
             return true;
@@ -253,8 +226,9 @@ public class GameController {
 
             Player player = selectPlayer.get();
             games = selectGames.get();
+            games.setPlayerId(player.getId());
+            games.setPlayerName(player.getPlayerName());
             games.addPlayer(player);
-
 
             transaction.commit();
             return true;
@@ -283,10 +257,9 @@ public class GameController {
             Teams teams = selectTeam.get();
             games = selectGame.get();
             teams.setGameName(games.getGameName());
+            games.setTeamId(teams.getId());
+            games.setTeamName(teams.getName());
             games.addTeams(teams);
-
-
-
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -297,7 +270,6 @@ public class GameController {
         } finally {
             entityManager.close();
         }
-
         return false;
     }
 }

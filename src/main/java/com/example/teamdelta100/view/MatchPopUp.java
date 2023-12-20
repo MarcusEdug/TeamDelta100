@@ -150,11 +150,8 @@ public class MatchPopUp {
                     nameOne = teamOne.getName();
                     nameTwo = teamTwo.getName();
 
-                    // Lägga in att matchnamnet syns för Teams
-                    // teamOne.setMatchName(nameOne + " vs. " + nameTwo);
-                    // teamTwo.setMatchName(nameOne + " vs. " + nameTwo);
                 }
-
+                 String matchName = nameOne + " vs. " + nameTwo;
                  LocalDate tempDate = date.getValue(); // Hämta datum
                  String tempPlayed = ((RadioButton) group.getSelectedToggle()).getText(); // Hämta Played eller Not Played
 
@@ -179,8 +176,8 @@ public class MatchPopUp {
                          matchController.addPlayerToMatch(tempMatch.getMatchId(), playerOne.getId());
                          matchController.addPlayerToMatch(tempMatch.getMatchId(), playerTwo.getId());
                      }else if (teamOrPlayer.equals("team")){
-                         matchController.addTeamToMatch(tempMatch.getMatchId(), teamOne.getId());
-                         matchController.addTeamToMatch(tempMatch.getMatchId(), teamTwo.getId());
+                         matchController.addTeamToMatch(tempMatch.getMatchId(), teamOne.getId(),matchName);
+                         matchController.addTeamToMatch(tempMatch.getMatchId(), teamTwo.getId(),matchName);
                      }
                      popup.close();
                 }
@@ -492,8 +489,10 @@ public class MatchPopUp {
                 selected.setNameOne(teamOne.getName());
                 selected.setNameTwo(teamTwo.getName());
 
-                matchController.addTeamToMatch(selected.getMatchId(), teamOne.getId());
-                matchController.addTeamToMatch(selected.getMatchId(), teamTwo.getId());
+                String matchName = teamOne.getName() + " vs. " + teamTwo.getName();
+
+                matchController.addTeamToMatch(selected.getMatchId(), teamOne.getId(), matchName);
+                matchController.addTeamToMatch(selected.getMatchId(), teamTwo.getId(), matchName);
             }
 
             RadioButton tempPlayedSelected = (RadioButton) group.getSelectedToggle();

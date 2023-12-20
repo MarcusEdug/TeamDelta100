@@ -425,23 +425,8 @@ public class TeamPopup {
         return teamId;
     }
 
-    public void setTeamId(int teamId) {
-        this.teamId = teamId;
-    }
-
     public int getPlayerId() {
         return playerId;
     }
 
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
-    }
-
-    public Teams getTempTeam() {
-        return tempTeam;
-    }
-
-    public void setTempTeam(Teams tempTeam) {
-        this.tempTeam = tempTeam;
-    }
 }
