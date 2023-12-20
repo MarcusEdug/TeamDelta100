@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-// Hantera kommunikationen med databasen för Match.
-// Evelina Daun
+/*
+ * Hantera kommunikationen med databasen för Match.
+ * @Author: Evelina Daun
+ */
 
 public class MatchController {
     public static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("hibernate");

@@ -5,8 +5,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-// Match objekt som kan placeras i databasen. Kopplat med Teams och Players.
-// Evelina Daun
+/*
+* Match objekt som kan placeras i databasen. Kopplat med Teams och Players.
+* @Author: Evelina Daun
+ */
 
 
 @Entity

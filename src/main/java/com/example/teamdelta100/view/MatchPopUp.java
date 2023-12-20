@@ -20,8 +20,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-// Hanterar popup fönster och kommunikation med controller.
-// Evelina Daun
+/* Hanterar popup fönster och kommunikation med controller.
+*
+* Innehåller metoder:
+* createMatch, addResult, deleteMatch, deletePopup, matchUpdate,
+* createCancelButton, changeLabels, testResultField, createMatchList
+* vboxFormat
+*
+* @Author: Evelina Daun
+*/
 
 
 public class MatchPopUp {
