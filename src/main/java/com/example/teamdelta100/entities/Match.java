@@ -68,7 +68,7 @@ public class Match {
         this.winner = winner;
     }
 
-    // Konstruktor med allt utom primary key och listor med kopplingar till andra klasser
+    // Konstruktor med allt utom primary key och listor
     public Match(String playerOrTeam, String playerTeamOneName, String playerTeamTwoName,
                  LocalDate matchDate, String played, int resultOne, int resultTwo, String winner) {
         this.playerOrTeam = playerOrTeam;
@@ -182,5 +182,4 @@ public class Match {
     public void setNameTwo(String nameTwo) {
         this.nameTwo = nameTwo;
     }
-
 }

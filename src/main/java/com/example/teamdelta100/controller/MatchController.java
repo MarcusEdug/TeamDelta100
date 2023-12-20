@@ -9,25 +9,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-// Hantera kommunikationen med databasen för Match tabellen.
+// Hantera kommunikationen med databasen för Match.
 // Evelina Daun
 
 public class MatchController {
     public static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("hibernate");
 
-
     // Tom konstruktor
     public MatchController(){}
 
 
-    // Metod: Lägga till Match objekt i databasen
-    public void addMatch(Match m){
-        EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+    // Metod: Lägga till match objekt i databasen
+    // @Param: Match objekt att lägga till
+    public void addMatch(Match match){
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         try{
-            transaction = em.getTransaction();
+            transaction = entityManager.getTransaction();
             transaction.begin();
-            em.persist(m); // Lägga in nytt objekt
+            entityManager.persist(match); // Lägga in nytt objekt
             transaction.commit();
         }catch(Exception e){
             if(transaction != null){
@@ -35,18 +35,19 @@ public class MatchController {
             }
             e.printStackTrace();
         }finally {
-            em.close();
+            entityManager.close();
         }
     }
 
-    // Metod: Uppdatera ett inskickat Match objekt
-    public void updateMatchObject(Match m){ // Skicka in vald match att ändra
-        EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+    // Metod: Uppdatera ett match objekt
+    // @Param: Match objekt att uppdatera
+    public void updateMatchObject(Match match){
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         try{
-            transaction = em.getTransaction();
+            transaction = entityManager.getTransaction();
             transaction.begin();
-            em.merge(m); // Uppdatera objekt
+            entityManager.merge(match); // Uppdatera objekt
             transaction.commit();
         }catch(Exception e){
             if(transaction != null){
@@ -54,27 +55,28 @@ public class MatchController {
             }
             e.printStackTrace();
         }finally {
-            em.close();
+            entityManager.close();
         }
     }
 
 
-    // Metod: Ta bord inskickat Match objekt
-    public void deleteMatchObject(Match m){ // Skicka in vald match att ta bort
-        EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+    // Metod: Ta bort match objekt
+    // @Param: Match objekt att ta bort
+    public void deleteMatchObject(Match match){
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         try{
-            transaction = em.getTransaction();
+            transaction = entityManager.getTransaction();
             transaction.begin();
 
-            Match tempMatch = em.find(Match.class, m.getMatchId());
-            if(tempMatch.getPlayerOrTeam().equals("player")){
-                List<Player> players = tempMatch.getPlayerList();
-                for(Player p : players){
-                    p.setMatch(null);
+            Match tempMatch = entityManager.find(Match.class, match.getMatchId()); // Hitta match objekt
+            if(tempMatch.getPlayerOrTeam().equals("player")){  // Om det är en player match
+                List<Player> players = tempMatch.getPlayerList(); // Hämta listan
+                for(Player p : players){ // Gå igenom listan
+                    p.setMatch(null);    // Sätta nytt match värde på player
                 }
                 tempMatch.getPlayerList().clear();
-            }else{
+            }else{  // Om det är en teams match
                 List<Teams> teams = tempMatch.getTeamsList();
                 for(Teams t : teams){
                     t.setMatch(null);
@@ -82,7 +84,7 @@ public class MatchController {
                 tempMatch.getTeamsList().clear();
             }
 
-            em.remove(tempMatch);
+            entityManager.remove(tempMatch);
             transaction.commit();
         }catch(Exception e){
             if(transaction != null){
@@ -90,22 +92,22 @@ public class MatchController {
             }
             e.printStackTrace();
         }finally {
-            em.close();
+            entityManager.close();
         }
     }
 
 
-    // Metod: Hämta alla Match objekt från databasen till en lista och skicka tillbaka
+    // Metod: Hämta alla match objekt från databasen till en lista och skicka tillbaka
     public List<Match> getAllMatchObjects(){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
-        List<Match> returnList = new ArrayList<>(); // Listan som objekten läggs i
+        List<Match> returnList = new ArrayList<>();
 
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-            TypedQuery<Match> resultList = entityManager.createQuery("FROM Match ", Match.class);
-            returnList.addAll(resultList.getResultList());
+            TypedQuery<Match> resultList = entityManager.createQuery("FROM Match ", Match.class); // Hämta
+            returnList.addAll(resultList.getResultList()); // Lägga till
             transaction.commit();
             return returnList;
         } catch (Exception e){
@@ -119,7 +121,7 @@ public class MatchController {
         return null;
     }
 
-    // Metod: Hämta Player lista för ett specifikt Match objekt - Används på grund av LAZY
+    // Metod: Hämta player lista för ett specifikt match objekt - Används på grund av LAZY
     public List<Player> getAllPlayers(Match match){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -127,8 +129,8 @@ public class MatchController {
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-            Match tempMatch = entityManager.find(Match.class, match.getMatchId()); // Söka efter Match med id
-            List<Player> returnList = new ArrayList<>(tempMatch.getPlayerList()); // Hämta listan med Players
+            Match tempMatch = entityManager.find(Match.class, match.getMatchId()); // Söka efter match med id
+            List<Player> returnList = new ArrayList<>(tempMatch.getPlayerList()); // Hämta listan med players
             transaction.commit();
             return returnList;
         } catch (Exception e){
@@ -143,7 +145,7 @@ public class MatchController {
     }
 
 
-    // Metod: Hämta Team lista för ett specifikt Match objekt - Används på grund av LAZY
+    // Metod: Hämta teams lista för ett specifikt match objekt - Används på grund av LAZY
     public List<Teams> getAllTeams(Match match){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -167,7 +169,7 @@ public class MatchController {
     }
 
 
-    // Metod: Lägga till Player till Match objekt
+    // Metod: Lägga till player till match objekt
     public void addPlayerToMatch(int matchId, int playerId){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -178,11 +180,11 @@ public class MatchController {
             Optional<Player> player = Optional.ofNullable(entityManager.find(Player.class, playerId));
             Optional<Match> match = Optional.ofNullable(entityManager.find(Match.class, matchId));
 
-            // If isPresent
-            Player tempPlayer = player.get();
-            Match tempMatch = match.get();
-            tempMatch.addPlayer(tempPlayer);
-
+           if(player.isPresent() && match.isPresent()){ // Om de finns
+               Player tempPlayer = player.get();        // Hämta player & match
+               Match tempMatch = match.get();
+               tempMatch.addPlayer(tempPlayer);         // Lägga till player i match
+           }
             transaction.commit();
         }catch(Exception e){
             if(transaction != null){
@@ -206,10 +208,11 @@ public class MatchController {
             Optional<Teams> team = Optional.ofNullable(entityManager.find(Teams.class, teamsId));
             Optional<Match> match = Optional.ofNullable(entityManager.find(Match.class, matchId));
 
-            Teams tempTeam = team.get();
-            Match tempMatch = match.get();
-            tempMatch.addTeams(tempTeam);
-
+            if(team.isPresent() && match.isPresent()){ // Om de finns
+                Teams tempTeam = team.get();           // Hämta team & match
+                Match tempMatch = match.get();
+                tempMatch.addTeams(tempTeam);          // Lägga till team i match
+            }
             transaction.commit();
         }catch(Exception e){
             if(transaction != null){
@@ -222,7 +225,7 @@ public class MatchController {
     }
 
 
-    // Metod: Ta bort Player från Match objekt
+    // Metod: Ta bort players från match objekt
     public void removeAllPlayers(Match match){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -240,7 +243,6 @@ public class MatchController {
 
             tempMatch.getPlayerList().clear();
             entityManager.merge(tempMatch);
-
             transaction.commit();
         }catch(Exception e){
             if(transaction != null){
@@ -253,7 +255,7 @@ public class MatchController {
     }
 
 
-    // Metod: Ta bort Team från Match objekt
+    // Metod: Ta bort teams från match objekt
     public void removeAllTeams(Match match){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -271,7 +273,6 @@ public class MatchController {
 
             tempMatch.getPlayerList().clear();
             entityManager.merge(tempMatch);
-
             transaction.commit();
         }catch(Exception e){
             if(transaction != null){
