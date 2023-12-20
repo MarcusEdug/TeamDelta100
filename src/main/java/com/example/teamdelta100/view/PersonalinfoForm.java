@@ -11,19 +11,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.w3c.dom.Text;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 
-import static com.example.teamdelta100.controller.PersonalController.ENTITY_MANAGER_FACTORY;
-
-public class InformationForm extends Application {
+public class PersonalinfoForm extends Application {
     private Stage window;
     private TextField firstNameField;
     private TextField lastNameField;
@@ -35,14 +27,13 @@ public class InformationForm extends Application {
     private TextField emailField;
     private String userStringInput;
     private TableView tableView;
-    private PlayerController playerController;
+    private PersonalController personalController;
     Button submitButton = new Button("Submit");
-    Player tempPlayer;
-
-
+    Personal tempPers;
 
     @Override
     public void start(Stage primaryStage) {
+
         primaryStage.setTitle("Information Form");
         this.window = primaryStage;
         GridPane grid = new GridPane();
@@ -105,7 +96,7 @@ public class InformationForm extends Application {
         grid.add(submitButton, 0, 8);
 
         submitButton.setOnAction(e -> {
-            tempPlayer = createPlayer (
+            tempPers = createPersonal (
                     firstNameField.getText(),
                     lastNameField.getText(),
                     nicknameField.getText(),
@@ -115,7 +106,7 @@ public class InformationForm extends Application {
                     countryField.getText(),
                     emailField.getText());
 
-            playerController.save(tempPlayer);
+            personalController.save(tempPers);
             update();
         });
 
@@ -125,6 +116,7 @@ public class InformationForm extends Application {
 
         primaryStage.show();
     }
+
 
     public TextField getFirstNameField() {
         return firstNameField;
@@ -158,42 +150,32 @@ public class InformationForm extends Application {
         return emailField;
     }
 
-    public void popupWindows(Scene scene){
-        window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Pop-up");
-        window.setMinWidth(200);
-        window.setScene(scene);
-        window.showAndWait();
-    }
-
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    public Player createPlayer(String firstName, String lastName, String nickname,
-                               String address, String postalCode, String city,
-                               String country, String email){
-        Player person = new Player();
-        person.setPlayerName(firstName);
-        person.setPlayerLastname(lastName);
-        person.setNickname(nickname);
-        person.setAddress(address);
-        person.setPostalCode(postalCode);
-        person.setCity(city);
-        person.setCountry(country);
-        person.setEmail(email);
-        return person;
+    public Personal createPersonal(String firstName, String lastName, String nickname,
+                                   String address, String postalCode, String city,
+                                   String country, String email){
+        Personal personal = new Personal();
+        personal.setPerName(firstName);
+        personal.setPerLname(lastName);
+        personal.setPerNickname(nickname);
+        personal.setPerAddress(address);
+        personal.setPerPostalCode(postalCode);
+        personal.setPerCity(city);
+        personal.setPerCountry(country);
+        personal.setPerEmail(email);
+        return personal;
     }
-
-    public void addComponents(TableView tableView, PlayerController playerController) {
+    public void addPerComponents(TableView tableView, PersonalController personalController) {
         this.tableView = tableView;
-        this.playerController = playerController;
+        this.personalController = personalController;
     }
     private void update(){
         tableView.getItems().clear();
-        for (Player temp : playerController.tableUpdate(true) ) {
+        for (Personal temp : personalController.tableUpdate(true) ) {
             tableView.getItems().add(temp);
         }
         window.close();

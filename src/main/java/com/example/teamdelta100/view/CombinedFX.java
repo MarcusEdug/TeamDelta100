@@ -7,57 +7,58 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class CombinedFX extends Application {
-
     PlayerMenu pm = new PlayerMenu();
     TeamFX teamFX = new TeamFX();
+    PersonalFX personalFX = new PersonalFX();
     MatchTab matchTab = new MatchTab(teamFX);
     GamesFX gamesFX = new GamesFX();
-    LogInWindows logInWindows = new LogInWindows(pm);
+    LogInWindows logInWindows = new LogInWindows(personalFX);
     private Scene loginScene;
     private Scene tabScene;
     private TabPane tabPane;
-    Stage window;
 
     @Override
     public void start(Stage stage) throws Exception {
         teamFX.setPlayerMenu(pm);
+
         gamesFX.setPlayerMenu(pm);
         gamesFX.setTeamFX(teamFX);
-        pm.createPlayer();
+        
 
 
-        stage.setTitle("test");
+
         BorderPane tabLayout = new BorderPane();
 
-        window = stage;
         tabPane = new TabPane();
 
+        tabPane.getTabs().add(personalFX.PersonalTab());
         tabPane.getTabs().add(pm.playerTab());
         tabPane.getTabs().add(teamFX.teamTab());
         tabPane.getTabs().add(gamesFX.gameTab());
         tabPane.getTabs().add(matchTab.createAndReturnTabMatch());
 
-
-
         tabLayout.setCenter(tabPane);
 
-        tabScene = new Scene(tabLayout, 800, 500);
+        tabScene = new Scene(tabLayout, 900, 500);
+        logInWindows.LogIn(stage,tabScene);
 
-        loginScene = logInWindows.LogIn(stage,tabScene);
 
         swapSceneSetup(stage);
-        stage.setScene(tabScene);
+        /*stage.setScene(loginScene);
         stage.show();
 
-    }
+         */
 
+    }
     public void swapSceneSetup(Stage stage){
         teamFX.setWindow(stage);
-        teamFX.setLoginScrene(loginScene);
+        teamFX.setTabScene(tabScene);
+        teamFX.setLogInWindows(logInWindows);
     }
 
     public static void main(String[] args) {
         launch(args);
     }
 }
+
 

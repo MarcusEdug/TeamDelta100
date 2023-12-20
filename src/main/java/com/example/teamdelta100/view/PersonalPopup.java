@@ -1,9 +1,8 @@
 package com.example.teamdelta100.view;
-
-import com.example.teamdelta100.controller.PlayerController;
-import com.example.teamdelta100.entities.Player;
+import com.example.teamdelta100.controller.PersonalController;
+import com.example.teamdelta100.entities.Personal;
 import com.example.teamdelta100.entities.Teams;
-import com.example.teamdelta100.view.InformationForm;
+import com.example.teamdelta100.view.PersonalinfoForm;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,10 +15,10 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
-public class  PlayerPopup {
-    InformationForm info = new InformationForm();
+public class  PersonalPopup{
+    PersonalinfoForm info = new PersonalinfoForm();
+    PersonalController personalController;
     TableView tableView;
-    PlayerController playerController;
     private String userStringSubmit;
     private int userIntSubmit;
     private Stage window;
@@ -31,12 +30,16 @@ public class  PlayerPopup {
     private int playerId;
     private Teams tempTeam;
     private Text error = new Text();
-    public PlayerPopup(TableView tableView, PlayerController playerController){
+
+    public PersonalPopup(TableView tableView, PersonalController personalController){
         this.tableView = tableView;
-        this.playerController = playerController;
+        this.personalController = personalController;
     }
-    public PlayerPopup() {
+
+    public PersonalPopup() {
+
     }
+
     public void popupWindows(){
         window = new Stage();
         //window.initModality(Modality.APPLICATION_MODAL);
@@ -46,24 +49,21 @@ public class  PlayerPopup {
         window.setScene(scene);
         window.showAndWait();
     }
-    public void InfoPopup(){
-        window = new Stage();
-        window.setTitle("Info");
-        window.setHeight(150);
-        window.setWidth(750);
-        window.setScene(scene);
-        window.showAndWait();
+
+    public void addPersonal() throws Exception {
+        info.init();
+        info.addPerComponents(tableView, personalController);
+        info.start(new Stage());
     }
-    public int deletePlayer (List<Player> playerList){
-        titleName = "Delete Player";
-        featureText = new Label("Which Player do you want to delete?");
+    public int deletePersonal (List<Personal> personalList){
+        titleName = "Delete Personal";
+        featureText = new Label("Which Person do you want to delete?");
 
         comboBox = new ComboBox();
-        for (Player player : playerList){
-            int id = player.getId();
+        for (Personal personal : personalList){
+            int id = personal.getId();
             comboBox.getItems().add(id);
         }
-
         Button submit = new Button("Submit");
         submit.setOnAction(e->{
             userIntSubmit = (int) comboBox.getValue();
@@ -79,13 +79,5 @@ public class  PlayerPopup {
         popupWindows();
 
         return userIntSubmit;
-    }
-
-    public void addPlayer() throws Exception {
-
-        info.init();  // Initialize the InformationForm
-        info.addComponents(tableView, playerController);
-        info.start(new Stage());  // Start the InformationForm
-
     }
 }
