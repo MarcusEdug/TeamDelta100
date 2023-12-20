@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 public class GamesFX extends Application {
@@ -23,7 +24,11 @@ public class GamesFX extends Application {
     Games games = new Games();
     Stage window;
     private PlayerMenu playerMenu;
+    private List<Games> listOfGames;
     private TeamFX teamFX;
+
+    public GamesFX() {
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -61,13 +66,15 @@ public class GamesFX extends Application {
         Button update = button("Update Game");
         Button assignPlayer = button("Assign player to a game");
         Button assignTeam = button("Assign team to a game");
+        Button removePlayer = button("Remove player from game");
+        Button removeTeam = button("Remove team from game");
         Button logOut = button("Log out");
 
 
         tableView = table();
 
         VBox buttonV = new VBox(20);
-        buttonV.getChildren().addAll(add,assignPlayer,assignTeam,delete,update,logOut);
+        buttonV.getChildren().addAll(add,assignPlayer,assignTeam,delete,update,removePlayer,removeTeam,logOut);
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(tableView,buttonV);
@@ -84,7 +91,6 @@ public class GamesFX extends Application {
             button.setOnAction(e-> {
                 if (input.equals("Add Game")) {
                     String name = gamePopup.addGame();
-
                     if (gameController.save(new Games(name))) {
                         System.out.println(name + " added");
                     } else {
@@ -93,27 +99,60 @@ public class GamesFX extends Application {
                     update();
 
                 } else if (input.equals("Assign player to a game")) {
-                    List<Player> playerList = playerMenu.playerDatabaseList();
-                    gamePopup.assignPlayerToGame(gameDatabaseList(), playerList);
-
-                    if (gameController.addPlayerToGame(gamePopup.getPlayerId(), gamePopup.getGameId())) {
-                        System.out.println("Player added");
-                    } else {
-                        System.out.println("Failed do add player");
+                    try {
+                        gameDatabaseList();
+                        List<Player> players = playerMenu.playerDatabaseList();
+                        if (listOfGames == null || players == null) {
+                            throw new Exception("Games or player are null");
+                        }
+                    } catch (Exception n1) {
+                        System.out.println("Error 1: " + n1.getMessage());
                     }
-
+                    if (!listOfGames.isEmpty() && !playerMenu.playerDatabaseList().isEmpty()) {
+                        gamePopup.assignPlayerToGame(listOfGames, playerMenu.playerDatabaseList());
+                        try {
+                            if (gamePopup.getPlayerId() != 0 && gamePopup.getGameId() != 0) {
+                                if (gameController.addPlayerToGame(gamePopup.getPlayerId(), gamePopup.getGameId())) {
+                                    System.out.println("Player assigned to game");
+                                } else {
+                                    System.out.println("Failed to assign player to game");
+                                }
+                            }
+                        } catch (Exception n2) {
+                            System.out.println("Error 2: " + n2.getMessage());
+                        }
+                    } else {
+                        System.out.println("No player assigned");
+                    }
                     update();
 
-                }else if (input.equals("Assign team to a game")) {
-                    List<Teams> teamsList = teamFX.teamDatabaseList();
-                    gamePopup.assignTeamToGame(gameDatabaseList(), teamsList);
-
-                    if (gameController.addTeamToGame(gamePopup.getTeamId(), gamePopup.getGameId())) {
-                        System.out.println("Team added");
-                    } else {
-                        System.out.println("Failed to add team");
+                } else if (input.equals("Assign team to a game")) {
+                    try {
+                        gameDatabaseList();
+                        List<Teams> teams = teamFX.teamDatabaseList();
+                        if (listOfGames == null || teams == null) {
+                            throw new Exception("Games or teams are null");
+                        }
+                    } catch (Exception e1) {
+                        System.out.println("Error 1: " + e1.getMessage());
+                        return;
                     }
-
+                    if (!listOfGames.isEmpty() && !teamFX.teamDatabaseList().isEmpty()) {
+                        gamePopup.assignTeamToGame(listOfGames, teamFX.teamDatabaseList());
+                        if (gamePopup.getTeamId() != 0 && gamePopup.getGameId() != 0) {
+                            try {
+                                if (gameController.addTeamToGame(gamePopup.getTeamId(), gamePopup.getGameId())) {
+                                    System.out.println("Team assigned to game");
+                                } else {
+                                    System.out.println("Failed to assign team");
+                                }
+                            } catch (Exception e2) {
+                                System.out.println("Error 2: " + e2.getMessage());
+                            }
+                        } else {
+                            System.out.println("No teams added");
+                        }
+                    }
                     update();
 
                 } else if (input.equals("Delete Game")) {
@@ -137,16 +176,32 @@ public class GamesFX extends Application {
                     }
                     update();
 
-                /*} else if (input.equals("List all games")) {
-                    gameController.getAll(true)
-                }
-                update();*/
+                }else if (input.equals("Remove player from game")) {
+                    gameDatabaseList();
+                    gamePopup.removePlayerFromGame(playerMenu.playerDatabaseList());
 
+                    if (gameController.removePlayerFromGame(gamePopup.getPlayerId(), gamePopup.getGameId())) {
+                        System.out.println("Player removed");
+                    } else {
+                        System.out.println("Failed to remove player");
+                    }
+                    update();
+                }else if (input.equals("Remove team from game")) {
+                    gameDatabaseList();
+                    gamePopup.removeTeamFromGame(teamFX.teamDatabaseList());
 
-                }else if (input.equals("Log out")) {
-                window.close();
+                    if (gameController.removeTeamFromGame(gamePopup.getTeamId(), gamePopup.getGameId())) {
+                        System.out.println("Team removed");
+                    } else {
+                        System.out.println("Failed to remove team");
+                    }
+                    update();
+
+            } else if (input.equals("Log out")) {
+            window.close();
             }
         });
+
         return button;
     }
 
@@ -164,7 +219,7 @@ public class GamesFX extends Application {
         gamePlayerColumn.setCellValueFactory(new PropertyValueFactory("playerList"));
 
         TableColumn<Games, String> gameTeamColumn = new TableColumn<>("Team name");
-        gameTeamColumn.setCellValueFactory(new PropertyValueFactory("teamName"));
+        gameTeamColumn.setCellValueFactory(new PropertyValueFactory("teamsList"));
 
         tableView.getColumns().addAll(gameIdColumn, gameNameColumn, gamePlayerColumn,gameTeamColumn);
 
@@ -186,7 +241,7 @@ public class GamesFX extends Application {
         return gameController.tableUpdate()
     }*/
     public List<Games> gameDatabaseList() {
-        List<Games> listOfGames = gameController.tableUpdate();
+        listOfGames = gameController.tableUpdate();
         return listOfGames;
     }
 
@@ -198,22 +253,12 @@ public class GamesFX extends Application {
         this.playerMenu = playerMenu;
     }
 
-    public static void main(String[] args) throws Exception {
-        launch(args);
-    }
-    public GameController getGameController(){
+    public GameController getGameController() {
         return gameController;
     }
+
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
-    }
-
-   /* public GamePopup getGamePopup() {
-        return gamePopup;
-    }
-
-    public void setGamePopup(GamePopup gamePopup) {
-        this.gamePopup = gamePopup;
     }
 
     public TableView getTableView() {
@@ -224,13 +269,18 @@ public class GamesFX extends Application {
         this.tableView = tableView;
     }
 
-    public Stage getWindow() {
-        return window;
+    public TeamFX getTeamFX() {
+        return teamFX;
     }
 
-    public void setWindow(Stage window) {
-        this.window = window;
-    }*/
+    public void setTeamFX(TeamFX teamFX) {
+        this.teamFX = teamFX;
+    }
+
+    public static void main(String[] args) throws Exception {
+        launch(args);
+    }
+
 }
 
 

@@ -12,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -35,6 +37,8 @@ public class GamePopup {
     private Player tempPlayer;
     private Games tempGame;
     private Text errorMessage = new Text();
+    private Label boxText1;
+    private Label boxText2;
 
     public void popupWindow() {
         window = new Stage();
@@ -227,7 +231,7 @@ public class GamePopup {
             if (tempPlayer.getGames() == null) {
                gameId = tempGame.getGameId();
                playerId = tempPlayer.getId();
-                window.close();
+               window.close();
             } else {
                 errorMessage.setText("Player is already assigned to a game");
             }
@@ -269,7 +273,7 @@ public class GamePopup {
             errorMessage.setText("");
             tempGame = (Games) comboBoxGames.getValue();
             Teams tempTeams = (Teams) comboBoxTeam.getValue();
-            if (tempTeams == null || tempTeams.getGames() == null) {
+            if (tempTeams.getGames() == null) {
                 tempTeams.setGames(tempGame);
                 gameId = tempGame.getGameId();
                 teamId = tempTeams.getId();
@@ -297,6 +301,110 @@ public class GamePopup {
         scene = new Scene(vBox);
 
         popupWindow();
+    }
+    private Player player;
+    public void removePlayerFromGame (List<Player> playerList) {
+
+        titleName = "Remove player";
+        featureText = new Label("Remove a player from game");
+
+        boxText1 = new Label("Select player: ");
+        boxText2 = new Label("Assigned to:  ");
+
+        ComboBox playerComboBox = new ComboBox();
+        for (Player player : playerList) {
+            if (player.getGames() != null) {
+                playerComboBox.getItems().add(player);
+            }
+        }
+        Text gameName = new Text();
+        gameName.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+        playerComboBox.setOnAction(e-> {
+            player = (Player) playerComboBox.getValue();
+            gameName.setText("Game-ID " + gameId);
+            tempGame = player.getGames();
+        });
+
+        HBox upperHbox = new HBox(8);
+        upperHbox.getChildren().addAll(boxText1,playerComboBox);
+        upperHbox.setAlignment(Pos.CENTER);
+
+        HBox lowerHbox = new HBox(8);
+        lowerHbox.getChildren().addAll(boxText2,gameName);
+        lowerHbox.setAlignment(Pos.CENTER);
+
+        Button submit = new Button("Submit");
+        submit.setOnAction(e-> {
+            errorMessage.setText("");
+            if (playerComboBox.getValue() != null) {
+                errorMessage.setText("");
+                gameId = tempGame.getGameId();
+                playerId = player.getId();
+                window.close();
+            } else {
+                errorMessage.setText("Chose a player");
+            }
+        });
+
+        VBox vBox = new VBox(5);
+        vBox.getChildren().addAll(featureText,upperHbox,lowerHbox,submit,errorMessage);
+
+        scene = new Scene(vBox);
+
+        window.setScene(scene);
+        window.showAndWait();
+    }
+    private Teams teams;
+    public void removeTeamFromGame (List<Teams> teamsList) {
+        titleName = "Remove team";
+        featureText = new Label("Remove team from game");
+
+        boxText1 = new Label("Select team");
+        boxText2 = new Label("Assigned to: ");
+
+        ComboBox teamComboBox = new ComboBox();
+        for (Teams teams : teamsList) {
+            if (teams.getGames() != null) {
+                teamComboBox.getItems().add(teams);
+            }
+        }
+        Text gameName = new Text();
+        gameName.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+        teamComboBox.setOnAction(e-> {
+            teams = (Teams) teamComboBox.getValue();
+            gameName.setText("Game-ID: " + gameId);
+            tempGame = teams.getGames();
+        });
+
+        HBox upperHbox = new HBox(8);
+        upperHbox.getChildren().addAll(boxText1, teamComboBox);
+        upperHbox.setAlignment(Pos.CENTER);
+
+        HBox lowerHbox = new HBox(2);
+        lowerHbox.getChildren().addAll(boxText2,gameName);
+        lowerHbox.setAlignment(Pos.CENTER);
+
+        Button submit = new Button("Submit");
+        submit.setOnAction(e-> {
+            errorMessage.setText("");
+            if (teamComboBox.getValue() != null) {
+                errorMessage.setText("");
+                gameId = tempGame.getGameId();
+                teamId = teams.getId();
+                window.close();
+            } else {
+                errorMessage.setText("Chose a team");
+            }
+        });
+
+        VBox vbox = new VBox(5);
+        vbox.getChildren().addAll(featureText,upperHbox,lowerHbox,submit,errorMessage);
+        vbox.setAlignment(Pos.CENTER);
+
+        scene = new Scene(vbox);
+
+        window.setScene(scene);
+        window.showAndWait();
     }
 
     public int getGameId() {

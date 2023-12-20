@@ -33,7 +33,6 @@ public class GameController {
             }
             e.printStackTrace();
         } finally {
-            System.out.println("Har nått finally");
             entityManager.close();
         }
         return false;
@@ -169,6 +168,57 @@ public class GameController {
         }
         return false;
     }
+    public boolean removePlayerFromGame(int gameId, int playerId) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            Games games = entityManager.find(Games.class, gameId);
+            Player player = entityManager.find(Player.class, playerId);
+
+            if (games != null && player != null) {
+                entityManager.remove(player);
+            }
+
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return false;
+    }
+    public boolean removeTeamFromGame (int teamId, int gameId) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            Games games = entityManager.find(Games.class, gameId);
+            Teams teams = entityManager.find(Teams.class, teamId);
+
+            if (games != null && teams != null) {
+                entityManager.remove(teams);
+            }
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return false;
+    }
 
     public List<Games> tableUpdate() {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
@@ -205,7 +255,9 @@ public class GameController {
             games = selectGames.get();
             games.addPlayer(player);
 
+
             transaction.commit();
+            return true;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -230,7 +282,7 @@ public class GameController {
 
             Teams teams = selectTeam.get();
             games = selectGame.get();
-            //teams.setGameName(games.getGameName());
+            teams.setGameName(games.getGameName());
             games.addTeams(teams);
 
 
