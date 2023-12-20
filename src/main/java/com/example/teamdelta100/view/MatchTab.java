@@ -212,24 +212,13 @@ public class MatchTab {
             }
         }
     }
-    public Stage getWindow() {
-        return window;
-    }
 
     public void setWindow(Stage window) {
         this.window = window;
     }
 
-    public LogInWindows getLogInWindows() {
-        return logInWindows;
-    }
-
     public void setLogInWindows(LogInWindows logInWindows) {
         this.logInWindows = logInWindows;
-    }
-
-    public Scene getTabScene() {
-        return tabScene;
     }
 
     public void setTabScene(Scene tabScene) {

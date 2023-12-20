@@ -56,7 +56,6 @@ public class LogInWindows {
 
         HBox hBox = new HBox(5);
 
-
         //skapar en listView
         personalList = personalUser();
 
@@ -71,8 +70,6 @@ public class LogInWindows {
                 error.setText("Select admin");
             }
         });
-
-
 
         //skapar login knappen som tar värdet på de användar objekt som användare har valt i listview och så öppnar den upp tab stagen
         Button logIn = new Button("Log in");
@@ -102,8 +99,6 @@ public class LogInWindows {
         vbox.getChildren().addAll(personalList,hBox,error);
         vbox.setAlignment(Pos.CENTER);
 
-
-
         Layout.setCenter(vbox); // lägger in allt i layouten
 
         //öppnar login stagen
@@ -123,7 +118,6 @@ public class LogInWindows {
         return listView;
     }
     public void createPersonalpopup(Stage createStage){
-
         createStage.setTitle("Information Form");
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(20, 20, 20, 20));
@@ -198,12 +192,10 @@ public class LogInWindows {
             createStage.close();
         });
 
-
         Scene scene = new Scene(grid, 300, 400);
         createStage.setScene(scene);
 
         createStage.show();
-
     }
 
     public Personal createPersonal(String firstName, String lastName, String nickname,

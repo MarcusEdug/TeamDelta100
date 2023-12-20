@@ -18,12 +18,13 @@ public class Games {
     @Column (length = 50)
     private String gameName;
 
-    @Column (name = "player_id")
     private int playerId;
+
     private String playerName;
 
-    @Column (name = "team_id")
+
     private int teamId;
+
     private String teamName;
 
 
@@ -105,6 +106,38 @@ public class Games {
 
     public void setPlayerList(List<Player> numberOfPlayerList) {
         this.playerList = numberOfPlayerList;
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
     @Override

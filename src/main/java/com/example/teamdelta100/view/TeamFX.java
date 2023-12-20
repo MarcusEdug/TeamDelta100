@@ -51,7 +51,6 @@ public class TeamFX {
         Button logOut = createButton("Log out");
 
         createTable(); //Skapar tableView
-        //updateTable();
         teamTab.setOnSelectionChanged(e-> updateTable()); //Uppdatara tableView
 
         //skapar en VBox för att lägga in alla knappar

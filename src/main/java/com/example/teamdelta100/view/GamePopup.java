@@ -21,8 +21,6 @@ import javafx.stage.Stage;
 import java.util.List;
 
 public class GamePopup {
-
-    GameController gameController = new GameController();
     private String userStringInput;
     private int userIntInput;
     private Stage window;
@@ -34,15 +32,15 @@ public class GamePopup {
     private int gameId;
     private int playerId;
     private int teamId;
-    private Player tempPlayer;
     private Games tempGame;
     private Text errorMessage = new Text();
     private Label boxText1;
     private Label boxText2;
+    private Player player;
+    private Teams teams;
 
     public void popupWindow() {
         window = new Stage();
-        //window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(titleName);
         window.setMinWidth(200);
         window.setScene(scene);
@@ -50,45 +48,11 @@ public class GamePopup {
     }
 
     public String addGame() {
-        /*TextField userText = new TextField();
-        userText.setMaxWidth(100);
-        titleName = "Add game";
-        featureText = new Label("What is the name of the game?");*/
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Add game");
         window.setMinWidth(200);
-
-        TextField userText = new TextField();
-        Button submit = new Button("Submit");
-        submit.setOnAction(e -> {
-            userStringInput = userText.getText();
-            System.out.println(userStringInput);
-            window.close();
-        });
-
-
-        VBox vBox = new VBox();
-        vBox.getChildren().addAll(userText, submit);
-        vBox.setAlignment(Pos.CENTER);
-
-        scene = new Scene(vBox);
-        window.setScene(scene);
-        window.showAndWait();
-
-        //popupWindow();
-
-        return userStringInput;
-    }
-
-    public String addGameGenre(int id) {
-
-        Stage window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Add Game Genre");
-        window.setMaxWidth(200);
-
 
         TextField userText = new TextField();
         Button submit = new Button("Submit");
@@ -135,39 +99,6 @@ public class GamePopup {
         popupWindow();
 
         return userIntInput;
-    }
-
-    public Games updateGames(Games games) {
-        titleName = "Change name";
-        featureText = new Label("Select a new name for the game");
-
-        tempGame = games;
-        Text currentName = new Text(tempGame.getGameName());
-        TextField newName = new TextField();
-
-      /*  comboBox = new ComboBox<>();
-        for (Games games : gamesList) {
-            int id = games.getGameId();
-            comboBox.getItems().add(id);
-        }*/
-
-        HBox hbox = new HBox();
-        hbox.getChildren().addAll(currentName, newName);
-
-        Button submit = new Button("Submit");
-        submit.setOnAction(e -> {
-            tempGame.setGameName(newName.getText());
-            window.close();
-        });
-
-        VBox vBox = new VBox(5);
-        vBox.getChildren().addAll(featureText, comboBox, submit);
-        vBox.setAlignment(Pos.CENTER);
-
-        scene = new Scene(vBox);
-        //popupWindow();
-
-        return tempGame;
     }
 
     public Games updateGameName(List<Games> gamesList) {
@@ -302,9 +233,7 @@ public class GamePopup {
 
         popupWindow();
     }
-    private Player player;
     public void removePlayerFromGame (List<Player> playerList) {
-
         titleName = "Remove player";
         featureText = new Label("Remove a player from game");
 
@@ -354,7 +283,6 @@ public class GamePopup {
         window.setScene(scene);
         window.showAndWait();
     }
-    private Teams teams;
     public void removeTeamFromGame (List<Teams> teamsList) {
         titleName = "Remove team";
         featureText = new Label("Remove team from game");
@@ -411,31 +339,12 @@ public class GamePopup {
         return gameId;
     }
 
-    public void setGameId(int gameId) {
-        this.gameId = gameId;
-    }
-
     public int getPlayerId() {
         return playerId;
-    }
-
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
-    }
-
-    public String getGameName() {
-        return gameName;
-    }
-
-    public void setGameName(String gameName) {
-        this.gameName = gameName;
     }
 
     public int getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(int teamId) {
-        this.teamId = teamId;
-    }
 }

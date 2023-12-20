@@ -42,14 +42,14 @@ public class GamesFX {
 
         tableView = table();
 
-        VBox buttonV = new VBox(20);
-        buttonV.getChildren().addAll(add, assignPlayer, assignTeam, delete, update, removePlayer, removeTeam, logOut);
+        VBox buttonV = new VBox(10);
+        buttonV.getChildren().addAll(add, assignPlayer, removePlayer, assignTeam, removeTeam, delete, update, logOut);
 
         tabLayout.setOnSelectionChanged(e-> update());
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(tableView, buttonV);
-        AnchorPane.setTopAnchor(buttonV, 100.0);
+        AnchorPane.setTopAnchor(buttonV, 75.0);
         AnchorPane.setLeftAnchor(buttonV, 350.0);
 
         tabLayout.setContent(anchorPane);

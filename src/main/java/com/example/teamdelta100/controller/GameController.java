@@ -125,11 +125,17 @@ public class GameController {
             transaction = entityManager.getTransaction();
             transaction.begin();
 
-            Games games = entityManager.find(Games.class, gameId);
-            Player player = entityManager.find(Player.class, playerId);
+            Optional<Player> selectPlayer= Optional.ofNullable(entityManager.find(Player.class, playerId));
+            Optional<Games> selectGames = Optional.ofNullable(entityManager.find(Games.class, gameId));
 
-            if (games != null && player != null) {
-                entityManager.remove(player);
+            if (selectGames != null && selectPlayer != null) {
+                Player player = selectPlayer.get();
+                Games games = selectGames.get();
+
+                games.getPlayerList().remove(0);
+                games.setPlayerName(null);
+                games.setPlayerId(0);
+                player.setGames(null);
             }
 
             transaction.commit();
@@ -151,11 +157,28 @@ public class GameController {
             transaction = entityManager.getTransaction();
             transaction.begin();
 
-            Games games = entityManager.find(Games.class, gameId);
-            Teams teams = entityManager.find(Teams.class, teamId);
+            Optional<Teams> selectTeam = Optional.ofNullable(entityManager.find(Teams.class, teamId));
+            Optional<Games> selectGames = Optional.ofNullable(entityManager.find(Games.class, gameId));
 
-            if (games != null && teams != null) {
-                entityManager.remove(teams);
+            if (selectGames != null && selectTeam != null) {
+                Teams teams = selectTeam.get();
+                Games games = selectGames.get();
+
+                games.getTeamsList().remove(0);
+                games.setTeamName(null);
+                games.setTeamId(0);
+                teams.setGameName(null);
+                teams.setGames(null);
+
+
+                /*
+                Player player = selectPlayer.get();
+                team = selectTeam.get();
+                team.getNumberOfPlayerList().remove(0);
+                player.setTeams(null);
+                player.setTeamName(null);
+                transaction.commit();
+                 */
             }
             transaction.commit();
             return true;
@@ -203,6 +226,8 @@ public class GameController {
 
             Player player = selectPlayer.get();
             games = selectGames.get();
+            games.setPlayerId(player.getId());
+            games.setPlayerName(player.getPlayerName());
             games.addPlayer(player);
 
             transaction.commit();
@@ -232,6 +257,8 @@ public class GameController {
             Teams teams = selectTeam.get();
             games = selectGame.get();
             teams.setGameName(games.getGameName());
+            games.setTeamId(teams.getId());
+            games.setTeamName(teams.getName());
             games.addTeams(teams);
             transaction.commit();
             return true;
