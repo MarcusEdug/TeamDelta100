@@ -86,7 +86,6 @@ public class PlayerController {
         }
         return false;
     }
-
     public List<Player> getAll() {
         return getAll(true);
     }
@@ -121,6 +120,26 @@ public class PlayerController {
         }
         return null;
     }
+    public Player getPlayerById(int id) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+            Player player = entityManager.find(Player.class, id);
+            transaction.commit();
+            return player;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return null;
+    }
     public boolean updatePlayer(Player player){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -140,4 +159,6 @@ public class PlayerController {
         }
         return false;
     }
+
+
 }

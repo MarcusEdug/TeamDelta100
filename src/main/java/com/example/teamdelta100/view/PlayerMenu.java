@@ -1,7 +1,6 @@
 package com.example.teamdelta100.view;
 
 import com.example.teamdelta100.controller.PlayerController;
-import com.example.teamdelta100.entities.Personal;
 import com.example.teamdelta100.entities.Player;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -12,26 +11,20 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-
 import java.util.List;
 
 public class PlayerMenu extends Application {
-
     PlayerController playerController = new PlayerController();
-    PlayerPopup playerPopup = new PlayerPopup();
-    InformationForm info = new InformationForm();
     TableView tableView;
     public static void main(String[] args) {
-
         launch();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        PlayerPopup playerPopup = new PlayerPopup(tableView, playerController);
         Button addplayer = button("Add Player");
+
 
         TableView viewPlayers = table();
 
@@ -50,17 +43,19 @@ public class PlayerMenu extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
     public Tab playerTab(){
         Tab tabLayout = new Tab("Players");
         tabLayout.setClosable(false);
         Button addPlayer = button("Add Player");
         Button deletePlayer = button("Delete Player");
+        Button showInfo = button("Show info");
         Button logOut = button("Log out");
 
         tableView = table();
 
         VBox buttonV = new VBox(10);
-        buttonV.getChildren().addAll(addPlayer,deletePlayer,logOut);
+        buttonV.getChildren().addAll(addPlayer, deletePlayer, showInfo, logOut);
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(tableView, buttonV);
@@ -98,33 +93,28 @@ public class PlayerMenu extends Application {
     }
     public Button button(String input) {
         Button button = new Button(input);
-        button.setOnAction(e-> {
+        button.setOnAction(e -> {
+            PlayerPopup playerPopup = new PlayerPopup(tableView, playerController);
             if (input.equals("Add Player")) {
                 try {
-                    PlayerPopup playerPopup = new PlayerPopup(tableView, playerController);
                     playerPopup.addPlayer();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-
             } else if (input.equals("Delete Player")) {
                 List<Player> playerList = playerController.getAll();
-                if (playerController.deletePlayerById(playerPopup.deletePlayer(playerList))){
-                    System.out.println("Bortagen Player");
+                if (playerController.deletePlayerById(playerPopup.deletePlayer(playerList))) {
+                    System.out.println("Deleted Player");
+                } else {
+                    System.out.println("Failed to delete Player");
                 }
-                else {
-                    System.out.println("Tog ej bort Player");
-                }
-
-
                 update();
-            } else if (input.equals("Show Info")) {
-
+            } else if (input.equals("Show info")) {
+                playerPopup.showPlayerInfo();  // Call showPlayerInfo directly
             } else if (input.equals("Log out")) {
-
+                // Handle log out
             }
         });
-
 
         return button;
     }
@@ -136,7 +126,6 @@ public class PlayerMenu extends Application {
     public PlayerController getController() {
         return playerController;
     }
-
     public void setController(PlayerController playerController) {
         this.playerController = playerController;
     }
