@@ -1,5 +1,6 @@
 package com.example.teamdelta100.view;
 
+import com.example.teamdelta100.entities.Player;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -180,6 +181,7 @@ public class TeamFX {
                 {
                     if (controller.updateTeams(tempTeam)) // laddar in de justerade teams objekt i databasen
                     {
+                        changePlayerTeamName(tempTeam);
                         System.out.println("The team is updatade");
                     }
                     else
@@ -243,6 +245,21 @@ public class TeamFX {
     public List<Teams> teamDatabaseList (){
        teamList = controller.getAListOfDatabase();
         return teamList;
+    }
+
+    //Metod: uppdatar teams namn på en player obejekt ifall den har blivit ihop kopplad
+    public void changePlayerTeamName(Teams teams){
+        for (Teams team1: teamDatabaseList()){
+            if(!team1.getNumberOfPlayerList().isEmpty()){
+                for(Player teamPlayer : team1.getNumberOfPlayerList()){
+                    if (teamPlayer.getTeams().getId() == teams.getId()){
+                        teamPlayer.setTeamName(teams.getName());
+                        teamPlayer.setTeams(teams);
+                        playerMenu.playerController.updatePlayer(teamPlayer);
+                    }
+                }
+            }
+        }
     }
 
     //Getters och Setters
