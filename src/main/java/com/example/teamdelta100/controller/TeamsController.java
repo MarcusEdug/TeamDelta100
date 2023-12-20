@@ -7,19 +7,16 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-
 /*
     Den klass har hand om överförsningen av information mellan databasen och java
  */
-public class TeamsController implements Share {
+public class TeamsController {
     public static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("hibernate");
 
     //Spara teams objekt i database
     public boolean save (Teams player){
             EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
             EntityTransaction transaction = null;
-
             try{
                 transaction = entityManager.getTransaction();
                 transaction.begin();
@@ -111,7 +108,6 @@ public class TeamsController implements Share {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         Teams team;
-
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
@@ -135,7 +131,6 @@ public class TeamsController implements Share {
                 } finally{
                     entityManager.close();
                 }
-
                 return false;
         }
 
@@ -144,7 +139,6 @@ public class TeamsController implements Share {
             EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
             EntityTransaction transaction = null;
             Teams team;
-
             try {
                 transaction = entityManager.getTransaction();
                 transaction.begin();
@@ -169,7 +163,6 @@ public class TeamsController implements Share {
             } finally{
                 entityManager.close();
             }
-
             return false;
         }
     }

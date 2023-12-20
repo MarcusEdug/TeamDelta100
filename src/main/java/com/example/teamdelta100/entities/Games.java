@@ -14,6 +14,7 @@ public class Games {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "game_id")
     private int gameId;
+
     @Column (length = 50)
     private String gameName;
 
@@ -38,17 +39,9 @@ public class Games {
     //Mapped - Förhindrar den här sidan att skapa en extra tabell för relational mapping
     //Mapped - säger till hibernate att den motsatta sidan har kontroll, inget behov av att skapa tabeller (behövs den här?)
 
-
- /*   @JoinColumn (name = "player_id")
-    @JoinColumn (name = "team_id")*/
-    //private Player player;
-    // private Teams teams;
-
     //Tom konstruktor
     public Games() {
     }
-
-
 
     //Konstruktor med allt
     public Games(int gameId, String gameName, int playerId, String playerName, List<Games> gamesToChose, Player player, int teamId, String teamName, Teams teams) {
@@ -62,7 +55,6 @@ public class Games {
     }
 
     //Konstruktor med allt utom gameId.
-
     public Games(String gameName, int playerId, String playerName, int teamId, String teamName, List<Teams> teamsList, List<Player> playerList) {
         this.gameName = gameName;
         this.playerId = playerId;
@@ -75,9 +67,6 @@ public class Games {
 
     public Games(String gameName) {
         this.gameName = gameName;
-    }
-
-    public Games(int id, String genre) {
     }
 
     public void addPlayer (Player player){
@@ -98,110 +87,8 @@ public class Games {
         this.gameName = gameName;
     }
 
-    public int getPlayerId() {
-        return playerId;
-    }
-
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
-    }
-
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    public int getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(int teamId) {
-        this.teamId = teamId;
-    }
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
-    /*    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    public Teams getTeams() {
-        return teams;
-    }
-
-    public void setTeams(Teams teams) {
-        this.teams = teams;*/
-
-    /*public String getPlayerName() {
-        return playerName;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    public int getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(int teamId) {
-        this.teamId = teamId;
-    }
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;*/
-
-    /*  public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }*/
-
- /*   public Teams getTeams() {
-        return teams;
-    }
-
-    public void setTeams(Teams teams) {
-        this.teams = teams;
-    }*/
-
-    public void setGameId(int id) {
-        this.gameId = id;
-    }
-
     public int getGameId() {
         return gameId;
-    }
-
-/*    public int getPlayerId() {
-        return playerId;
-    }
-
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
-    }*/
-    //För att få ut text i comboboxen vid uppdatering av namn
-    @Override
-    public String toString() {
-        return gameName;
     }
 
     public List<Teams> getTeamsList() {
@@ -220,5 +107,8 @@ public class Games {
         this.playerList = numberOfPlayerList;
     }
 
-
+    @Override
+    public String toString() {
+        return gameName;
+    }
 }

@@ -7,25 +7,20 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class CombinedFX extends Application {
-    PlayerMenu pm = new PlayerMenu();
-    TeamFX teamFX = new TeamFX();
-    PersonalFX personalFX = new PersonalFX();
-    MatchTab matchTab = new MatchTab(teamFX);
-    GamesFX gamesFX = new GamesFX();
-    LogInWindows logInWindows = new LogInWindows(personalFX);
-    private Scene loginScene;
+    private PlayerMenu pm = new PlayerMenu();
+    private TeamFX teamFX = new TeamFX();
+    private PersonalFX personalFX = new PersonalFX();
+    private MatchTab matchTab = new MatchTab();
+    private GamesFX gamesFX = new GamesFX();
+    private LogInWindows logInWindows = new LogInWindows(personalFX);
     private Scene tabScene;
     private TabPane tabPane;
 
     @Override
     public void start(Stage stage) throws Exception {
         teamFX.setPlayerMenu(pm);
-
         gamesFX.setPlayerMenu(pm);
         gamesFX.setTeamFX(teamFX);
-        
-
-
 
         BorderPane tabLayout = new BorderPane();
 
@@ -35,25 +30,26 @@ public class CombinedFX extends Application {
         tabPane.getTabs().add(pm.playerTab());
         tabPane.getTabs().add(teamFX.teamTab());
         tabPane.getTabs().add(gamesFX.gameTab());
-        tabPane.getTabs().add(matchTab.createAndReturnTabMatch());
+        tabPane.getTabs().add(matchTab.createMatchTab());
 
         tabLayout.setCenter(tabPane);
 
         tabScene = new Scene(tabLayout, 900, 500);
         logInWindows.LogIn(stage,tabScene);
 
-
         swapSceneSetup(stage);
-        /*stage.setScene(loginScene);
-        stage.show();
-
-         */
 
     }
     public void swapSceneSetup(Stage stage){
         teamFX.setWindow(stage);
         teamFX.setTabScene(tabScene);
         teamFX.setLogInWindows(logInWindows);
+        gamesFX.setWindow(stage);
+        gamesFX.setTabScene(tabScene);
+        gamesFX.setLogInWindows(logInWindows);
+        matchTab.setWindow(stage);
+        matchTab.setTabScene(tabScene);
+        matchTab.setLogInWindows(logInWindows);
     }
 
     public static void main(String[] args) {

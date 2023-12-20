@@ -200,6 +200,32 @@ public class MatchController {
 
 
     // Metod: Lägga till Team till Match objekt
+    public void addTeamToMatch(int matchId, int teamsId,String matchName){
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+        try{
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            Optional<Teams> team = Optional.ofNullable(entityManager.find(Teams.class, teamsId));
+            Optional<Match> match = Optional.ofNullable(entityManager.find(Match.class, matchId));
+
+            if(team.isPresent() && match.isPresent()){ // Om de finns
+                Teams tempTeam = team.get();           // Hämta team & match
+                Match tempMatch = match.get();
+                tempTeam.setMatchName(matchName);
+                tempMatch.addTeams(tempTeam);          // Lägga till team i match
+            }
+            transaction.commit();
+        }catch(Exception e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }finally {
+            entityManager.close();
+        }
+    }
     public void addTeamToMatch(int matchId, int teamsId){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -225,7 +251,6 @@ public class MatchController {
             entityManager.close();
         }
     }
-
 
     // Metod: Ta bort players från match objekt
     public void removeAllPlayers(Match match){

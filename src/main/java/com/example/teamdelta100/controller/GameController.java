@@ -2,7 +2,6 @@ package com.example.teamdelta100.controller;
 import com.example.teamdelta100.entities.Games;
 import com.example.teamdelta100.entities.Player;
 import com.example.teamdelta100.entities.Teams;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 public class GameController {
     public static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("hibernate");
-
 
     // Create
     public boolean save(Games games) {
@@ -53,33 +50,9 @@ public class GameController {
                 for (Games games :
                         gamesListToReturn) {
                     System.out.println(games.getGameId() + ". " + games.getGameName());
-                    /*for (Player player :
-                            player.getPlayerName()) {
-                        System.out.println(games.getGameName());
-                    }*/
                 }
             }
             return gamesListToReturn;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
-        }
-        return null;
-    }
-
-    public Games getGameById(int id) {
-        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        EntityTransaction transaction = null;
-        try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            Games gamesToReturn = entityManager.find(Games.class, id);
-            transaction.commit();
-            return gamesToReturn;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -110,29 +83,6 @@ public class GameController {
             entityManager.close();
         }
         return false;
-    }
-
-    //Delete
-    public boolean deleteGames(Games games) {
-        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        EntityTransaction transaction = null;
-        try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            //Om entitet finns med så ta bort spel, annars slå ihop och sen ta bort
-            entityManager.remove(entityManager.contains(games) ? games : entityManager.merge(games));
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.getMessage();
-        } finally {
-            entityManager.close();
-        }
-        return false;
-
     }
 
     //Delete med ID
@@ -255,7 +205,6 @@ public class GameController {
             games = selectGames.get();
             games.addPlayer(player);
 
-
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -284,9 +233,6 @@ public class GameController {
             games = selectGame.get();
             teams.setGameName(games.getGameName());
             games.addTeams(teams);
-
-
-
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -297,7 +243,6 @@ public class GameController {
         } finally {
             entityManager.close();
         }
-
         return false;
     }
 }

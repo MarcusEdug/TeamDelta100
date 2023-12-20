@@ -2,11 +2,14 @@ package com.example.teamdelta100.view;
 
 import com.example.teamdelta100.controller.MatchController;
 import com.example.teamdelta100.entities.Match;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
 import java.time.LocalDate;
 
 
@@ -28,28 +31,31 @@ public class MatchTab {
     private Button showAll;
     private Button showComming;
     private Button showDone;
+    private Scene tabScene;
+    private Stage window;
+    private LogInWindows logInWindows;
 
     private Label tabelLabel; // Label som ändras efter vilka delar av tabellen som ska synas
 
 
 
-    // TA BORT FX OBJEKTET
+
     // Konstruktor
-    public MatchTab(TeamFX teamFX) {
+    public MatchTab() {
         matchController  = new MatchController();
         popup = new MatchPopUp(matchController);
     }
 
 
     // Metod: Skapa & skicka tillbaka scenen för matcher
-    public Tab createAndReturnTabMatch(){ // createMatchTab
+    public Tab createMatchTab(){
         Tab matchTab = new Tab("Matches"); // Skapa en tab
         matchTab.setClosable(false);
         AnchorPane matchPane = new AnchorPane(); // Grund pane
 
         tabelLabel = new Label("all"); // Label för att visa vilka matcher som visas i tabellen
         createTable(); // Skapa tabell
-        updateTable(); // Uppdatera tabell
+        matchTab.setOnSelectionChanged(e->updateTable()); // Uppdatera tabell
 
         VBox buttonVBox = createButtonsSide(); // Skapa knappar
         buttonVBox.setLayoutX(650);
@@ -158,8 +164,9 @@ public class MatchTab {
         });
 
         logOut.setOnAction(event -> {
-            System.out.println("LOGGA UT WOOOP!!");
-            // Tillbaka till startscenen
+            logInWindows.LogIn(window,tabScene); // tar upp login stagen
+
+            window.close(); // stänger tab stagen
         });
 
 
@@ -205,5 +212,27 @@ public class MatchTab {
             }
         }
     }
+    public Stage getWindow() {
+        return window;
+    }
 
+    public void setWindow(Stage window) {
+        this.window = window;
+    }
+
+    public LogInWindows getLogInWindows() {
+        return logInWindows;
+    }
+
+    public void setLogInWindows(LogInWindows logInWindows) {
+        this.logInWindows = logInWindows;
+    }
+
+    public Scene getTabScene() {
+        return tabScene;
+    }
+
+    public void setTabScene(Scene tabScene) {
+        this.tabScene = tabScene;
+    }
 }

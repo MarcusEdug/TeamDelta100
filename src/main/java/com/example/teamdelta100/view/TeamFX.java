@@ -51,7 +51,8 @@ public class TeamFX {
         Button logOut = createButton("Log out");
 
         createTable(); //Skapar tableView
-        updateTable();  //Uppdatara tableView
+        //updateTable();
+        teamTab.setOnSelectionChanged(e-> updateTable()); //Uppdatara tableView
 
         //skapar en VBox för att lägga in alla knappar
         VBox vBoxForButton = new VBox(10);
@@ -219,14 +220,14 @@ public class TeamFX {
         TableColumn teamNameColumn = new TableColumn<Teams, String>("Team Name");
         teamNameColumn.setCellValueFactory(new PropertyValueFactory<Teams, String>("name"));
 
-        TableColumn playersIdColumn = new TableColumn<Teams, Integer>("Players");
-        playersIdColumn.setCellValueFactory(new PropertyValueFactory<Teams, Integer>("numberOfPlayerList"));
+        TableColumn playersIdColumn = new TableColumn<Teams, String>("Players");
+        playersIdColumn.setCellValueFactory(new PropertyValueFactory<Teams, String>("numberOfPlayerList"));
 
-        TableColumn gameNameColumn = new TableColumn<Teams, Integer>("Game");
-        gameNameColumn.setCellValueFactory(new PropertyValueFactory<Teams, Integer>("gameName"));
+        TableColumn gameNameColumn = new TableColumn<Teams, String>("Game");
+        gameNameColumn.setCellValueFactory(new PropertyValueFactory<Teams, String>("gameName"));
 
-        TableColumn matchNameColumn = new TableColumn<Teams, Integer>("Match");
-        matchNameColumn.setCellValueFactory(new PropertyValueFactory<Teams, Integer>("matchName"));
+        TableColumn matchNameColumn = new TableColumn<Teams, String>("Match");
+        matchNameColumn.setCellValueFactory(new PropertyValueFactory<Teams, String>("matchName"));
 
         tableView.getColumns().addAll(teamIdColumn,teamNameColumn,playersIdColumn,gameNameColumn,matchNameColumn);
 
@@ -263,11 +264,6 @@ public class TeamFX {
     }
 
     //Getters och Setters
-
-    public PlayerMenu getPlayerMenu() {
-        return playerMenu;
-    }
-
     public void setPlayerMenu(PlayerMenu playerMenu) {
         this.playerMenu = playerMenu;
     }
@@ -280,24 +276,12 @@ public class TeamFX {
         this.controller = controller;
     }
 
-    public Scene getTabScene() {
-        return tabScene;
-    }
-
     public void setTabScene(Scene tabScene) {
         this.tabScene = tabScene;
     }
 
-    public Stage getWindow() {
-        return window;
-    }
-
     public void setWindow(Stage window) {
         this.window = window;
-    }
-
-    public LogInWindows getLogInWindows() {
-        return logInWindows;
     }
 
     public void setLogInWindows(LogInWindows logInWindows) {
