@@ -45,14 +45,12 @@ public class TeamsController {
                 Teams teams = entityManager.find(Teams.class, Id);
 
                 if(teams != null){
-                    for(int i = 0; i < (teams.getNumberOfPlayerList().size()); i++){
-                        System.out.println(teams.getName());
-                        System.out.println(teams.getNumberOfPlayerList().get(i).getPlayerName());
-                        System.out.println(i);
-                        teams.getNumberOfPlayerList().get(i).setTeams(null);
-                        teams.getNumberOfPlayerList().get(i).setTeamName(null);
-                        teams.getNumberOfPlayerList().remove(i);
+                    List<Player> playerslist = teams.getNumberOfPlayerList();
+                    for (Player player : playerslist){
+                        player.setTeams(null);
+                        player.setTeamName(null);
                     }
+                    teams.getNumberOfPlayerList().clear();
                     entityManager.remove(teams);
                 }
                 transaction.commit();
