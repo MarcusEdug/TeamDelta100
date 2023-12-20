@@ -309,7 +309,7 @@ public class GamePopup {
         featureText = new Label("Remove a player from game");
 
         boxText1 = new Label("Select player: ");
-        boxText2 = new Label("Game: ");
+        boxText2 = new Label("Assigned to:  ");
 
         ComboBox playerComboBox = new ComboBox();
         for (Player player : playerList) {
@@ -321,7 +321,7 @@ public class GamePopup {
         gameName.setFont(Font.font("Arial", FontWeight.BOLD, 12));
         playerComboBox.setOnAction(e-> {
             player = (Player) playerComboBox.getValue();
-            gameName.setText("Is assigned to game-ID: " + gameId);
+            gameName.setText("Game-ID " + gameId);
             tempGame = player.getGames();
         });
 
@@ -360,7 +360,7 @@ public class GamePopup {
         featureText = new Label("Remove team from game");
 
         boxText1 = new Label("Select team");
-        boxText2 = new Label("Game: ");
+        boxText2 = new Label("Assigned to: ");
 
         ComboBox teamComboBox = new ComboBox();
         for (Teams teams : teamsList) {
@@ -372,7 +372,7 @@ public class GamePopup {
         gameName.setFont(Font.font("Arial", FontWeight.BOLD, 12));
         teamComboBox.setOnAction(e-> {
             teams = (Teams) teamComboBox.getValue();
-            gameName.setText("Is assigned to game-ID: " + gameId);
+            gameName.setText("Game-ID: " + gameId);
             tempGame = teams.getGames();
         });
 
