@@ -15,10 +15,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /*
-    Klassen skapar en Login Stage
-    Klassen har två metoder:
+    Klassen skapar en Login Stage (Gjorde av AR,ED,MS,JD)
+    Klassen har fyra metoder:
     * Skapa LogIn stagen
     * Skapa en ListView
+    * Skapa och vissar upp en stage för att ställa in värden för en personal
+    * Skapa en Personal objekt
  */
 
 public class LogInWindows {
@@ -81,7 +83,7 @@ public class LogInWindows {
                     title = selectPersonal.getPerName();
                     stage.setTitle("Program Delta " + title);
                     stage.setScene(tabScene);                   //byter stage
-                    stage.show();                               //öppnar de nya tabstage
+                    stage.show();                               //öppnar och visar våran tabstage
                     logInStage.close();                         //stänger log in stage
                 } else {
                     error.setText("Select a user!");
@@ -117,14 +119,19 @@ public class LogInWindows {
 
         return listView;
     }
+
+    //Metod: Skapar en stage där man kan skapa en personal och den vissar upp den stagen också
     public void createPersonalpopup(Stage createStage){
+        // Sätter Title
         createStage.setTitle("Information Form");
+
+        //Skapar upp en Grid som funkar som layout
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(20, 20, 20, 20));
         grid.setVgap(10);
         grid.setHgap(10);
 
-
+        //Skapar upp instrution labels och Textfield för användara att skriva in info
         Label firstNameLabel = new Label("Förnamn:");
         TextField firstNameField = new TextField();
 
@@ -149,6 +156,8 @@ public class LogInWindows {
         Label emailLabel = new Label("E-mail:");
         TextField emailField = new TextField();
 
+
+        //Sättar in Labels och TextField i girden
         grid.add(firstNameLabel, 0, 0);
         grid.add(firstNameField, 1, 0);
 
@@ -173,10 +182,13 @@ public class LogInWindows {
         grid.add(emailLabel, 0, 7);
         grid.add(emailField, 1, 7);
 
+        //Sättar in knappen i gridpane
         GridPane.setColumnSpan(submitButton, 2);
         grid.add(submitButton, 0, 8);
 
+        //Skapar vad som händer när man trycker på knappen
         submitButton.setOnAction(e -> {
+            //Skapar en peronal objekt och lägger in allt som finns i TextFields
             tempPers = createPersonal (
                     firstNameField.getText(),
                     lastNameField.getText(),
@@ -187,17 +199,23 @@ public class LogInWindows {
                     countryField.getText(),
                     emailField.getText());
 
+            //Spara personal obejekt i databasen
             personalFX.personalController.save(tempPers);
+
+            //Starta upp login stagen igen
             LogIn(createStage,tabScene);
+
+            //stänger de nuvarande stagen
             createStage.close();
         });
 
+        //Sätter in griden i en scen och visar upp den i stagen
         Scene scene = new Scene(grid, 300, 400);
         createStage.setScene(scene);
-
         createStage.show();
     }
 
+    //Skapar en Personal Obejekt
     public Personal createPersonal(String firstName, String lastName, String nickname,
                                    String address, String postalCode, String city,
                                    String country, String email){

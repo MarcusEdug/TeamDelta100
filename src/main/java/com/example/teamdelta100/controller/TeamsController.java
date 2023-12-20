@@ -43,7 +43,16 @@ public class TeamsController {
                 transaction = entityManager.getTransaction();
                 transaction.begin();
                 Teams teams = entityManager.find(Teams.class, Id);
+
                 if(teams != null){
+                    for(int i = 0; i < (teams.getNumberOfPlayerList().size()); i++){
+                        System.out.println(teams.getName());
+                        System.out.println(teams.getNumberOfPlayerList().get(i).getPlayerName());
+                        System.out.println(i);
+                        teams.getNumberOfPlayerList().get(i).setTeams(null);
+                        teams.getNumberOfPlayerList().get(i).setTeamName(null);
+                        teams.getNumberOfPlayerList().remove(i);
+                    }
                     entityManager.remove(teams);
                 }
                 transaction.commit();
@@ -111,18 +120,19 @@ public class TeamsController {
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-
+            if (playerId != 0 && teamsId != 0) {
             Optional<Player> selectPlayer = Optional.ofNullable(entityManager.find(Player.class, playerId));
             Optional<Teams> selectTeam = Optional.ofNullable(entityManager.find(Teams.class, teamsId));
 
-                    Player player = selectPlayer.get();
-                    team = selectTeam.get();
-                    player.setTeamName(team.getName());
-                    team.addPlayer(player);
-                    transaction.commit();
 
-                    return true;
+                        Player player = selectPlayer.get();
+                        team = selectTeam.get();
+                        player.setTeamName(team.getName());
+                        team.addPlayer(player);
+                        transaction.commit();
 
+                        return true;
+                    }
                 } catch(Exception e){
                     if (transaction != null) {
                         transaction.rollback();
