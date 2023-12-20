@@ -5,90 +5,64 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-// Match objekt som kan placeras i databasen.
-// Evelina Daun
+/*
+* Match objekt som kan placeras i databasen. Kopplat med Teams och Players.
+* @Author: Evelina Daun
+ */
 
 
 @Entity
 @Table(name="matches")
 public class Match {
-    @Id // Primary key
+    @Id // Primary Key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "match_id")
     private int matchId;
 
-    @Column(name = "playerOrTeam")
-    private String playerOrTeam;  // "team",  "player"
+    @Column(name = "playerOrTeam") // Om matchen innehåller Teams eller Players
+    private String playerOrTeam;   // Värde: "team", "player"
 
-
-
-    // sätta in plats 0 - id 1 och plats 1 - id 2 ?
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "match")
     private List<Player> playerList = new ArrayList<>();
 
     @OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "match")
     private List<Teams> teamsList = new ArrayList<>();
 
+    @Column(name = "nameOne") // Player eller Team namn
+    private String nameOne;
 
-    // TA BORT OCH ANVÄNDA LISTORNA ISTÄLLET  ???
-    @Column(name = "playerTeamOneId")  // Player eller Team id
-    private int playerTeamOneId;
-    @Column(name = "playerTeamTwoId")
-    private int playerTeamTwoId;
-
-    // TA BORT OCH ANVÄNDA LISTORNA ISTÄLLET ???
-    @Column(name = "playerTeamOneName") // Player eller Team namn
-    private String playerTeamOneName;
-    @Column(name = "playerTeamTwoName")
-    private String playerTeamTwoName;
+    @Column(name = "nameTwo")
+    private String nameTwo;
 
     @Column(name = "matchDate")
-    private LocalDate matchDate;
+    private LocalDate matchDate; // Matchens datum
 
     @Column(name = "playedNotPlayed")
-    private String played; // "Played", "Not played"
+    private String played;  // Värde: "Played", "Not Played"
 
     @Column(name = "resultOne")
-    private int resultOne; // Lag eller spelare 1
+    private int resultOne;  // Resultatet för Team/Player 1
 
     @Column(name = "resultTwo")
-    private int resultTwo; // Lag eller spelare 2
+    private int resultTwo;
 
     @Column(name = "winner")
-    private String winner; // Team eller Player namnet
+    private String winner;  // Vinnaren av matchen
 
 
     // Tom konstruktor
     public Match(){}
 
-
-    // Konstruktor med allt utom matchId - Primary key
-    public Match(String playerOrTeam, int playerTeamOneId, int playerTeamTwoId,
-                 String playerTeamOneName, String playerTeamTwoName, LocalDate matchDate,
-                 String played, int resultOne, int resultTwo, String winner) {
-        this.playerOrTeam = playerOrTeam;
-        this.playerTeamOneId = playerTeamOneId;
-        this.playerTeamTwoId = playerTeamTwoId;
-        this.playerTeamOneName = playerTeamOneName;
-        this.playerTeamTwoName = playerTeamTwoName;
-        this.matchDate = matchDate;
-        this.played = played;
-        this.resultOne = resultOne;
-        this.resultTwo = resultTwo;
-        this.winner = winner;
-    }
-
-
     // Konstruktor med allt inkluderat
-    public Match(int matchId, String playerOrTeam, int playerTeamOneId, int playerTeamTwoId,
-                 String playerTeamOneName, String playerTeamTwoName, LocalDate matchDate,
-                 String played, int resultOne, int resultTwo, String winner) {
+    public Match(int matchId, String playerOrTeam, List<Player> playerList, List<Teams> teamsList,
+                 String playerTeamNameOne, String playerTeamNameTwo, LocalDate matchDate, String played,
+                 int resultOne, int resultTwo, String winner) {
         this.matchId = matchId;
         this.playerOrTeam = playerOrTeam;
-        this.playerTeamOneId = playerTeamOneId;
-        this.playerTeamTwoId = playerTeamTwoId;
-        this.playerTeamOneName = playerTeamOneName;
-        this.playerTeamTwoName = playerTeamTwoName;
+        this.playerList = playerList;
+        this.teamsList = teamsList;
+        this.nameOne = playerTeamNameOne;
+        this.nameTwo = playerTeamNameTwo;
         this.matchDate = matchDate;
         this.played = played;
         this.resultOne = resultOne;
@@ -96,21 +70,39 @@ public class Match {
         this.winner = winner;
     }
 
-    // Metod: toString - Skriva ut matcherna med namn och id för spelare/lag
+    // Konstruktor med allt utom primary key och listor
+    public Match(String playerOrTeam, String playerTeamOneName, String playerTeamTwoName,
+                 LocalDate matchDate, String played, int resultOne, int resultTwo, String winner) {
+        this.playerOrTeam = playerOrTeam;
+        this.nameOne = playerTeamOneName;
+        this.nameTwo = playerTeamTwoName;
+        this.matchDate = matchDate;
+        this.played = played;
+        this.resultOne = resultOne;
+        this.resultTwo = resultTwo;
+        this.winner = winner;
+    }
+
+
+    // Metod: Lägga till player
     public void addPlayer (Player player){
         player.setMatch(this);
+        playerList.add(player);
     }
 
+    // Metod: Lägga till team
     public void addTeams (Teams team){
         team.setMatch(this);
+        teamsList.add(team);
     }
 
+
+    // Metod: toString - Skriva ut matcherna med namn för spelare/lag och datum
     @Override
     public String toString() {
-        return "Match: " + playerTeamOneName +
-                " vs. " + playerTeamTwoName +
-                ", Date: " + matchDate ;
+        return "Match: " + nameOne + " vs. " + nameTwo + ". Date: " + matchDate;
     }
+
 
     // Getters & Setters
     public int getMatchId() {
@@ -161,39 +153,6 @@ public class Match {
         this.winner = name;
     }
 
-    public int getPlayerTeamOneId() {
-        return playerTeamOneId;
-    }
-
-    public void setPlayerTeamOneId(int playerTeamOneId) {
-        this.playerTeamOneId = playerTeamOneId;
-    }
-
-    public int getPlayerTeamTwoId() {
-        return playerTeamTwoId;
-    }
-
-    public void setPlayerTeamTwoId(int playerTeamTwoId) {
-        this.playerTeamTwoId = playerTeamTwoId;
-    }
-
-    public String getPlayerTeamOneName() {
-        return playerTeamOneName;
-    }
-
-    public void setPlayerTeamOneName(String playerTeamOneName) {
-        this.playerTeamOneName = playerTeamOneName;
-    }
-
-    public String getPlayerTeamTwoName() {
-        return playerTeamTwoName;
-    }
-
-    public void setPlayerTeamTwoName(String playerTeamTwoName) {
-        this.playerTeamTwoName = playerTeamTwoName;
-    }
-
-
     public List<Player> getPlayerList() {
         return playerList;
     }
@@ -210,4 +169,19 @@ public class Match {
         this.teamsList = teamsList;
     }
 
+    public String getNameOne() {
+        return nameOne;
+    }
+
+    public void setNameOne(String nameOne) {
+        this.nameOne = nameOne;
+    }
+
+    public String getNameTwo() {
+        return nameTwo;
+    }
+
+    public void setNameTwo(String nameTwo) {
+        this.nameTwo = nameTwo;
+    }
 }
