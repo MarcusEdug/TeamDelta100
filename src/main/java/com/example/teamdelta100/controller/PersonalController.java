@@ -67,14 +67,6 @@ public class PersonalController {
         return getAll(true); // Set default value to true (print results)
     }
 
-    public void printAll() {
-        List<Personal> personals = getAll();
-        if (personals != null) {
-            for (Personal personal : personals) {
-                System.out.println(personal.getId() + ". " + personal.getPerName() + ". " + personal.getPerLname());
-            }
-        }
-    }
     public List<Personal> tableUpdate(boolean printOut){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;

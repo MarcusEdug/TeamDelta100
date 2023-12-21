@@ -89,15 +89,6 @@ public class PlayerController {
     public List<Player> getAll() {
         return getAll(true);
     }
-
-    public void printAll() {
-        List<Player> players = getAll();
-        if (players != null) {
-            for (Player player : players) {
-                System.out.println(player.getId() + ". " + player.getPlayerName() + " " + player.getPlayerLastname());
-            }
-        }
-    }
     public List<Player> tableUpdate(boolean printOut){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
