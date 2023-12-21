@@ -2,20 +2,15 @@ package com.example.teamdelta100.view;
 
 import com.example.teamdelta100.controller.PlayerController;
 import com.example.teamdelta100.entities.Player;
-import com.example.teamdelta100.entities.Teams;
-import com.example.teamdelta100.view.InformationForm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
 import java.util.List;
 
@@ -39,7 +34,6 @@ public class PlayerPopup {
 
     public void popupWindows() {
         window = new Stage();
-        //window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(titleName);
         window.setHeight(150);
         window.setWidth(320);
@@ -156,7 +150,6 @@ public class PlayerPopup {
         infoStage.setScene(infoScene);
         infoStage.showAndWait();
     }
-    //klar i personal
     public void showUpdatePlayerForm() {
         window = new Stage();
         titleName = "Update Player Information";
@@ -189,7 +182,7 @@ public class PlayerPopup {
 
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(titleName);
-        window.setHeight(150);
+        window.setHeight(400);
         window.setWidth(320);
         window.setScene(scene);
         window.showAndWait();

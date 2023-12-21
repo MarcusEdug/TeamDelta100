@@ -112,7 +112,6 @@ public class PlayerMenu {
     public void setController(PlayerController playerController) {
         this.playerController = playerController;
     }
-
     public void setWindow(Stage window) {
         this.window = window;
     }
