@@ -29,20 +29,20 @@ public class MatchController {
     // Metod: Lägga till match objekt i databasen
     // @Param: Match objekt att lägga till
     public void addMatch(Match match){
-        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        EntityTransaction transaction = null;
-        try{
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            entityManager.persist(match); // Lägga in nytt objekt
-            transaction.commit();
-        }catch(Exception e){
-            if(transaction != null){
-                transaction.rollback();
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager(); // Hämta/skapa en entitymanager
+        EntityTransaction transaction = null;                                       // Skapa en Transaktion
+        try{                                                                        // Testa koden mot fel
+            transaction = entityManager.getTransaction();                           // Hämta en Transaktion från entitymanager
+            transaction.begin();                                                    // Starta upp en Transaktion
+            entityManager.persist(match);                                           // Lägga in nytt objekt / Ny post i tabellen
+            transaction.commit();                                                   // Att transaktionen är klar
+        }catch(Exception e){                                                        // Om ett fel uppstår fångas det
+            if(transaction != null){                                                // Kontrollerar om det finns en pågående transaktion
+                transaction.rollback();                                             // Rollback - för att ångra ändringar som gjorst under transaktionen
             }
-            e.printStackTrace();
-        }finally {
-            entityManager.close();
+            e.printStackTrace();                                                    // Skriva ut felet
+        }finally {                                                                  // Händer oavsett vad som händer ovan
+            entityManager.close();                                                  // Stänga entitymanagern
         }
     }
 
@@ -87,7 +87,6 @@ public class MatchController {
                 List<Teams> teams = tempMatch.getTeamsList();
                 for(Teams t : teams){
                     t.setMatch(null);
-                    t.setMatchName(null);
                 }
                 tempMatch.getTeamsList().clear();
             }
@@ -206,7 +205,7 @@ public class MatchController {
 
 
     // Metod: Lägga till Team till Match objekt
-    public void addTeamToMatch(int matchId, int teamsId, String matchName){
+    public void addTeamToMatch(int matchId, int teamsId){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         try{
@@ -219,7 +218,6 @@ public class MatchController {
             if(team.isPresent() && match.isPresent()){ // Om de finns
                 Teams tempTeam = team.get();           // Hämta team & match
                 Match tempMatch = match.get();
-                tempTeam.setMatchName(matchName);
                 tempMatch.addTeams(tempTeam);          // Lägga till team i match
             }
             transaction.commit();
@@ -277,7 +275,6 @@ public class MatchController {
 
             for(Teams t : teams){
                 t.setMatch(null);
-                t.setMatchName(null);
                 entityManager.merge(t);
             }
 
