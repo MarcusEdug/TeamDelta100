@@ -1,6 +1,8 @@
 package com.example.teamdelta100.controller;
 
 import com.example.teamdelta100.entities.Personal;
+import com.example.teamdelta100.entities.Player;
+import com.example.teamdelta100.view.PersonalFX;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -105,6 +107,45 @@ public class PersonalController {
             if(personal != null){
                 entityManager.remove(personal);
             }
+            transaction.commit();
+            return true;
+        } catch (Exception e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return false;
+    }
+    public Personal getPersonalById(int id) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+            Personal personal = entityManager.find(Personal.class, id);
+            transaction.commit();
+            return personal;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return null;
+    }
+    public boolean updatePersonal(Personal personal){
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+            entityManager.merge(personal);
             transaction.commit();
             return true;
         } catch (Exception e){

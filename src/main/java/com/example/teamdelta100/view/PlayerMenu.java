@@ -85,14 +85,12 @@ public class PlayerMenu {
                 if (playerController.deletePlayerById(playerPopup.deletePlayer(playerList))) {
                     System.out.println("Deleted Player");
                 } else {
-                    System.out.println("Failed to delete Player");
-                }
+                    System.out.println("Failed to delete Player");}
                 update();
             } else if (input.equals("Show info")) {
                 playerPopup.showPlayerInfo();
             } else if (input.equals("Update Player")) {
                 playerPopup.showUpdatePlayerForm();
-                update();
             }
         });
 
@@ -109,15 +107,8 @@ public class PlayerMenu {
     public void setController(PlayerController playerController) {
         this.playerController = playerController;
     }
-    public void setTabScene(Scene tabScene) {
-        this.tabScene = tabScene;
-    }
 
     public void setWindow(Stage window) {
         this.window = window;
-    }
-
-    public void setLogInWindows(LogInWindows logInWindows) {
-        this.logInWindows = logInWindows;
     }
 }

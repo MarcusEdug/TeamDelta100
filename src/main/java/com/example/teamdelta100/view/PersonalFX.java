@@ -18,21 +18,20 @@ import java.util.List;
 
 public class PersonalFX extends Application {
     PersonalController personalController = new PersonalController();
-    PersonalPopup personalPopup = new PersonalPopup();
     TableView tableView;
+    private Stage window;
+    private LogInWindows logInWindows;
     public static void main(String[] args) {
         launch();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        PersonalPopup personalPopup = new PersonalPopup(tableView, personalController);
-        Button addPersonal = button("Add Personal");
 
         TableView viewPersonal = table();
 
         VBox buttonV = new VBox(10);
-        buttonV.getChildren().addAll(addPersonal);
+        buttonV.getChildren().addAll();
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(viewPersonal, buttonV);
@@ -48,17 +47,18 @@ public class PersonalFX extends Application {
     }
 
     public Tab PersonalTab(){
-        //createPersonal();
         Tab tabLayout = new Tab("Personal");
         tabLayout.setClosable(false);
         Button addPersonal = button("Add Personal");
         Button deletePersonal = button("Delete Personal");
+        Button updatePlayer = button( "Update Player");
+        Button showInfo =  button("Show Info");
         Button logOut = button("Log out");
 
         tableView = table();
 
         VBox buttonV = new VBox(10);
-        buttonV.getChildren().addAll(addPersonal, deletePersonal, logOut);
+        buttonV.getChildren().addAll(addPersonal, deletePersonal, updatePlayer, showInfo, logOut);
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(tableView, buttonV);
@@ -97,9 +97,9 @@ public class PersonalFX extends Application {
     public Button button(String input) {
         Button button = new Button(input);
         button.setOnAction(e-> {
+            PersonalPopup personalPopup = new PersonalPopup(tableView, personalController);
             if (input.equals("Add Personal")) {
                 try {
-                    PersonalPopup personalPopup = new PersonalPopup(tableView, personalController);
                     personalPopup.addPersonal();
                 } catch (Exception ex) {
                     ex.printStackTrace(); // Handle the exception appropriately (e.g., log or display an error message)
@@ -113,14 +113,14 @@ public class PersonalFX extends Application {
                 else {
                     System.out.println("Tog ej bort Person");
                 }
-
                 update();
             }
 
             else if (input.equals("Show Info")) {
-
-            }
-            else if (input.equals("Log Out")) {
+                personalPopup.showPersonalInfo();
+            } else if (input.equals("Update Player")) {
+                personalPopup.showUpdatePersonalForm();
+            } else if (input.equals("Log Out")) {
 
             }
         });

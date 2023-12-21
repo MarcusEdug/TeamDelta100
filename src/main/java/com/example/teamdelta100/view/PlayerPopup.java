@@ -47,15 +47,6 @@ public class PlayerPopup {
         window.showAndWait();
     }
 
-    public void InfoPopup() {
-        window = new Stage();
-        window.setTitle(titleName);
-        window.setHeight(150);
-        window.setWidth(750);
-        window.setScene(scene);
-        window.showAndWait();
-    }
-
     public int deletePlayer(List<Player> playerList) {
         titleName = "Delete Player";
         featureText = new Label("Which Player do you want to delete?");
@@ -161,12 +152,11 @@ public class PlayerPopup {
                 postalCodeLabel, cityLabel, countryLabel, emailLabel, closeButton);
 
         Scene infoScene = new Scene(infoLayout, 300, 350);
-        //infoScene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm()); // Add your stylesheet if needed
 
         infoStage.setScene(infoScene);
         infoStage.showAndWait();
     }
-
+    //klar i personal
     public void showUpdatePlayerForm() {
         window = new Stage();
         titleName = "Update Player Information";
@@ -181,7 +171,7 @@ public class PlayerPopup {
         Button submit = new Button("Submit");
         submit.setOnAction(e -> {
             Player selectedPlayerId = (Player) comboBox.getValue();
-            System.out.println(selectedPlayerId);
+
             try {
                  info.updateInfo(window, selectedPlayerId);
 
@@ -203,37 +193,5 @@ public class PlayerPopup {
         window.setWidth(320);
         window.setScene(scene);
         window.showAndWait();
-    }
-
-    public void showPlayerInfo(int playerId) {
-        try {
-            Player somePlayerObject = getPlayerById(playerId);
-
-            if (somePlayerObject != null) {
-                info.init();
-                info.addComponents();
-
-                TextField firstNameField = info.getFirstNameField();
-                TextField lastNameField = info.getLastNameField();
-
-                if (firstNameField != null) {
-                    firstNameField.setText(somePlayerObject.getPlayerName());
-                } else {
-                    System.out.println("firstNameField is null");
-                }
-
-                if (lastNameField != null) {
-                    lastNameField.setText(somePlayerObject.getPlayerLastname());
-                } else {
-                    System.out.println("lastNameField is null");
-                }
-
-            } else {
-                System.out.println("Player with ID " + playerId + " not found.");
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new RuntimeException(ex);
-        }
     }
 }

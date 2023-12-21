@@ -1,39 +1,16 @@
-package com.example.teamdelta100.view;
-
-import com.example.teamdelta100.controller.PersonalController;
-import com.example.teamdelta100.controller.PlayerController;
-import com.example.teamdelta100.entities.Personal;
+package com.example.teamdelta100.view;;
+import com.example.teamdelta100.controller.PlayerController;;
 import com.example.teamdelta100.entities.Player;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.w3c.dom.Text;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-
-import static com.example.teamdelta100.controller.PersonalController.ENTITY_MANAGER_FACTORY;
 
 public class InformationForm extends Application {
     private Stage window;
-    private TextField firstNameField;
-    private TextField lastNameField;
-    private TextField nicknameField;
-    private TextField adressField;
-    private TextField postalCodeField;
-    private TextField cityField;
-    private TextField countryField;
-    private TextField emailField;
-    private String userStringInput;
     private TableView tableView;
     private PlayerController playerController;
     Button submitButton = new Button("Submit");
@@ -98,8 +75,6 @@ public class InformationForm extends Application {
 
         grid.add(emailLabel, 0, 7);
         grid.add(emailField, 1, 7);
-
-        TextField userText = new TextField();
 
         GridPane.setColumnSpan(submitButton, 2);
         grid.add(submitButton, 0, 8);
@@ -183,24 +158,22 @@ public class InformationForm extends Application {
         grid.add(emailLabel, 0, 7);
         grid.add(emailField, 1, 7);
 
-        TextField userText = new TextField();
-
         GridPane.setColumnSpan(submitButton, 2);
         grid.add(submitButton, 0, 8);
         submitButton.setOnAction(e -> {
-            updatePlayer.setPlayerName(String.valueOf(getFirstNameField()));
-            updatePlayer.setPlayerLastname(String.valueOf(getLastNameField()));
-            updatePlayer.setNickname(String.valueOf(getNicknameField()));
-            updatePlayer.setAddress(String.valueOf(getAdressField()));
-            updatePlayer.setPostalCode(String.valueOf(getPostalCodeField()));
-            updatePlayer.setCity(String.valueOf(getCityField()));
-            updatePlayer.setCountry(String.valueOf(getCountryField()));
-            updatePlayer.setEmail(String.valueOf(getEmailField()));
-
-            System.out.println(updatePlayer);
+            updatePlayer.setId(player.getId());
+            updatePlayer.setPlayerName(firstNameField.getText());
+            updatePlayer.setPlayerLastname(lastNameField.getText());
+            updatePlayer.setNickname(nicknameField.getText());
+            updatePlayer.setAddress(addressField.getText());
+            updatePlayer.setPostalCode(postalCodeField.getText());
+            updatePlayer.setCity(cityField.getText());
+            updatePlayer.setCountry(countryField.getText());
+            updatePlayer.setEmail(emailField.getText());
 
             playerController.updatePlayer(updatePlayer);
-            update();
+
+            window.close();
         });
 
 
@@ -208,52 +181,6 @@ public class InformationForm extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.show();
-    }
-
-    public TextField getFirstNameField() {
-        return firstNameField;
-    }
-
-    public TextField getLastNameField() {
-        return lastNameField;
-    }
-
-    public TextField getNicknameField() {
-        return nicknameField;
-    }
-
-    public TextField getAdressField() {
-        return adressField;
-    }
-
-    public TextField getPostalCodeField() {
-        return postalCodeField;
-    }
-
-    public TextField getCityField() {
-        return cityField;
-    }
-
-    public TextField getCountryField() {
-        return countryField;
-    }
-
-    public TextField getEmailField() {
-        return emailField;
-    }
-
-    public void popupWindows(Scene scene){
-        window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Pop-up");
-        window.setMinWidth(200);
-        window.setScene(scene);
-        window.showAndWait();
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
     public Player createPlayer(String firstName, String lastName, String nickname,
@@ -281,8 +208,5 @@ public class InformationForm extends Application {
             tableView.getItems().add(temp);
         }
         window.close();
-    }
-
-    public void addComponents() {
     }
 }
