@@ -20,7 +20,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-/* Hanterar popup fönster och kommunikation med controller.
+/*
+* MatchPopUp - Hanterar popup fönster och kommunikation med matchController.
 *
 * Innehåller metoder:
 * createMatch, addResult, deleteMatch, deletePopup, matchUpdate,
@@ -32,11 +33,11 @@ import java.util.List;
 
 
 public class MatchPopUp {
-    private MatchController matchController;
+    private MatchController matchController; // Objekt av kopplingsklass till databas
     private TeamFX teamFX = new TeamFX(); // För att nå lista med Teams objekt
     private PlayerMenu playerMenu = new PlayerMenu(); // För att nå lista med Player objekt
     private Match selected; // Vald match att hantera
-    private Label title = new Label();
+    private Label title = new Label(); // Rubrik för popup fönster
 
     // Labels för formulär
     private Label playerTeamOne = new Label("Player/Team 1: ");
@@ -54,7 +55,7 @@ public class MatchPopUp {
     }
 
 
-    // Metod: Popup fö att skapa en match
+    // Metod: Popup för att skapa en match (Team vs.
     public void createMatch(String teamOrPlayer){
         Stage popup = new Stage();
         popup.setWidth(450);

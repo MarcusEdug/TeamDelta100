@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
-* Match objekt som kan placeras i databasen. Kopplat med Teams och Players.
+* Match - Match objekt som kan placeras i databasen. Kopplat med Teams och Players.
 * @Author: Evelina Daun
  */
 
