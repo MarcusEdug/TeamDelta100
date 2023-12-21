@@ -86,18 +86,8 @@ public class PlayerController {
         }
         return false;
     }
-
     public List<Player> getAll() {
         return getAll(true);
-    }
-
-    public void printAll() {
-        List<Player> players = getAll();
-        if (players != null) {
-            for (Player player : players) {
-                System.out.println(player.getId() + ". " + player.getPlayerName() + " " + player.getPlayerLastname());
-            }
-        }
     }
     public List<Player> tableUpdate(boolean printOut){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
@@ -113,6 +103,26 @@ public class PlayerController {
             return playerListToReturn;
         } catch (Exception e){
             if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return null;
+    }
+    public Player getPlayerById(int id) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+            Player player = entityManager.find(Player.class, id);
+            transaction.commit();
+            return player;
+        } catch (Exception e) {
+            if (transaction != null) {
                 transaction.rollback();
             }
             e.printStackTrace();
@@ -140,4 +150,6 @@ public class PlayerController {
         }
         return false;
     }
+
+
 }
