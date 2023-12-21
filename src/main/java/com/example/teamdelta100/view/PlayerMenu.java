@@ -29,12 +29,13 @@ public class PlayerMenu {
         Button deletePlayer = button("Delete Player");
         Button showInfo = button("Show info");
         Button updatePlayer = button("Update Player");
+        Button logOut = button("Logout");
 
         tableView = table();
         tabLayout.setOnSelectionChanged(e-> update());
 
         VBox buttonV = new VBox(10);
-        buttonV.getChildren().addAll(addPlayer, deletePlayer, showInfo, updatePlayer); // Replaced logOut with updatePlayer
+        buttonV.getChildren().addAll(addPlayer, deletePlayer, showInfo, updatePlayer,logOut); // Replaced logOut with updatePlayer
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(tableView, buttonV);
@@ -92,6 +93,10 @@ public class PlayerMenu {
             } else if (input.equals("Update Player")) {
                 playerPopup.showUpdatePlayerForm();
             }
+            else if (input.equals("Logout")){
+                logInWindows.LogIn(window,tabScene); // tar upp login stagen
+                window.close(); // stänger tab stagen
+            }
         });
 
         return button;
@@ -110,5 +115,25 @@ public class PlayerMenu {
 
     public void setWindow(Stage window) {
         this.window = window;
+    }
+
+    public Scene getTabScene() {
+        return tabScene;
+    }
+
+    public void setTabScene(Scene tabScene) {
+        this.tabScene = tabScene;
+    }
+
+    public Stage getWindow() {
+        return window;
+    }
+
+    public LogInWindows getLogInWindows() {
+        return logInWindows;
+    }
+
+    public void setLogInWindows(LogInWindows logInWindows) {
+        this.logInWindows = logInWindows;
     }
 }

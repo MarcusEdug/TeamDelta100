@@ -19,6 +19,7 @@ import java.util.List;
 public class PersonalFX extends Application {
     PersonalController personalController = new PersonalController();
     TableView tableView;
+    private Scene tabScene;
     private Stage window;
     private LogInWindows logInWindows;
     public static void main(String[] args) {
@@ -53,7 +54,7 @@ public class PersonalFX extends Application {
         Button deletePersonal = button("Delete Personal");
         Button updatePlayer = button( "Update Player");
         Button showInfo =  button("Show Info");
-        Button logOut = button("Log out");
+        Button logOut = button("Logout");
 
         tableView = table();
         tabLayout.setOnSelectionChanged(e-> update());
@@ -121,8 +122,9 @@ public class PersonalFX extends Application {
                 personalPopup.showPersonalInfo();
             } else if (input.equals("Update Player")) {
                 personalPopup.showUpdatePersonalForm();
-            } else if (input.equals("Log Out")) {
-
+            } else if (input.equals("Logout")) {
+                logInWindows.LogIn(window,tabScene); // tar upp login stagen
+                window.close(); // stänger tab stagen
             }
         });
 
@@ -145,5 +147,27 @@ public class PersonalFX extends Application {
 
      */
 
+    public Scene getTabScene() {
+        return tabScene;
+    }
 
+    public void setTabScene(Scene tabScene) {
+        this.tabScene = tabScene;
+    }
+
+    public Stage getWindow() {
+        return window;
+    }
+
+    public void setWindow(Stage window) {
+        this.window = window;
+    }
+
+    public LogInWindows getLogInWindows() {
+        return logInWindows;
+    }
+
+    public void setLogInWindows(LogInWindows logInWindows) {
+        this.logInWindows = logInWindows;
+    }
 }
