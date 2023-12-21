@@ -182,7 +182,7 @@ public class PlayerPopup {
 
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(titleName);
-        window.setHeight(150);
+        window.setHeight(400);
         window.setWidth(320);
         window.setScene(scene);
         window.showAndWait();
