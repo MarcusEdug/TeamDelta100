@@ -125,6 +125,90 @@ public class InformationForm extends Application {
 
         primaryStage.show();
     }
+    public void updateInfo(Stage primaryStage, Player player){
+        Player updatePlayer = player;
+        primaryStage.setTitle("Information Form");
+        this.window = primaryStage;
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(20, 20, 20, 20));
+        grid.setVgap(10);
+        grid.setHgap(10);
+
+
+        Label firstNameLabel = new Label("Förnamn:");
+        TextField firstNameField = new TextField();
+
+        Label lastNameLabel = new Label("Efternamn:");
+        TextField lastNameField = new TextField();
+
+        Label nicknameLabel = new Label("Nickname:");
+        TextField nicknameField = new TextField();
+
+        Label addressLabel = new Label("Gatuadress:");
+        TextField addressField = new TextField();
+
+        Label postalCodeLabel = new Label("Postnummer:");
+        TextField postalCodeField = new TextField();
+
+        Label cityLabel = new Label("Postort:");
+        TextField cityField = new TextField();
+
+        Label countryLabel = new Label("Land:");
+        TextField countryField = new TextField();
+
+        Label emailLabel = new Label("E-mail:");
+        TextField emailField = new TextField();
+
+        grid.add(firstNameLabel, 0, 0);
+        grid.add(firstNameField, 1, 0);
+
+        grid.add(lastNameLabel, 0, 1);
+        grid.add(lastNameField, 1, 1);
+
+        grid.add(nicknameLabel, 0, 2);
+        grid.add(nicknameField, 1, 2);
+
+        grid.add(addressLabel, 0, 3);
+        grid.add(addressField, 1, 3);
+
+        grid.add(postalCodeLabel, 0, 4);
+        grid.add(postalCodeField, 1, 4);
+
+        grid.add(cityLabel, 0, 5);
+        grid.add(cityField, 1, 5);
+
+        grid.add(countryLabel, 0, 6);
+        grid.add(countryField, 1, 6);
+
+        grid.add(emailLabel, 0, 7);
+        grid.add(emailField, 1, 7);
+
+        TextField userText = new TextField();
+
+        GridPane.setColumnSpan(submitButton, 2);
+        grid.add(submitButton, 0, 8);
+        submitButton.setOnAction(e -> {
+            updatePlayer.setPlayerName(String.valueOf(getFirstNameField()));
+            updatePlayer.setPlayerLastname(String.valueOf(getLastNameField()));
+            updatePlayer.setNickname(String.valueOf(getNicknameField()));
+            updatePlayer.setAddress(String.valueOf(getAdressField()));
+            updatePlayer.setPostalCode(String.valueOf(getPostalCodeField()));
+            updatePlayer.setCity(String.valueOf(getCityField()));
+            updatePlayer.setCountry(String.valueOf(getCountryField()));
+            updatePlayer.setEmail(String.valueOf(getEmailField()));
+
+            System.out.println(updatePlayer);
+
+            playerController.updatePlayer(updatePlayer);
+            update();
+        });
+
+
+        Scene scene = new Scene(grid, 700, 400);
+        primaryStage.setScene(scene);
+
+        primaryStage.show();
+    }
 
     public TextField getFirstNameField() {
         return firstNameField;
@@ -197,5 +281,8 @@ public class InformationForm extends Application {
             tableView.getItems().add(temp);
         }
         window.close();
+    }
+
+    public void addComponents() {
     }
 }

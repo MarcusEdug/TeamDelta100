@@ -9,10 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -21,7 +19,7 @@ import javafx.util.StringConverter;
 
 import java.util.List;
 
-public class  PlayerPopup {
+public class PlayerPopup {
 
     InformationForm info = new InformationForm();
     private int userIntSubmit;
@@ -34,13 +32,12 @@ public class  PlayerPopup {
     private PlayerController playerController;
 
 
-
     public PlayerPopup(TableView<Player> tableView, PlayerController playerController) {
         this.tableView = tableView;
         this.playerController = playerController;
-
     }
-    public void popupWindows(){
+
+    public void popupWindows() {
         window = new Stage();
         //window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(titleName);
@@ -49,7 +46,8 @@ public class  PlayerPopup {
         window.setScene(scene);
         window.showAndWait();
     }
-    public void InfoPopup(){
+
+    public void InfoPopup() {
         window = new Stage();
         window.setTitle(titleName);
         window.setHeight(150);
@@ -57,19 +55,19 @@ public class  PlayerPopup {
         window.setScene(scene);
         window.showAndWait();
     }
-    public int deletePlayer (List<Player> playerList){
+
+    public int deletePlayer(List<Player> playerList) {
         titleName = "Delete Player";
         featureText = new Label("Which Player do you want to delete?");
 
         comboBox = new ComboBox();
-        for (Player player : playerList){
+        for (Player player : playerList) {
             int id = player.getId();
             comboBox.getItems().add(id);
         }
 
         Button submit = new Button("Submit");
-        submit.setOnAction(e->{
-
+        submit.setOnAction(e -> {
             userIntSubmit = (int) comboBox.getValue();
             window.close();
         });
@@ -84,12 +82,13 @@ public class  PlayerPopup {
 
         return userIntSubmit;
     }
+
     public void addPlayer() throws Exception {
         info.init();
         info.addComponents(tableView, playerController);
         info.start(new Stage());
-
     }
+
     public void showPlayerInfo() {
         Stage choosePlayerStage = new Stage();
         choosePlayerStage.initModality(Modality.APPLICATION_MODAL);
@@ -155,12 +154,11 @@ public class  PlayerPopup {
         Label emailLabel = new Label("Player Email: " + player.getEmail());
         Label teamLabel = new Label("Team Name: " + player.getTeamName());
 
-
         Button closeButton = new Button("Close");
         closeButton.setOnAction(e -> infoStage.close());
 
         infoLayout.getChildren().addAll(titleLabel, idLabel, nameLabel, lastnameLabel, teamLabel, nicknameLabel, addressLabel,
-                                        postalCodeLabel, cityLabel, countryLabel, emailLabel, closeButton);
+                postalCodeLabel, cityLabel, countryLabel, emailLabel, closeButton);
 
         Scene infoScene = new Scene(infoLayout, 300, 350);
         //infoScene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm()); // Add your stylesheet if needed
@@ -169,4 +167,73 @@ public class  PlayerPopup {
         infoStage.showAndWait();
     }
 
+    public void showUpdatePlayerForm() {
+        window = new Stage();
+        titleName = "Update Player Information";
+        featureText = new Label("Choose Player ID to update:");
+
+        comboBox = new ComboBox<>();
+        List<Player> playerList = playerController.getAll(false);
+        for (Player player : playerList) {
+            comboBox.getItems().add(player);
+        }
+
+        Button submit = new Button("Submit");
+        submit.setOnAction(e -> {
+            Player selectedPlayerId = (Player) comboBox.getValue();
+            System.out.println(selectedPlayerId);
+            try {
+                 info.updateInfo(window, selectedPlayerId);
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+        });
+
+        VBox vBox = new VBox(5);
+        vBox.getChildren().addAll(featureText, comboBox, submit);
+        vBox.setAlignment(Pos.CENTER);
+
+        scene = new Scene(vBox);
+
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle(titleName);
+        window.setHeight(150);
+        window.setWidth(320);
+        window.setScene(scene);
+        window.showAndWait();
+    }
+
+    public void showPlayerInfo(int playerId) {
+        try {
+            Player somePlayerObject = getPlayerById(playerId);
+
+            if (somePlayerObject != null) {
+                info.init();
+                info.addComponents();
+
+                TextField firstNameField = info.getFirstNameField();
+                TextField lastNameField = info.getLastNameField();
+
+                if (firstNameField != null) {
+                    firstNameField.setText(somePlayerObject.getPlayerName());
+                } else {
+                    System.out.println("firstNameField is null");
+                }
+
+                if (lastNameField != null) {
+                    lastNameField.setText(somePlayerObject.getPlayerLastname());
+                } else {
+                    System.out.println("lastNameField is null");
+                }
+
+            } else {
+                System.out.println("Player with ID " + playerId + " not found.");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
+    }
 }

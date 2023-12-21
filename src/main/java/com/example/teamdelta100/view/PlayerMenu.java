@@ -14,53 +14,32 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.util.List;
 
-public class PlayerMenu extends Application {
+
+public class PlayerMenu {
     PlayerController playerController = new PlayerController();
     TableView tableView;
-    public static void main(String[] args) {
-        launch();
-    }
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        Button addplayer = button("Add Player");
+    private Scene tabScene;
+    private Stage window;
+    private LogInWindows logInWindows;
 
 
-        TableView viewPlayers = table();
-
-        VBox buttonV = new VBox(10);
-        buttonV.getChildren().addAll(addplayer);
-
-        AnchorPane anchorPane = new AnchorPane();
-        anchorPane.getChildren().addAll(viewPlayers, buttonV);
-        AnchorPane.setTopAnchor(buttonV,100.0);
-        AnchorPane.setLeftAnchor(buttonV,650.0);
-
-        anchorPane.setPrefSize(800, 500);
-        tableView.setPrefSize(600, 400);
-
-        Scene scene = new Scene(anchorPane);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public Tab playerTab(){
+    public Tab playerTab() {
         Tab tabLayout = new Tab("Players");
         tabLayout.setClosable(false);
         Button addPlayer = button("Add Player");
         Button deletePlayer = button("Delete Player");
         Button showInfo = button("Show info");
-        Button logOut = button("Log out");
+        Button updatePlayer = button("Update Player");
 
         tableView = table();
 
         VBox buttonV = new VBox(10);
-        buttonV.getChildren().addAll(addPlayer, deletePlayer, showInfo, logOut);
+        buttonV.getChildren().addAll(addPlayer, deletePlayer, showInfo, updatePlayer); // Replaced logOut with updatePlayer
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(tableView, buttonV);
-        AnchorPane.setTopAnchor(buttonV,100.0);
-        AnchorPane.setLeftAnchor(buttonV,270.0);
+        AnchorPane.setTopAnchor(buttonV, 100.0);
+        AnchorPane.setLeftAnchor(buttonV, 270.0);
 
         tabLayout.setContent(anchorPane);
 
@@ -110,9 +89,10 @@ public class PlayerMenu extends Application {
                 }
                 update();
             } else if (input.equals("Show info")) {
-                playerPopup.showPlayerInfo();  // Call showPlayerInfo directly
-            } else if (input.equals("Log out")) {
-                // Handle log out
+                playerPopup.showPlayerInfo();
+            } else if (input.equals("Update Player")) {
+                playerPopup.showUpdatePlayerForm();
+                update();
             }
         });
 
@@ -128,5 +108,16 @@ public class PlayerMenu extends Application {
     }
     public void setController(PlayerController playerController) {
         this.playerController = playerController;
+    }
+    public void setTabScene(Scene tabScene) {
+        this.tabScene = tabScene;
+    }
+
+    public void setWindow(Stage window) {
+        this.window = window;
+    }
+
+    public void setLogInWindows(LogInWindows logInWindows) {
+        this.logInWindows = logInWindows;
     }
 }
