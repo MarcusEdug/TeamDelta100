@@ -65,6 +65,12 @@ public class CombinedFX extends Application {
         matchTab.setWindow(stage);
         matchTab.setTabScene(tabScene);
         matchTab.setLogInWindows(logInWindows);
+        pm.setWindow(stage);
+        pm.setTabScene(tabScene);
+        pm.setLogInWindows(logInWindows);
+        personalFX.setWindow(stage);
+        personalFX.setTabScene(tabScene);
+        personalFX.setLogInWindows(logInWindows);
     }
 
     public static void main(String[] args) {

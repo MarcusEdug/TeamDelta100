@@ -61,7 +61,7 @@ public class TeamFX {
         AnchorPane teamLayout = new AnchorPane();
         teamLayout.getChildren().addAll(tableView, vBoxForButton);
         AnchorPane.setTopAnchor(vBoxForButton,100.0);
-        AnchorPane.setLeftAnchor(vBoxForButton,420.0);
+        AnchorPane.setLeftAnchor(vBoxForButton,350.0);
 
         teamTab.setContent(teamLayout);
 
