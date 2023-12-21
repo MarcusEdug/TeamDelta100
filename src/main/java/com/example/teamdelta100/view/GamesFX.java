@@ -14,6 +14,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.util.List;
 
+
+/*
+Skapar upp en tab, "flik", som läggs in i klassen CombinedFX
+Skapar flik
+Skapar knappar
+Skapar TableView med kolumner
+Tar ut lista från databasen
+ */
 public class GamesFX {
     private TableView tableView;
     private GameController gameController = new GameController();
