@@ -2,7 +2,6 @@ package com.example.teamdelta100.view;
 
 import com.example.teamdelta100.controller.PlayerController;
 import com.example.teamdelta100.entities.Player;
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
