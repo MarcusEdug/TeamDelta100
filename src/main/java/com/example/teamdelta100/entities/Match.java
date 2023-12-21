@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
-* Match objekt som kan placeras i databasen. Kopplat med Teams och Players.
+* Match - Match objekt som kan placeras i databasen. Kopplat med Teams och Players.
 * @Author: Evelina Daun
  */
 
@@ -22,17 +22,19 @@ public class Match {
     @Column(name = "playerOrTeam") // Om matchen innehåller Teams eller Players
     private String playerOrTeam;   // Värde: "team", "player"
 
+    // Koppling mellan Player och Match
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "match")
     private List<Player> playerList = new ArrayList<>();
 
+    // Koppling mellan Teams och Match
     @OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "match")
     private List<Teams> teamsList = new ArrayList<>();
 
-    @Column(name = "nameOne") // Player eller Team namn
-    private String nameOne;
+    @Column(name = "nameOne")
+    private String nameOne; // Player eller Team 1 namn
 
     @Column(name = "nameTwo")
-    private String nameTwo;
+    private String nameTwo; // Player eller Team 1 namn
 
     @Column(name = "matchDate")
     private LocalDate matchDate; // Matchens datum
@@ -44,7 +46,7 @@ public class Match {
     private int resultOne;  // Resultatet för Team/Player 1
 
     @Column(name = "resultTwo")
-    private int resultTwo;
+    private int resultTwo;  // Resultatet för Team/Player 2
 
     @Column(name = "winner")
     private String winner;  // Vinnaren av matchen
@@ -84,16 +86,16 @@ public class Match {
     }
 
 
-    // Metod: Lägga till player
+    // Metod: Lägga till Player i Match
     public void addPlayer (Player player){
-        player.setMatch(this);
-        playerList.add(player);
+        player.setMatch(this);   // Lägga till Match objekt
+        playerList.add(player);  // Lägga till Player i listan
     }
 
-    // Metod: Lägga till team
+    // Metod: Lägga till Team i Match
     public void addTeams (Teams team){
-        team.setMatch(this);
-        teamsList.add(team);
+        team.setMatch(this);  // Lägga till Match objekt
+        teamsList.add(team);  // Lägga till Team i listan
     }
 
 
@@ -109,9 +111,7 @@ public class Match {
         return matchId;
     }
 
-    public String getPlayerOrTeam() {
-        return playerOrTeam;
-    }
+    public String getPlayerOrTeam() { return playerOrTeam; }
 
     public LocalDate getMatchDate() {
         return matchDate;
@@ -165,9 +165,7 @@ public class Match {
         return teamsList;
     }
 
-    public void setTeamsList(List<Teams> teamsList) {
-        this.teamsList = teamsList;
-    }
+    public void setTeamsList(List<Teams> teamsList) { this.teamsList = teamsList; }
 
     public String getNameOne() {
         return nameOne;

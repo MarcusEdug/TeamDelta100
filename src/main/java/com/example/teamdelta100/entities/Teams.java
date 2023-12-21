@@ -34,8 +34,6 @@ public class Teams {
     //värden som är till TableView
     private String gameName;
 
-    //värden som är till TableView
-    private String matchName;
 
     //Konstruktorer
 
@@ -103,14 +101,6 @@ public class Teams {
 
     public void setGameName(String gameName) {
         this.gameName = gameName;
-    }
-
-    public String getMatchName() {
-        return matchName;
-    }
-
-    public void setMatchName(String matchName) {
-        this.matchName = matchName;
     }
 
     public List<Player> getNumberOfPlayerList() {

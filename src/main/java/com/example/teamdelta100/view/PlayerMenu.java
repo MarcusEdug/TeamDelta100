@@ -32,6 +32,7 @@ public class PlayerMenu {
         Button updatePlayer = button("Update Player");
 
         tableView = table();
+        tabLayout.setOnSelectionChanged(e-> update());
 
         VBox buttonV = new VBox(10);
         buttonV.getChildren().addAll(addPlayer, deletePlayer, showInfo, updatePlayer); // Replaced logOut with updatePlayer
