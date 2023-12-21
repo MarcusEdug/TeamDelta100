@@ -9,15 +9,16 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.time.LocalDate;
 
+/*
+* MatchTab - Skapar upp en tab för matcherna samt innehåller koppling till popupfönster.
+* @Author: Evelina Daun
+ */
 
-// Skapar och skickar tillbaka en tab för matcherna samt innehåller koppling till popupfönster.
-// Evelina Daun
 
 public class MatchTab {
-    private MatchController matchController;
+    private MatchController matchController; // Objekt av kopplingsklass till databas
     private MatchPopUp popup; // Popupfönster som tillhör knapparna
     private TableView<Match> matchTableView; // Tabellen för alla matcher
 
@@ -31,6 +32,9 @@ public class MatchTab {
     private Button showAll;
     private Button showComming;
     private Button showDone;
+    private Button showPlayerMatch;
+    private Button showTeamMatch;
+
     private Scene tabScene;
     private Stage window;
     private LogInWindows logInWindows;
@@ -130,7 +134,9 @@ public class MatchTab {
         showAll = new Button("Show all");
         showComming = new Button("Show not played matches");
         showDone = new Button("Show played matches");
-        hbox.getChildren().addAll(showAll, showComming, showDone);
+        showPlayerMatch = new Button("Show Player Matches");
+        showTeamMatch = new Button("Show Teams Matches");
+        hbox.getChildren().addAll(showAll, showComming, showDone, showPlayerMatch, showTeamMatch);
         return hbox;
     }
 
@@ -185,6 +191,17 @@ public class MatchTab {
             tabelLabel.setText("played");
             updateTable();
         });
+
+        showPlayerMatch.setOnAction(event -> {
+            tabelLabel.setText("players");
+            updateTable();
+        });
+
+        showTeamMatch.setOnAction(event -> {
+            tabelLabel.setText("teams");
+            updateTable();
+        });
+
     }
 
 
@@ -207,6 +224,20 @@ public class MatchTab {
             matchTableView.getItems().clear();
             for(Match m : matchController.getAllMatchObjects()){
                 if(m.getPlayed().equals("Played")){
+                    matchTableView.getItems().add(m);
+                }
+            }
+        }else if(tabelLabel.getText().equals("players")){ // Endast matcher med Players
+            matchTableView.getItems().clear();
+            for(Match m : matchController.getAllMatchObjects()){
+                if(m.getPlayerOrTeam().equals("player")){
+                    matchTableView.getItems().add(m);
+                }
+            }
+        }else if(tabelLabel.getText().equals("teams")){ // Endast matcher med Teams
+            matchTableView.getItems().clear();
+            for(Match m : matchController.getAllMatchObjects()){
+                if(m.getPlayerOrTeam().equals("team")){
                     matchTableView.getItems().add(m);
                 }
             }
