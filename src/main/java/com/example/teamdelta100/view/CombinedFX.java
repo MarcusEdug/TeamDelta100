@@ -38,11 +38,11 @@ public class CombinedFX extends Application {
         tabPane = new TabPane();
 
         //Lägger in alls tabar i tabPane
-        tabPane.getTabs().add(personalFX.PersonalTab());
         tabPane.getTabs().add(pm.playerTab());
         tabPane.getTabs().add(teamFX.teamTab());
         tabPane.getTabs().add(gamesFX.gameTab());
         tabPane.getTabs().add(matchTab.createMatchTab());
+        tabPane.getTabs().add(personalFX.PersonalTab());
 
         //sätter inte tabPane i layouten
         tabLayout.setCenter(tabPane);
