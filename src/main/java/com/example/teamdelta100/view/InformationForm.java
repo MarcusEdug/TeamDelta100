@@ -177,7 +177,7 @@ public class InformationForm extends Application {
         });
 
 
-        Scene scene = new Scene(grid, 700, 400);
+        Scene scene = new Scene(grid, 300, 400);
         primaryStage.setScene(scene);
 
         primaryStage.show();
