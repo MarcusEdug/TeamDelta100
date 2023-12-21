@@ -165,15 +165,9 @@ public class Player {
         this.teams = teams;
     }
 
-    public Match getMatch() {
-        return match;
-    }
-
     public void setMatch(Match match) {
         this.match = match;
     }
-
-
 
     public Games getGames() {
         return games;

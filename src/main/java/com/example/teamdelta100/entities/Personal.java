@@ -34,31 +34,7 @@ public class Personal {
     @Column(name = "email")
     private String perEmail;
 
-    public Personal(int id, String perName, String perLname, String perNickname, String perAddress,
-                    String perPostalCode, String perCity, String perCountry, String perEmail) {
-        this.Id = id;
-        this.perName = perName;
-        this.perLname = perLname;
-        this.perNickname = perNickname;
-        this.perAddress = perAddress;
-        this.perPostalCode = perPostalCode;
-        this.perCity = perCity;
-        this.perCountry = perCountry;
-        this.perEmail = perEmail;
-    }
     public Personal(){
-
-    }
-
-    public Personal(String perName, String perLname, String perNickname, String perAddress, String perPostalCode, String perCity, String perCountry, String perEmail) {
-        this.perName = perName;
-        this.perLname = perLname;
-        this.perNickname = perNickname;
-        this.perAddress = perAddress;
-        this.perPostalCode = perPostalCode;
-        this.perCity = perCity;
-        this.perCountry = perCountry;
-        this.perEmail = perEmail;
     }
 
     public int getId() {
