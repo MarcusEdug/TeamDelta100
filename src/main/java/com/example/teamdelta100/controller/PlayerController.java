@@ -1,19 +1,13 @@
 package com.example.teamdelta100.controller;
 
-import com.example.teamdelta100.entities.Personal;
 import com.example.teamdelta100.entities.Player;
-import com.example.teamdelta100.entities.Teams;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.teamdelta100.controller.PersonalController.ENTITY_MANAGER_FACTORY;
-
 public class PlayerController {
     public static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("hibernate");
 
-    // CREATE
     public boolean save (Player player){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -36,7 +30,7 @@ public class PlayerController {
         }
         return false;
     }
-    // READ
+
     public List<Player> getAll(boolean printOut){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -64,6 +58,7 @@ public class PlayerController {
         }
         return null;
     }
+
     public boolean deletePlayerById(int Id){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -86,9 +81,11 @@ public class PlayerController {
         }
         return false;
     }
+
     public List<Player> getAll() {
         return getAll(true);
     }
+
     public List<Player> tableUpdate(boolean printOut){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -111,6 +108,7 @@ public class PlayerController {
         }
         return null;
     }
+
     public Player getPlayerById(int id) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -131,6 +129,7 @@ public class PlayerController {
         }
         return null;
     }
+
     public boolean updatePlayer(Player player){
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -150,6 +149,4 @@ public class PlayerController {
         }
         return false;
     }
-
-
 }

@@ -1,9 +1,6 @@
 package com.example.teamdelta100.view;
 import com.example.teamdelta100.controller.PersonalController;
 import com.example.teamdelta100.entities.Personal;
-import com.example.teamdelta100.entities.Player;
-import com.example.teamdelta100.entities.Teams;
-import com.example.teamdelta100.view.PersonalinfoForm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -14,7 +11,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -36,8 +32,6 @@ public class  PersonalPopup{
         this.personalController = personalController;
     }
 
-
-
     public void popupWindows(){
         window = new Stage();
         //window.initModality(Modality.APPLICATION_MODAL);
@@ -47,6 +41,7 @@ public class  PersonalPopup{
         window.setScene(scene);
         window.showAndWait();
     }
+
     private Personal getPersonalById(int id) {
         return personalController.getPersonalById(id);
     }
@@ -64,6 +59,7 @@ public class  PersonalPopup{
         persInfo.addPerComponents(tableView, personalController);
         persInfo.start(new Stage());
     }
+
     public int deletePersonal (List<Personal> personalList){
         titleName = "Delete Personal";
         featureText = new Label("Which Person do you want to delete?");
@@ -118,6 +114,7 @@ public class  PersonalPopup{
         choosePlayerStage.setScene(new Scene(chooseLayout, 250, 100));
         choosePlayerStage.showAndWait();
     }
+
     public void showPersonalDetails(Personal personal) {
         Stage infoStage = new Stage();
         infoStage.initModality(Modality.APPLICATION_MODAL);

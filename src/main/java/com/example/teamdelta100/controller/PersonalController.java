@@ -1,8 +1,6 @@
 package com.example.teamdelta100.controller;
 
 import com.example.teamdelta100.entities.Personal;
-import com.example.teamdelta100.entities.Player;
-import com.example.teamdelta100.view.PersonalFX;
 
 import javax.persistence.*;
 import java.util.ArrayList;

@@ -19,8 +19,6 @@ import java.util.List;
 public class PersonalFX extends Application {
     PersonalController personalController = new PersonalController();
     TableView tableView;
-    private Stage window;
-    private LogInWindows logInWindows;
     public static void main(String[] args) {
         launch();
     }
@@ -134,16 +132,4 @@ public class PersonalFX extends Application {
         List <Personal> personalList = personalController.tableUpdate(true);
         return personalList;
     }
-
-    /*public void createPersonal(){
-
-        personalController.save(new Personal("Sara", "Svensson", "Miss", "Saravägen", "65752", "Stockholm","Sverige" , "Sara@sarason" ));
-        personalController.save(new Personal("Rolf", "Rolfsson", "Gubben", "Rolfvägen", "63241", "Stockholm","Sverige" , "Rolf@Rolfsons" ));
-        personalController.save(new Personal("Sockan", "Hundsson", "Mr dog", "Hundgatan", "98970", "Uppsala","Sverige" , "Sockan@dogsspn" ));
-        personalController.save(new Personal("Hellena", "Svensson", "queen", "Hell", "875887", "Uppsala","Sverige" , "Hellen@hell" ));
-    }
-
-     */
-
-
 }
