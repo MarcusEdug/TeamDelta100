@@ -10,10 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+/*
+Hanterar kommunikationen mellan databasen och Games-klassen
+MS
+ */
 public class GameController {
     public static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("hibernate");
 
+    public GameController() {
+    }
+
     // Create
+    //Metod för att lägga till Games-objekt i databasen
     public boolean save(Games games) {
         // Boiler plate
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
@@ -36,6 +45,8 @@ public class GameController {
     }
 
     //Read
+    //Metod för att hämta alla objekt från databasen med en lista
+    //samt kunna skicka tillbaka
     public List<Games> getAll(boolean printOut) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -43,8 +54,8 @@ public class GameController {
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-            TypedQuery<Games> resultList = entityManager.createQuery("FROM Games", Games.class);
-            gamesListToReturn.addAll(resultList.getResultList());
+            TypedQuery<Games> resultList = entityManager.createQuery("FROM Games", Games.class); //Hämtar från databas
+            gamesListToReturn.addAll(resultList.getResultList()); //Lägger till i databas
             transaction.commit();
             if (printOut) {
                 for (Games games :
@@ -65,13 +76,14 @@ public class GameController {
     }
 
     //Update
+    //Metod för att uppdatera games-objekt
     public boolean updateGames(Games games) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-            entityManager.merge(games);
+            entityManager.merge(games); //Uppdaterar
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -86,6 +98,7 @@ public class GameController {
     }
 
     //Delete med ID
+    //Metod:Tar bort games-objekt från databasen med hjälp av ID
     public boolean deleteGameById(int gameId) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -93,19 +106,25 @@ public class GameController {
             transaction = entityManager.getTransaction();
             transaction.begin();
 
-            //Hämtar games entity från databasen med gameId
-            //Kollar om entiteten finns som property eller identifier
+            //Hämtar games entitet från databasen med gameId
             Games games = entityManager.find(Games.class, gameId);
 
-            //Denna funkar ej för att den kolla om en entity finns men entiteten är en integer.
-            //contains-metoden vill ha ett entity-objekt, inte en property eller identifier av en entity
-            //entityManager.remove(entityManager.contains(gameId) ? gameId : entityManager.merge(gameId));
-
-            //Kollar om games finns i databasen och tar sedan bort efter id
             if (games != null) {
-                //Ta bort spel
-                entityManager.remove(games);
+                List<Player> list = games.getPlayerList();
+                for (Player player : list) {
+                    player.setGames(null); //Kopplar bort värdet på player från games
+                }
+                games.getPlayerList().clear();
+
+            } else {
+                List<Teams> list2 = games.getTeamsList();
+                for (Teams teams : list2) {
+                    teams.setGames(null);
+                    teams.setGameName(null);
+                }
+                games.getTeamsList().clear();
             }
+            entityManager.remove(games);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -118,6 +137,8 @@ public class GameController {
         }
         return false;
     }
+
+    //Metod: Kopplar bort Player-objekt från games
     public boolean removePlayerFromGame(int gameId, int playerId) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -125,6 +146,7 @@ public class GameController {
             transaction = entityManager.getTransaction();
             transaction.begin();
 
+            //Letar objekten med tillhörande id i från databas
             Optional<Player> selectPlayer= Optional.ofNullable(entityManager.find(Player.class, playerId));
             Optional<Games> selectGames = Optional.ofNullable(entityManager.find(Games.class, gameId));
 
@@ -133,9 +155,9 @@ public class GameController {
                 Games games = selectGames.get();
 
                 games.getPlayerList().remove(0);
-                games.setPlayerName(null);
+                games.setPlayerName(null); //Kopplar bort player-objekt
                 games.setPlayerId(0);
-                player.setGames(null);
+                player.setGames(null); //Kopplar bort games-objekt från player
             }
 
             transaction.commit();
@@ -150,6 +172,7 @@ public class GameController {
         }
         return false;
     }
+    //Metod: Kopplar bort teams-objekt från games
     public boolean removeTeamFromGame (int teamId, int gameId) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -157,28 +180,20 @@ public class GameController {
             transaction = entityManager.getTransaction();
             transaction.begin();
 
+            //Letar objekten med tillhörande ID i databas
             Optional<Teams> selectTeam = Optional.ofNullable(entityManager.find(Teams.class, teamId));
             Optional<Games> selectGames = Optional.ofNullable(entityManager.find(Games.class, gameId));
 
             if (selectGames != null && selectTeam != null) {
-                Teams teams = selectTeam.get();
+                Teams teams = selectTeam.get(); //Hämtar
                 Games games = selectGames.get();
 
                 games.getTeamsList().remove(0);
-                games.setTeamName(null);
+                games.setTeamName(null); //Kopplar bort teams från games
                 games.setTeamId(0);
-                teams.setGameName(null);
+                teams.setGameName(null); //Kopplar bort games från teams
                 teams.setGames(null);
 
-
-                /*
-                Player player = selectPlayer.get();
-                team = selectTeam.get();
-                team.getNumberOfPlayerList().remove(0);
-                player.setTeams(null);
-                player.setTeamName(null);
-                transaction.commit();
-                 */
             }
             transaction.commit();
             return true;
@@ -193,6 +208,7 @@ public class GameController {
         return false;
     }
 
+    //Metod: Tar ut en ny "aktuell" lista från databasen
     public List<Games> tableUpdate() {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -213,6 +229,7 @@ public class GameController {
         return null;
     }
 
+    //Metod: Kopplar ihop teams med games
     public boolean addPlayerToGame(int playerId, int gameId) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -221,14 +238,15 @@ public class GameController {
             transaction = entityManager.getTransaction();
             transaction.begin();
 
+            //Letar i databasen efter objekt med tillhörande ID
             Optional<Player> selectPlayer = Optional.ofNullable(entityManager.find(Player.class, playerId));
             Optional<Games> selectGames = Optional.ofNullable(entityManager.find(Games.class, gameId));
 
-            Player player = selectPlayer.get();
+            Player player = selectPlayer.get(); //Hämtar
             games = selectGames.get();
             games.setPlayerId(player.getId());
             games.setPlayerName(player.getPlayerName());
-            games.addPlayer(player);
+            games.addPlayer(player); //Lägger till
 
             transaction.commit();
             return true;
@@ -243,6 +261,7 @@ public class GameController {
         return false;
     }
 
+    //Metod: Kopplar ihop teams-objekt med games
     public boolean addTeamToGame(int teamsId, int gameId) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -251,15 +270,17 @@ public class GameController {
             transaction = entityManager.getTransaction();
             transaction.begin();
 
+            //Letar i databasen efter objekten med tillhörande ID
             Optional<Teams> selectTeam = Optional.ofNullable(entityManager.find(Teams.class, teamsId));
             Optional<Games> selectGame = Optional.ofNullable(entityManager.find(Games.class, gameId));
 
-            Teams teams = selectTeam.get();
+            Teams teams = selectTeam.get();//Hämtar
             games = selectGame.get();
             teams.setGameName(games.getGameName());
             games.setTeamId(teams.getId());
             games.setTeamName(teams.getName());
-            games.addTeams(teams);
+            games.addTeams(teams); //Lägger till
+
             transaction.commit();
             return true;
         } catch (Exception e) {

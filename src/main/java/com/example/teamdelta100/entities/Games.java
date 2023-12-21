@@ -4,33 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-//CRUD-operationer
+//Games-objekt som kopplas till databasen. Kopplas till Teams och Player. MS
 @Entity
 @Table (name = "games")
 public class Games {
-    //Primary key
-    @Id
-    //Id genereras av databasen
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id//Primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Id genereras av databasen
     @Column(name = "game_id")
     private int gameId;
 
     @Column (length = 50)
     private String gameName;
 
+    //Kopplingar till tableView
     private int playerId;
 
     private String playerName;
-
 
     private int teamId;
 
     private String teamName;
 
-
+    //Koppling mellan Teams och Games. Lag kan endast tillhöra ett spel
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "games" )
     private List<Teams> teamsList = new ArrayList<>();
 
+    //Koppling mellan Player och Games. Samma villkor som för Teams.
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "games" )
     private List<Player> playerList = new ArrayList<>();
 
@@ -70,16 +69,24 @@ public class Games {
         this.gameName = gameName;
     }
 
+    //Metod för att kunna lägga till player-objekt
     public void addPlayer (Player player){
         player.setGames(this);
         playerList.add(player);
     }
 
+    //Metod för att kunna lägga till teams-objekt
     public void addTeams (Teams team){
         team.setGames(this);
         teamsList.add(team);
     }
+    //Metod - toString för att kunna skriva ut namnet på spel
+    @Override
+    public String toString() {
+        return gameName;
+    }
 
+    //Setters & Getters
     public String getGameName() {
         return gameName;
     }
@@ -140,8 +147,4 @@ public class Games {
         this.teamName = teamName;
     }
 
-    @Override
-    public String toString() {
-        return gameName;
-    }
 }
