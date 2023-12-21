@@ -225,10 +225,7 @@ public class TeamFX {
         TableColumn gameNameColumn = new TableColumn<Teams, String>("Game");
         gameNameColumn.setCellValueFactory(new PropertyValueFactory<Teams, String>("gameName"));
 
-        TableColumn matchNameColumn = new TableColumn<Teams, String>("Match");
-        matchNameColumn.setCellValueFactory(new PropertyValueFactory<Teams, String>("matchName"));
-
-        tableView.getColumns().addAll(teamIdColumn,teamNameColumn,playersIdColumn,gameNameColumn,matchNameColumn);
+        tableView.getColumns().addAll(teamIdColumn,teamNameColumn,playersIdColumn,gameNameColumn);
 
         return tableView;
     }

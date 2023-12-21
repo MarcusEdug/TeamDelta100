@@ -56,6 +56,7 @@ public class PersonalFX extends Application {
         Button logOut = button("Log out");
 
         tableView = table();
+        tabLayout.setOnSelectionChanged(e-> update());
 
         VBox buttonV = new VBox(10);
         buttonV.getChildren().addAll(addPersonal, deletePersonal, logOut);
